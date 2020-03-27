@@ -910,7 +910,10 @@ footer a:hover{
     #company a{
         margin: 0px;
         display: block;
-        padding: 10px 40px;
+        padding: 25px 40px;
+    }
+    #company a:hover{
+        background-color: rgba(44, 62, 80, 0.99);
     }
     .right-nav-bar{
         display: none;
