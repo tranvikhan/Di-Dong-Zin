@@ -98,6 +98,7 @@ button>img{
     padding:10px;
     transition: 0.5s;
     cursor: pointer;
+    position: relative;
 }
 .tablinks>img {
     width: 20px;
@@ -144,7 +145,7 @@ button>img{
     font-size: 18px;
     width: 100%;
     text-align: left;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 .action-bar{
     margin-bottom: 10px;
@@ -301,8 +302,83 @@ button:hover ,button:focus{
     display: block;
 }
 
-#trangchu{
+#thongke{
     display: block;
+}
+#thongke [class*="col-"]{
+    background-color: white;
+    padding: 20px;
+    border: solid 10px var(--border-item);
+    border-radius: 20px;
+}
+.thongkeitem{
+    padding: 30px;
+    position: relative;
+    text-align: center;
+}
+.thongkeitem h1 {
+    text-align: center;
+    padding: 20px 0 10px 0;
+    font-size: 40px;
+    color: var(--font-color2);
+}
+.thongkeitem img{
+    width: 30px;
+    
+}
+.thongkeitem p{
+    font-weight: 300;
+    padding-bottom: 20px;
+    color: var(--font-color1);
+}
+.bieudo p{
+    display: inline;
+}
+.bieudo input{
+    font-size: 15px;
+    font-family: 'Roboto',sans-serif;
+    border: none;
+    padding: 5px;
+}
+.single-chart p {
+    text-align: center;
+    padding: 10px 10px;
+    color: var(--font-color1);
+    font-size: 15px;
+}
+
+.single-chart {
+    padding: 50px;
+    justify-content: space-around;
+}
+
+.circle-stroke {
+    stroke: var(--border-item);
+}
+
+.circular-chart {
+    display: block;
+    margin: 10px auto;
+    max-width: 60%;
+    max-height: 100px;
+}
+
+.circle {
+    animation: progress 5s ease-out forwards infinite;
+}
+
+@keyframes progress {
+    0% {
+        stroke-dasharray: 0 100;
+    }
+}
+
+.chitieu p{
+    margin-bottom: 25px;
+}
+.chitieu p:not(:first-child){
+    text-align: center;
+    font-size: 12px;
 }
 .nhaplieu{
     font-size: 15px;
@@ -463,6 +539,16 @@ textarea:focus{
 .hangDtMoi input[type="submit"]:hover,
 .hangDtMoi input[type="submit"]:focus{
     background-color: var(--font-color2);
+}
+.sodonmoi{
+    background-color: var(--primary-color);
+    border-radius: 10px;
+    font-size: 12px;
+    color: var(--font-color-light);
+    padding: 2px 6px;
+    position: absolute;
+    left: 18px;
+    top: 2px;
 }
 @media only screen and (max-width: 768px) {
     .content{

@@ -18,16 +18,16 @@
     <!-- TOP HEADER ..................................................................................-->
     <div class="top_header">
         <img id="btn-menu" src="assets/img/menu_100px.png" onclick="show_left_menu()">
-        <h2>DIDONGZIN MANAGE</h2>
+        <h2>DIDONGZIN MANAGE CENTER</h2>
         <a id="btn-admin">Chào! Admin</a>
          <img id="admin-avt" src="assets/img/cat_profile_30px.png">
     </div>
     <!-- LEFT MENU..................................................................................-->
     <div id="left-menu">
         <ul>
-            <li class="tablinks active" onclick="openTab(event, 'trangchu')">
+            <li class="tablinks active" onclick="openTab(event, 'thongke')">
                 <img src="assets/img/home_50px.png" alt="logo">
-                <p>TRANG CHỦ</p>
+                <p>THỐNG KÊ</p>
             </li>
             <li class="tablinks" onclick="openTab(event, 'dienthoai')">
                 <img src="assets/img/smartphone_tablet_50px.png" alt="logo">
@@ -40,6 +40,7 @@
             <li class="tablinks" onclick="openTab(event, 'donhang')">
                 <img src="assets/img/purchase_order_50px.png" alt="logo">
                 <p>Đơn hàng</p>
+                <span class="sodonmoi">2</span>
             </li>
             <li class="tablinks" onclick="openTab(event, 'hoadon')">
                 <img src="assets/img/receipt_50px.png" alt="logo">
@@ -66,8 +67,65 @@
     <!-- NOI DUNG CHINH ..................................................................................-->
     <div class="content">
         <!-- TRANG CHU ..................................................................................-->
-        <div id="trangchu" class="tabcontent">
-            <h2>TRANG CHỦ</h2>
+        <div id="thongke" class="tabcontent">
+            <h2>THỐNG KÊ</h2>
+            <div class="row">
+                <div class="col-3 thongkeitem">
+                    <h1>91</h1>
+                    <img src="assets/img/smartphone_tablet_100px.png">
+                    <p>Điện thoại</p>
+                </div>
+                <div class="col-3 thongkeitem">
+                    <h1>7</h1>
+                    <img src="assets/img/company_100px.png">
+                    <p>Hãng điện thoại</p>
+                </div>
+                <div class="col-3 thongkeitem">
+                    <h1>172</h1>
+                    <img src="assets/img/user_groups_50px.png">
+                    <p>Thành viên</p>
+                </div>
+                <div class="col-3 thongkeitem">
+                    <h1>100+</h1>
+                    <img src="assets/img/procurement_50px.png">
+                    <p>Đơn hàng thành công</p>
+                </div>
+                <div class="col-9 bieudo">
+                    <p>Thống kê tuần:</p>
+                    <input type="week">
+                    <canvas id="myChart" height="150" width="400" ></canvas>
+                </div>
+                <div class="col-3 chitieu">
+                    <p>Chỉ tiêu hôm nay:</p>
+                    <svg viewBox="0 0 36 36" class="circular-chart">
+                        <path class="circle-stroke" fill="none" stroke-width="3.8" d="M18 2.0845
+                        a 15.9155 15.9155 0 0 1 0 31.831
+                        a 15.9155 15.9155 0 0 1 0 -31.831" />
+                        <path class="circle" fill="none" stroke="#e74c3c" stroke-width="2.8" stroke-linecap="round"
+                            stroke-dasharray="60, 100" d="M18 2.0845
+                        a 15.9155 15.9155 0 0 1 0 31.831
+                        a 15.9155 15.9155 0 0 1 0 -31.831" />
+                        <text x="18" y="20.35" class="percentage" text-anchor="middle" font-size="0.5em"
+                            fill="#666666">60%</text>
+                    </svg>
+                    <p>Bán 10 điện thoại</p>
+                    <svg viewBox="0 0 36 36" class="circular-chart">
+                        <path class="circle-stroke" fill="none" stroke-width="3.8" d="M18 2.0845
+                        a 15.9155 15.9155 0 0 1 0 31.831
+                        a 15.9155 15.9155 0 0 1 0 -31.831" />
+                        <path class="circle" fill="none" stroke="#2c3e50" stroke-width="2.8" stroke-linecap="round"
+                            stroke-dasharray="50, 100" d="M18 2.0845
+                        a 15.9155 15.9155 0 0 1 0 31.831
+                        a 15.9155 15.9155 0 0 1 0 -31.831" />
+                        <text x="18" y="20.35" class="percentage" text-anchor="middle" font-size="0.5em"
+                            fill="#666666">50%</text>
+                    </svg>
+                    <p>2 thành viên mới</p>
+                </div>
+                <div class="col-6 phanhoi">
+                    <p>Phản hồi khách hàng:</p>
+                </div>
+            </div>
         </div>
         <!-- DIEN THOAI ..................................................................................-->
         <div id="dienthoai" class="tabcontent">
@@ -792,6 +850,7 @@
         </div>
     </div>
 </body>
+<script src="assets/js/Chart.js"></script>
 <script src="assets/js/manage.js"></script>
 
 </html>
