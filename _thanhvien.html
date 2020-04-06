@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <title>Quản Lý - Thành Viên</title>
+    <meta charset="utf-8">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="assets/img/logo-min.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/manage.css">
+    <!--open lib animation...........................................................................-->
+    <link rel="stylesheet" type="text/css" href="assets/css/animate.css">
+</head>
+
+<body>
+    <!-- TOP HEADER ..................................................................................-->
+    <div class="top_header">
+        <img id="btn-menu" src="assets/img/menu_100px.png" onclick="show_left_menu()">
+        <h2>DIDONGZIN MANAGEMENT CENTER</h2>
+        <a id="btn-admin">Chào! Admin</a>
+        <img id="admin-avt" src="assets/img/cat_profile_30px.png">
+    </div>
+    <!-- LEFT MENU..................................................................................-->
+    <div id="left-menu">
+        <ul>
+            <li class="tablinks" onclick="loadPage('_thongke.html')">
+                <img src="assets/img/home_50px.png" alt="logo">
+                <p>THỐNG KÊ</p>
+            </li>
+            <li class="tablinks" onclick="loadPage('_dienthoai.html')">
+                <img src="assets/img/smartphone_tablet_50px.png" alt="logo">
+                <p>Điện thoại</p>
+            </li>
+            <li class="tablinks" onclick="loadPage('_hangdienthoai.html')">
+                <img src="assets/img/department_50px.png" alt="logo">
+                <p>Hãng điện thoại</p>
+            </li>
+            <li class="tablinks" onclick="loadPage('_donhang.html')">
+                <img src="assets/img/purchase_order_50px.png" alt="logo">
+                <p>Đơn hàng</p>
+                <span class="sodonmoi">2</span>
+            </li>
+            <li class="tablinks" onclick="loadPage('_hoadon.html')">
+                <img src="assets/img/receipt_50px.png" alt="logo">
+                <p>Hóa đơn</p>
+            </li>
+            <li class="tablinks  active" onclick="loadPage('_thanhvien.html')">
+                <img src="assets/img/member_50px.png" alt="logo">
+                <p>Thành viên</p>
+            </li>
+            <li class="tablinks" onclick="loadPage('_trang.html')">
+                <img src="assets/img/page_50px.png" alt="logo">
+                <p>Trang</p>
+            </li>
+            <li class="tablinks" onclick="loadPage('_caidat.html')">
+                <img src="assets/img/settings_50px.png" alt="logo" id="ic-caidat">
+                <p>Cài đặt</p>
+            </li>
+            <li class="tablinks">
+                <img src="assets/img/login_rounded_50px.png" alt="logo">
+                <p>Đăng xuất</p>
+            </li>
+        </ul>
+    </div>
+    <!-- NOI DUNG CHINH ..................................................................................-->
+    <div class="content">
+        <div id="thanhvien" class="tabcontent">
+            <h2>QUẢN LÝ THÀNH VIÊN</h2>
+            <input type="text" placeholder="Nhập mã hoặc tên thành viên">
+            <button class="btnThemdienthoai"><img src="assets/img/search_30_ligghtpx.png"></img>Tìm thành viên</button>
+            <div class="row">
+                <div class="col-4 cart-thanhvien">
+                    <div>
+                        <img src="avatar/avatar-cartoon-superman-png_244033.jpg" alt="avatar">
+                        <table>
+                            <tr>
+                                <th>Mã tài khoản:</th>
+                                <td>001</td>
+                            </tr>
+                            <tr>
+                                <th>Tên đăng nhập:</th>
+                                <td>tranvikhan</td>
+                            </tr>
+                            <tr>
+                                <th>Họ và tên:</th>
+                                <td>Trần Vi Khan</td>
+                            </tr>
+                            <tr>
+                                <th>Giới tính:</th>
+                                <td>Nam</td>
+                            </tr>
+                            <tr>
+                                <th>Ngày sinh:</th>
+                                <td>06/06/1999</td>
+                            </tr>
+                            <tr>
+                                <th>Số điện thoại:</th>
+                                <td>0974184717</td>
+                            </tr>
+                            <tr>
+                                <th>Địa chỉ:</th>
+                                <td>Cần thơ</td>
+                            </tr>
+
+                        </table>
+                    </div>
+                </div>
+                <div class="col-4 cart-thanhvien">
+                    <div>
+                        <img src="avatar/avatar-doi-tren-facebook-1.jpg" alt="avatar">
+                        <table>
+                            <tr>
+                                <th>Mã tài khoản:</th>
+                                <td>002</td>
+                            </tr>
+                            <tr>
+                                <th>Tên đăng nhập:</th>
+                                <td>thinhnguyen</td>
+                            </tr>
+                            <tr>
+                                <th>Họ và tên:</th>
+                                <td>Nguyễn Tấn Thịnh</td>
+                            </tr>
+                            <tr>
+                                <th>Giới tính:</th>
+                                <td>Nam</td>
+                            </tr>
+                            <tr>
+                                <th>Ngày sinh:</th>
+                                <td>05/6/1999</td>
+                            </tr>
+                            <tr>
+                                <th>Số điện thoại:</th>
+                                <td>024545343</td>
+                            </tr>
+                            <tr>
+                                <th>Địa chỉ:</th>
+                                <td>đường Nguyễn Văn Linh, phường Anh Khánh, quận Ninh Kiều, thành phố Cần Thơ </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-4 cart-thanhvien">
+                    <div>
+                        <img src="avatar/fc5162103264ed63d5b5a008b0872e5b.jpg" alt="avatar">
+                        <table>
+                            <tr>
+                                <th>Mã tài khoản:</th>
+                                <td>003</td>
+                            </tr>
+                            <tr>
+                                <th>Tên đăng nhập:</th>
+                                <td>nguyenvana</td>
+                            </tr>
+                            <tr>
+                                <th>Họ và tên:</th>
+                                <td>Nguyễn Văn A</td>
+                            </tr>
+                            <tr>
+                                <th>Giới tính:</th>
+                                <td>Nam</td>
+                            </tr>
+                            <tr>
+                                <th>Ngày sinh:</th>
+                                <td>--/--/--</td>
+                            </tr>
+                            <tr>
+                                <th>Số điện thoại:</th>
+                                <td>----------</td>
+                            </tr>
+                            <tr>
+                                <th>Địa chỉ:</th>
+                                <td>Ấp 8 xã Lương Nghĩa, huyện Long Mỹ, tỉnh Hậu Giang</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-4 cart-thanhvien">
+                    <div>
+                        <img src="avatar/sieu-nhan-cuu-the-gioi.jpg" alt="avatar">
+                        <table>
+                            <tr>
+                                <th>Mã tài khoản:</th>
+                                <td>004</td>
+                            </tr>
+                            <tr>
+                                <th>Tên đăng nhập:</th>
+                                <td>thino</td>
+                            </tr>
+                            <tr>
+                                <th>Họ và tên:</th>
+                                <td>Lê Thị Nở</td>
+                            </tr>
+                            <tr>
+                                <th>Giới tính:</th>
+                                <td>Nữ</td>
+                            </tr>
+                            <tr>
+                                <th>Ngày sinh:</th>
+                                <td>30/02/1994</td>
+                            </tr>
+                            <tr>
+                                <th>Số điện thoại</th>
+                                <td>0393912485</td>
+                            </tr>
+                            <tr>
+                                <th>Địa chỉ:</th>
+                                <td>Campuchia</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="assets/js/manage.js"></script>
+<script src="assets/js/_thanhvien.js"></script>
+
+</html>

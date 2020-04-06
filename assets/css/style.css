@@ -46,7 +46,6 @@ html{
     font-family: 'Roboto',sans-serif;
     background-color: var(--backgroud-light);
 }
-
 #show_company{
     width: 20px;
     display: block;

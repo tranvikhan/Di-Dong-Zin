@@ -71,7 +71,8 @@ button>img{
     top: 5px;
     left: 6px;
 }
-.btnThemdienthoai:hover{
+.btnThemdienthoai:hover,
+.btnThemdienthoai:focus {
     background-color: var(--backgroud-color3);
     color: var(--font-color-light);
 }
@@ -138,7 +139,6 @@ button>img{
 .tabcontent{
     width: 100%;
     min-height: 650px;
-    display: none;
 }
 .tabcontent h2{
     color: var(--font-color1);
@@ -551,19 +551,26 @@ textarea:focus{
     left: 18px;
     top: 2px;
 }
-.donhangmoi{
+.donhangmoi,
+.hoadon{
     background-color: var(--backgroud-light);
     width: 100%;
     padding: 50px 50px 20px 50px;
     border-radius: 20px;
     margin: 20px 0;
 }
-.donhangmoi table{
+.hoadon{
+    padding: 50px;
+}
+.donhangmoi table,
+.hoadon table{
     width: 100%;
     text-align: left;
     font-size: 15px;
+    overflow-x: auto;
 }
-.donhangmoi td{
+.donhangmoi td,
+.hoadon td{
     font-weight: 300;
 }
 .tb1 th{
@@ -606,6 +613,40 @@ textarea:focus{
 .g-btn-xacnhan button:first-child:hover{
     background-color: var(--backgroud-color3);
 }
+.cart-thanhvien{
+    padding: 20px;
+}
+.cart-thanhvien>div:hover{
+    box-shadow: 3px 3px 5px 6px rgba(204, 204, 204,0.5);
+}
+.cart-thanhvien>div{
+    background-color: var(--backgroud-light);
+    padding: 30px;
+    border-radius: 20px;
+    text-align: center;
+    min-height: 520px;
+    transition: 0.5s;
+}
+.cart-thanhvien>div>img{
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin-bottom: 20px;
+}
+.cart-thanhvien table{
+    text-align: left;
+    border-spacing: 5px;
+    width: 100%;
+}
+.cart-thanhvien th{
+    width: 45%;
+    font-weight: 400;
+    vertical-align: top;
+}
+.cart-thanhvien td{
+    width: 55%;
+    font-weight: 300;
+}
 @media only screen and (max-width: 768px) {
     .content{
         margin-left: 0;
@@ -617,4 +658,19 @@ textarea:focus{
         left: 50%;
         transform: translateX(-50%);
     }
+}
+#ic-caidat{
+    animation: quay 2s   infinite;
+}
+@keyframes quay {
+    0% {
+        transform: rotate(360deg);
+    }
+}
+#caidat>img,
+#trang>img{
+    position: relative;
+    width: 600px;
+    left: 50%;
+    transform: translateX(-50%);
 }

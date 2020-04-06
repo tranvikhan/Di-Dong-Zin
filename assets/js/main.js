@@ -1,3 +1,8 @@
+//Trang chu
+    function trangchu(){
+        location.replace("index.html");
+    }
+
 //Tim san pham
 function search_phone(value) {
     var text_search = document.getElementById("text_search").value.toString();
