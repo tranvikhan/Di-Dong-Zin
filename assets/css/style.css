@@ -940,8 +940,23 @@ footer a:hover{
         top:20px;
     }
 }
-@media only screen and (max-width: 1000px){
+@media only screen and (max-width: 1280px) {
+    .container {
+        padding: 0 5%;
+    }
+
+    .col-2s {
+        width: 20%;
+    }
+}
+@media only screen and (max-width: 1024px){
     .container{
         padding: 0 5%;
+    }
+    .col-2s {
+        width: 25%;
+    }
+    #thanhvien .col-4s{
+        width: 50%;
     }
 }
