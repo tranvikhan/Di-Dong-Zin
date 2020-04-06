@@ -1,8 +1,3 @@
-//Trang chu
-    function trangchu(){
-        location.replace("index.html");
-    }
-
 //Tim san pham
 function search_phone(value) {
     var text_search = document.getElementById("text_search").value.toString();
@@ -137,13 +132,15 @@ function switchTheme(e) {
     if (e.target.checked) {
         document.documentElement.setAttribute('data-theme', 'dark');
         localStorage.setItem('theme', 'dark');
-        console.error("kksbksd");
     } else {
         document.documentElement.setAttribute('data-theme', 'light');
         localStorage.setItem('theme', 'light');
-        console.error("kkss");
     }
 }
 
 toggleSwitch.addEventListener('change', switchTheme, false);
-/// END
+/// LoadPage
+function loadPage(page) {
+    location.replace(page);
+
+}

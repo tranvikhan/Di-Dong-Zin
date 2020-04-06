@@ -8,7 +8,8 @@
     <link rel="shortcut icon" href="assets/img/logo-min.png">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/user-manage.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/style-login-success.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/_user_thongtin.css">
     <!--open lib animation-->
     <link rel="stylesheet" type="text/css" href="assets/css/animate.css">
     <!----------------------------------------------------->
@@ -16,15 +17,10 @@
 
 <body>
     <div class="container nav-top">
-        <!-- Rounded switch -->
-        <label class="switch">
-            <input type="checkbox" id="switch1">
-            <span class="slider round"></span>
-        </label>
         <img id="show_company" src="assets/img/menu_100px.png" alt="menu" onclick="show_company()">
         <div class="row">
 
-            <div class="col-4" onclick="trangchu()">
+            <div class="col-4" onclick="loadPage('index-login-success.html')">
                 <img src="assets/img/logo-min.png" alt="logo" />
                 <h2 class="animated infinite pulse">DIDONGZIN</h2>
             </div>
@@ -67,7 +63,20 @@
                 <a id="myBtn">
                     <img src="avatar/avatar-cartoon-superman-png_244033.jpg" alt="user" />
                     <p>Trần Vi Khan</p>
+                        <div class="user-menu">
+                            <img src="avatar/avatar-cartoon-superman-png_244033.jpg" alt="user" />
+                            <img src="assets/img/camera_50px.png" alt="update-avatar" id="update_avatar">
+                            <h2>Trần Vi Khan</h2>
+                            <p>tranvikhan</p>
+                            <button onclick="loadPage('_user_thongtin.html')">Cập nhật thông tin</button>
+                            <button>Đăng Xuất</button>
+                        </div>
                 </a>
+                 <!-- Rounded switch -->
+                 <label class="switch">
+                     <input type="checkbox" id="switch1">
+                     <span class="slider round"></span>
+                 </label>
             </div>
         </div>
 
@@ -130,7 +139,6 @@
     </div>
     <img src="assets/img/slide_up_50px.png" onclick="scroll_top()" id="up-btn" alt="...">
 </body>
-<script src="assets/js/main.js"></script>
-<script src="assets/js/user-manage.js"></script>
-
+<script src="assets/js/main-login-success.js"></script>
+<script src="assets/js/_user_thongtin.js"></script>
 </html>
