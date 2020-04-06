@@ -495,7 +495,7 @@ textarea:focus{
 }
 #btn-themhangdt:hover h2{
     color: var(--primary-color);
-    font-weight: 600;
+    font-weight: 500;
 }
 #btn-themhangdt img{
     position: absolute;
@@ -615,6 +615,7 @@ textarea:focus{
 }
 .cart-thanhvien{
     padding: 20px;
+    min-height: 190px;
 }
 .cart-thanhvien>div:hover{
     box-shadow: 3px 3px 5px 6px rgba(204, 204, 204,0.5);
@@ -622,30 +623,151 @@ textarea:focus{
 .cart-thanhvien>div{
     background-color: var(--backgroud-light);
     padding: 30px;
-    border-radius: 20px;
-    text-align: center;
-    min-height: 520px;
-    transition: 0.5s;
+    border-radius: 15px;
+    transition: 0.3s;
+    position: relative;
 }
 .cart-thanhvien>div>img{
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+}
+.cart-thanhvien>div>div{
+    text-align: left;
+    padding-left: 15px;
+    padding-top:20px;
+}
+.cart-thanhvien>div>div>h3{
+    color: var(--font-color4);
+    font-family: 500;
+    font-size: 18px;
+}
+.cart-thanhvien>div>div>p{
+    color: var(--font-color4);
+    font-family: 300;
+}
+.cart-thanhvien .sua_thanhvien {
+    width: 25px;
+    height: 25px;
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    cursor: pointer;
+}
+.chitiet-thanhvien{
+    position: absolute;
+    top:0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--backgroud-rbga2);
+    z-index: 1;
+}
+/* The Modal (background) */
+.modal {
+    display: none;
+    /* Hidden by default */
+    position: fixed;
+    /* Stay in place */
+    z-index: 4;
+    /* Sit on top */
+    padding-top: 50px;
+    padding-bottom: 50px;
+    padding-left: 200px;
+    /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%;
+    /* Full width */
+    height: 100%;
+    /* Full height */
+    overflow-y: auto;
+    /* Enable scroll if needed */
+    background-color: rgb(0, 0, 0);
+    /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.4);
+    /* Black w/ opacity */
+    transition: 0.5s;
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: var(--backgroud-rbga1);
+    margin: auto;
+    padding: 50px;
+    border: 1px solid var(--font-color3);
+    width: 450px;
+    border-radius: 10px;
+    position: relative;
+}
+
+/* The Close Button */
+.close {
+    position: absolute;
+    right: -10px;
+    top: -10px;
+    color: var(--font-color3);
+    font-size: 20px;
+    font-weight: bold;
+    background-color: var(--backgroud-color1);
+    padding: 4px 10px;
+    border-radius: 30px;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+#myModal2{
+    text-align: center;    
+}
+#myModal2 select{
+    margin: 0;
+    margin-left: -8px;
+    border: none;
+    padding: 2px;
+    background-color: transparent;
+    border: solid 1px var(--border-item);
+}
+#myModal2 input[type="submit"]{
+    background-color: transparent;
+    color: var(--font-color4);
+    padding: 10px 30px;
+    border-radius: 30px;
+    cursor: pointer;
+    margin-left: 70px;
+    margin-top: 20px;
+}
+#myModal2 input[type="submit"]:hover{
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+#myModal2 select:hover{
+    border-color: var(--primary-color);
+}
+#myModal2 img{
     width: 150px;
     height: 150px;
     border-radius: 50%;
-    margin-bottom: 20px;
+    margin-bottom: 40px;
 }
-.cart-thanhvien table{
+#myModal2 table {
     text-align: left;
+    padding-left: 50px;
     border-spacing: 5px;
     width: 100%;
 }
-.cart-thanhvien th{
-    width: 45%;
+#myModal2 th {
     font-weight: 400;
     vertical-align: top;
+    padding: 3px 3px 3px 5px;
 }
-.cart-thanhvien td{
+#myModal2 td {
     width: 55%;
     font-weight: 300;
+    padding: 3px 3px 3px 8px;
 }
 @media only screen and (max-width: 768px) {
     .content{
@@ -670,7 +792,7 @@ textarea:focus{
 #caidat>img,
 #trang>img{
     position: relative;
-    width: 600px;
+    width: 500px;
     left: 50%;
     transform: translateX(-50%);
 }

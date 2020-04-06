@@ -945,7 +945,7 @@ footer a:hover{
         padding: 0 5%;
     }
 
-    .col-2s {
+    #hangdienthoai .col-2s {
         width: 20%;
     }
 }
@@ -953,7 +953,7 @@ footer a:hover{
     .container{
         padding: 0 5%;
     }
-    .col-2s {
+    #hangdienthoai .col-2s {
         width: 25%;
     }
     #thanhvien .col-4s{
