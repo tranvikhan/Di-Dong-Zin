@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="vi">
+    <head>
+        <title>Di Động Zin</title>
+        <meta charset="utf-8">
+        <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700&display=swap" rel="stylesheet">
+        <link rel="shortcut icon" href="assets/img/logo-min.png">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+        <!--open lib animation-->
+        <link rel="stylesheet" type="text/css" href="assets/css/animate.css">
+        <!----------------------------------------------------->
+    </head>
+    <body>
+        <div class="container nav-top">
+            <!-- Rounded switch -->
+            <label class="switch">
+                <input type="checkbox" id="switch1">
+                <span class="slider round"></span>
+            </label>
+            <img id="show_company" src="assets/img/menu_100px.png" alt="menu" onclick="show_company()">
+            <div class="row">
+                
+                <div class="col-4" onclick="trangchu()">
+                    <img src="assets/img/logo-min.png" alt="logo" />
+                    <h2 class="animated infinite pulse">DIDONGZIN</h2>
+                </div>
+                <div class="search-bar col-4">
+                    <input id ="text_search"type="text" placeholder="Tìm sản phẩm" onkeyup="search_phone(this.value)"/>
+                    <img src="assets/img/search_30px.png" alt="icon-search">
+                    <div id="search-results">
+                        <div class="phone-results">
+                            <img src="dttd/iphone11-black-1.png" alt="iphone 11"/>
+                            <h2 class="name">iPhone11 64Gb Mới Chính Hãng</h2>
+                            <span class="price">19.190.000 VND</span>
+                        </div>
+                        <div class="phone-results">
+                            <img src="dttd/iphoneX-space-gray-300x400.png" alt="iphone X" />
+                            <h2 class="name">iPhoneX 64Gb Mới Chính Hãng</h2>
+                            <span class="price">11.190.000 VND</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4 right-nav-bar">
+                    <a id="cart-btn">
+                        <img src="assets/img/shopping_cart_100px.png" alt="cart" />
+                        <span class="badge">3</span>
+                        <p>Giỏ hàng</p>
+                        <div id="cart">
+                            <div class="phone-results">
+                                <img src="dttd/iphone11-black-1.png" alt="iphone 11" />
+                                <h2 class="name">iPhone11 64Gb Mới Chính Hãng</h2>
+                                <span class="price">19.190.000 VND</span>
+                                <span class="count">X 1</span>
+                            </div>
+                            <div class="phone-results">
+                                <img src="dttd/iphoneX-space-gray-300x400.png" alt="iphone X" />
+                                <h2 class="name">iPhoneX 64Gb Mới Chính Hãng</h2>
+                                <span class="price">11.190.000 VND</span>
+                                <span class="count">X 2</span>
+                            </div>
+                        </div>
+                    </a>
+                    <a id="myBtn">
+                        <img src="assets/img/male_user_100px.png" alt="user" />
+                        <p>Đăng nhập</p>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+        <div id="company" style="left: 0;">
+            <img src="assets/img/back_30px.png" alt="back" onclick="hide_company()">
+            <a href="#">APPLE</a>
+            <a href="#">SAMSUNG</a>
+            <a href="#">XIAOMI</a>
+            <a href="#">HAWAII</a>
+            <a href="#">NOKIA</a>
+            <a href="#">REALME</a>
+            <a href="#">VSMART</a>
+        </div>
+        <div class="container page-body">
+            <div class="row">
+                <div class="col-8 banner">
+                    <img src="assets/img/banner/327e8c9f185ad1c90470f5b86c2bb930.jpg"/>
+                </div>
+                <div class="col-4 right-banner">
+                    <div>
+                        <img src="assets/img/truck_100px.png" />
+                        <p>GIAO HÀNG TẬN NƠI</p>
+                    </div>
+                    <div>
+                        <img src="assets/img/guarantee_100px.png" />
+                        <p>CAM KẾT CHẤT LƯỢNG</p>
+                    </div>
+                    <div>
+                        <img src="assets/img/origin_100px.png" />
+                        <p>ĐỔI TRẢ TRONG 30 NGÀY</p>
+                        
+                    </div>
+                </div>
+            </div>
+           
+            <!-- XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-->
+            <h2  class="title ">TẤT CẢ SẢN PHẨM</h2>
+            <div class="sort-bar">
+                Sắp xếp theo:
+                <a>GIÁ THẤP</a>
+                <a>GIÁ CAO</a>
+                <div class="dropdown">MỨC GIÁ
+                    <div class="dropdown-content">
+                        <a>Dưới 2 triệu</a>
+                        <a>2 triệu-5 triệu</a>
+                        <a>5 triệu-10 triệu</a>
+                        <a>10 triệu-15 triệu</a>
+                        <a>Trên 15 triệu</a>
+                    </div>
+                </div> 
+            </div>
+            <div   class="list-phone row">
+                <div class="col-2s ">
+                    <div class="mobile-phone">
+                        <img src="dttd/iphone11-black-1.png" alt="iphone11">
+                        <h2 class="name">iPhone 11 64GB Mới Chính Hãng</h2>
+                        <span class="price">19.190.000 VND</span>
+                    </div>
+                    <div class="hidden-info">
+                        <h2 class="name">iPhone 11 64GB Mới Chính Hãng</h2>
+                        <span class="price">19.190.000 VND</span>
+                        <span class="list-info">Màn hình: 6.5 inch 1231x555</span>
+                        <span class="list-info">Chipset: Apple A11</span>
+                        <span class="list-info">Ram: 3Gb</span>
+                        <span class="list-info">Rom: 64Gb</span>
+                        <span class="list-info">Khe sim: 1</span>
+                        <span class="list-info">Pin: 2500mah</span>
+                        <span class="list-info">OS: IOS 13</span>
+                    </div>
+                </div>
+                <div class="col-2s">
+                    <div class="mobile-phone">
+                        <img src="dttd/iphoneX-space-gray-300x400.png" alt="iphoneX">
+                        <h2 class="name">iPhoneX 64Gb Mới Chính Hãng</h2>
+                        <span class="price">11.190.000 VND</span>
+                    </div>
+                    <div class="hidden-info">
+                        <h2 class="name">iPhoneX 64Gb Mới Chính Hãng</h2>
+                        <span class="price">11.190.000 VND</span>
+                        <span class="list-info">Màn hình: 6.5 inch 1231x555</span>
+                        <span class="list-info">Chipset: Apple A11</span>
+                        <span class="list-info">Ram: 3Gb</span>
+                        <span class="list-info">Rom: 64Gb</span>
+                        <span class="list-info">Khe sim: 1</span>
+                        <span class="list-info">Pin: 2500mah</span>
+                        <span class="list-info">OS: IOS 13</span>
+                    </div>
+                </div>
+                <div class="col-2s">
+                    <div class="mobile-phone">
+                        <img src="dttd/s20-hong.png" alt="galaxys20">
+                        <h2 class="name">Samsung Galaxy S20 8Gb/256Gb Mới Chính Hãng</h2>
+                        <span class="price">19.490.000 VND</span>
+                    </div>
+                    <div class="hidden-info">
+                        <h2 class="name">Samsung Galaxy S20 8Gb/256Gb Mới Chính Hãng</h2>
+                        <span class="price">19.490.000 VND</span>
+                        <span class="list-info">Màn hình: 6.5 inch 1231x555</span>
+                        <span class="list-info">Chipset: Apple A11</span>
+                        <span class="list-info">Ram: 3Gb</span>
+                        <span class="list-info">Rom: 64Gb</span>
+                        <span class="list-info">Khe sim: 1</span>
+                        <span class="list-info">Pin: 2500mah</span>
+                        <span class="list-info">OS: IOS 13</span>
+                    </div>
+                </div>
+                <div class="col-2s">
+                    <div class="mobile-phone">
+                        <img src="dttd/SAMSUNG-GALAXY-S10-300x400.png" alt="galaxys10">
+                        <h2 class="name">Samsung Galaxy S10 128Gb Chính Hãng</h2>
+                        <span class="price">13.990.000 VND</span>
+                    </div>
+                    <div class="hidden-info">
+                        <h2 class="name">Samsung Galaxy S10 128Gb Chính Hãng</h2>
+                        <span class="price">13.990.000 VND</span>
+                        <span class="list-info">Màn hình: 6.5 inch 1231x555</span>
+                        <span class="list-info">Chipset: Apple A11</span>
+                        <span class="list-info">Ram: 3Gb</span>
+                        <span class="list-info">Rom: 64Gb</span>
+                        <span class="list-info">Khe sim: 1</span>
+                        <span class="list-info">Pin: 2500mah</span>
+                        <span class="list-info">OS: IOS 13</span>
+                    </div>
+                </div>
+                <div class="col-2s">
+                    <div class="mobile-phone">
+                        <img src="dttd/note-10-lite-trang.png" alt="note10lite">
+                        <h2 class="name">Samsung Note 10 Lite 8Gb/128Gb Chính Hãng</h2>
+                        <span class="price">10.190.000 VND</span>
+                    </div>
+                    <div class="hidden-info">
+                        <h2 class="name">Samsung Note 10 Lite 8Gb/128Gb Chính Hãng</h2>
+                        <span class="price">10.190.000 VND</span>
+                        <span class="list-info">Màn hình: 6.5 inch 1231x555</span>
+                        <span class="list-info">Chipset: Apple A11</span>
+                        <span class="list-info">Ram: 3Gb</span>
+                        <span class="list-info">Rom: 64Gb</span>
+                        <span class="list-info">Khe sim: 1</span>
+                        <span class="list-info">Pin: 2500mah</span>
+                        <span class="list-info">OS: IOS 13</span>
+                    </div>
+                </div>
+                <div class="col-2s">
+                    <div class="mobile-phone">
+                        <img src="dttd/galaxy-a70-xanh.png" alt="galaxya70">
+                        <h2 class="name">Samsung Galaxy A70 Mới Chính Hãng</h2>
+                        <span class="price">8.190.000 VND</span>
+                    </div>
+                    <div class="hidden-info">
+                        <h2 class="name">Samsung Galaxy A70 Mới Chính Hãng</h2>
+                        <span class="price">8.190.000 VND</span>
+                        <span class="list-info">Màn hình: 6.5 inch 1231x555</span>
+                        <span class="list-info">Chipset: Apple A11</span>
+                        <span class="list-info">Ram: 3Gb</span>
+                        <span class="list-info">Rom: 64Gb</span>
+                        <span class="list-info">Khe sim: 1</span>
+                        <span class="list-info">Pin: 2500mah</span>
+                        <span class="list-info">OS: IOS 13</span>
+                    </div>
+                </div>
+                <div class="col-2s">
+                    <div class="mobile-phone">
+                        <img src="dttd/iphone11-black-1.png" alt="iphone11">
+                        <h2 class="name">iPhone 11 64GB Mới Chính Hãng</h2>
+                        <span class="price">19.190.000 VND</span>
+                    </div>
+                    <div class="hidden-info">
+                        <h2 class="name">iPhone 11 64GB Mới Chính Hãng</h2>
+                        <span class="price">19.190.000 VND</span>
+                        <span class="list-info">Màn hình: 6.5 inch 1231x555</span>
+                        <span class="list-info">Chipset: Apple A11</span>
+                        <span class="list-info">Ram: 3Gb</span>
+                        <span class="list-info">Rom: 64Gb</span>
+                        <span class="list-info">Khe sim: 1</span>
+                        <span class="list-info">Pin: 2500mah</span>
+                        <span class="list-info">OS: IOS 13</span>
+                    </div>
+                </div>
+                <div class="col-2s">
+                    <div class="mobile-phone">
+                        <img src="dttd/iphoneX-space-gray-300x400.png" alt="iphoneX">
+                        <h2 class="name">iPhoneX 64Gb Mới Chính Hãng</h2>
+                        <span class="price">11.190.000 VND</span>
+                    </div>
+                    <div class="hidden-info">
+                        <h2 class="name">iPhoneX 64Gb Mới Chính Hãng</h2>
+                        <span class="price">11.190.000 VND</span>
+                        <span class="list-info">Màn hình: 6.5 inch 1231x555</span>
+                        <span class="list-info">Chipset: Apple A11</span>
+                        <span class="list-info">Ram: 3Gb</span>
+                        <span class="list-info">Rom: 64Gb</span>
+                        <span class="list-info">Khe sim: 1</span>
+                        <span class="list-info">Pin: 2500mah</span>
+                        <span class="list-info">OS: IOS 13</span>
+                    </div>
+                </div>
+                <div class="col-2s">
+                    <div class="mobile-phone">
+                        <img src="dttd/s20-hong.png" alt="galaxys20">
+                        <h2 class="name">Samsung Galaxy S20 8Gb/256Gb Mới Chính Hãng</h2>
+                        <span class="price">19.490.000 VND</span>
+                    </div>
+                    <div class="hidden-info">
+                        <h2 class="name">Samsung Galaxy S20 8Gb/256Gb Mới Chính Hãng</h2>
+                        <span class="price">19.490.000 VND</span>
+                        <span class="list-info">Màn hình: 6.5 inch 1231x555</span>
+                        <span class="list-info">Chipset: Apple A11</span>
+                        <span class="list-info">Ram: 3Gb</span>
+                        <span class="list-info">Rom: 64Gb</span>
+                        <span class="list-info">Khe sim: 1</span>
+                        <span class="list-info">Pin: 2500mah</span>
+                        <span class="list-info">OS: IOS 13</span>
+                    </div>
+                </div>
+                <div class="col-2s">
+                    <div class="mobile-phone">
+                        <img src="dttd/SAMSUNG-GALAXY-S10-300x400.png" alt="galaxys10">
+                        <h2 class="name">Samsung Galaxy S10 128Gb Chính Hãng</h2>
+                        <span class="price">13.990.000 VND</span>
+                    </div>
+                    <div class="hidden-info">
+                        <h2 class="name">Samsung Galaxy S10 128Gb Chính Hãng</h2>
+                        <span class="price">13.990.000 VND</span>
+                        <span class="list-info">Màn hình: 6.5 inch 1231x555</span>
+                        <span class="list-info">Chipset: Apple A11</span>
+                        <span class="list-info">Ram: 3Gb</span>
+                        <span class="list-info">Rom: 64Gb</span>
+                        <span class="list-info">Khe sim: 1</span>
+                        <span class="list-info">Pin: 2500mah</span>
+                        <span class="list-info">OS: IOS 13</span>
+                    </div>
+                </div>
+                <div class="col-2s">
+                    <div class="mobile-phone">
+                        <img src="dttd/note-10-lite-trang.png" alt="note10lite">
+                        <h2 class="name">Samsung Note 10 Lite 8Gb/128Gb Chính Hãng</h2>
+                        <span class="price">10.190.000 VND</span>
+                    </div>
+                    <div class="hidden-info">
+                        <h2 class="name">Samsung Note 10 Lite 8Gb/128Gb Chính Hãng</h2>
+                        <span class="price">10.190.000 VND</span>
+                        <span class="list-info">Màn hình: 6.5 inch 1231x555</span>
+                        <span class="list-info">Chipset: Apple A11</span>
+                        <span class="list-info">Ram: 3Gb</span>
+                        <span class="list-info">Rom: 64Gb</span>
+                        <span class="list-info">Khe sim: 1</span>
+                        <span class="list-info">Pin: 2500mah</span>
+                        <span class="list-info">OS: IOS 13</span>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="see-more">
+                <button class="prm-btn">Xem Thêm</button>
+            </div>
+            <!-- XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-->
+             <h2 class="title">BÁN CHẠY</h2>
+             <div class="top-sale row">
+                 <div class="col-2s">
+                     <div class="mobile-phone">
+                         <img src="dttd/iphone11-black-1.png" alt="iphone11">
+                         <h2 class="name">iPhone 11 64GB Mới Chính Hãng</h2>
+                         <span class="price">19.190.000 VND</span>
+                     </div>
+                     <div class="hidden-info">
+                         <h2 class="name">iPhone 11 64GB Mới Chính Hãng</h2>
+                         <span class="price">19.190.000 VND</span>
+                         <span class="list-info">Màn hình: 6.5 inch 1231x555</span>
+                         <span class="list-info">Chipset: Apple A11</span>
+                         <span class="list-info">Ram: 3Gb</span>
+                         <span class="list-info">Rom: 64Gb</span>
+                         <span class="list-info">Khe sim: 1</span>
+                         <span class="list-info">Pin: 2500mah</span>
+                         <span class="list-info">OS: IOS 13</span>
+                     </div>
+                 </div>
+                 <div class="col-2s">
+                     <div class="mobile-phone">
+                         <img src="dttd/iphoneX-space-gray-300x400.png" alt="iphoneX">
+                         <h2 class="name">iPhoneX 64Gb Mới Chính Hãng</h2>
+                         <span class="price">11.190.000 VND</span>
+                     </div>
+                     <div class="hidden-info">
+                         <h2 class="name">iPhoneX 64Gb Mới Chính Hãng</h2>
+                         <span class="price">11.190.000 VND</span>
+                         <span class="list-info">Màn hình: 6.5 inch 1231x555</span>
+                         <span class="list-info">Chipset: Apple A11</span>
+                         <span class="list-info">Ram: 3Gb</span>
+                         <span class="list-info">Rom: 64Gb</span>
+                         <span class="list-info">Khe sim: 1</span>
+                         <span class="list-info">Pin: 2500mah</span>
+                         <span class="list-info">OS: IOS 13</span>
+                     </div>
+                 </div>
+                 <div class="col-2s">
+                     <div class="mobile-phone">
+                         <img src="dttd/s20-hong.png" alt="galaxys20">
+                         <h2 class="name">Samsung Galaxy S20 8Gb/256Gb Mới Chính Hãng</h2>
+                         <span class="price">19.490.000 VND</span>
+                     </div>
+                     <div class="hidden-info">
+                         <h2 class="name">Samsung Galaxy S20 8Gb/256Gb Mới Chính Hãng</h2>
+                         <span class="price">19.490.000 VND</span>
+                         <span class="list-info">Màn hình: 6.5 inch 1231x555</span>
+                         <span class="list-info">Chipset: Apple A11</span>
+                         <span class="list-info">Ram: 3Gb</span>
+                         <span class="list-info">Rom: 64Gb</span>
+                         <span class="list-info">Khe sim: 1</span>
+                         <span class="list-info">Pin: 2500mah</span>
+                         <span class="list-info">OS: IOS 13</span>
+                     </div>
+                 </div>
+                 <div class="col-2s">
+                     <div class="mobile-phone">
+                         <img src="dttd/SAMSUNG-GALAXY-S10-300x400.png" alt="galaxys10">
+                         <h2 class="name">Samsung Galaxy S10 128Gb Chính Hãng</h2>
+                         <span class="price">13.990.000 VND</span>
+                     </div>
+                     <div class="hidden-info">
+                         <h2 class="name">Samsung Galaxy S10 128Gb Chính Hãng</h2>
+                         <span class="price">13.990.000 VND</span>
+                         <span class="list-info">Màn hình: 6.5 inch 1231x555</span>
+                         <span class="list-info">Chipset: Apple A11</span>
+                         <span class="list-info">Ram: 3Gb</span>
+                         <span class="list-info">Rom: 64Gb</span>
+                         <span class="list-info">Khe sim: 1</span>
+                         <span class="list-info">Pin: 2500mah</span>
+                         <span class="list-info">OS: IOS 13</span>
+                     </div>
+                 </div>
+                 <div class="col-2s">
+                     <div class="mobile-phone">
+                         <img src="dttd/note-10-lite-trang.png" alt="note10lite">
+                         <h2 class="name">Samsung Note 10 Lite 8Gb/128Gb Chính Hãng</h2>
+                         <span class="price">10.190.000 VND</span>
+                     </div>
+                     <div class="hidden-info">
+                         <h2 class="name">Samsung Note 10 Lite 8Gb/128Gb Chính Hãng</h2>
+                         <span class="price">10.190.000 VND</span>
+                         <span class="list-info">Màn hình: 6.5 inch 1231x555</span>
+                         <span class="list-info">Chipset: Apple A11</span>
+                         <span class="list-info">Ram: 3Gb</span>
+                         <span class="list-info">Rom: 64Gb</span>
+                         <span class="list-info">Khe sim: 1</span>
+                         <span class="list-info">Pin: 2500mah</span>
+                         <span class="list-info">OS: IOS 13</span>
+                     </div>
+                 </div>
+                 <div class="col-2s">
+                     <div class="mobile-phone">
+                         <img src="dttd/galaxy-a70-xanh.png" alt="galaxya70">
+                         <h2 class="name">Samsung Galaxy A70 Mới Chính Hãng</h2>
+                         <span class="price">8.190.000 VND</span>
+                     </div>
+                     <div class="hidden-info">
+                         <h2 class="name">Samsung Galaxy A70 Mới Chính Hãng</h2>
+                         <span class="price">8.190.000 VND</span>
+                         <span class="list-info">Màn hình: 6.5 inch 1231x555</span>
+                         <span class="list-info">Chipset: Apple A11</span>
+                         <span class="list-info">Ram: 3Gb</span>
+                         <span class="list-info">Rom: 64Gb</span>
+                         <span class="list-info">Khe sim: 1</span>
+                         <span class="list-info">Pin: 2500mah</span>
+                         <span class="list-info">OS: IOS 13</span>
+                     </div>
+                 </div>
+
+             </div>
+             <div class="see-more">
+                 <button class="prm-btn">Xem Thêm</button>
+             </div>
+              <!-- XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-->
+              <h2   class="title">GIẢM GIÁ MẠNH</h2>
+              <div class="top-sale row">
+                  <div class="col-2s">
+                      <div class="mobile-phone">
+                          <img src="dttd/galaxy-a70-xanh.png" alt="galaxya70">
+                          <h2 class="name">Samsung Galaxy A70 Mới Chính Hãng</h2>
+                          <span class="price">8.190.000 VND</span>
+                      </div>
+                      <div class="hidden-info">
+                          <h2 class="name">Samsung Galaxy A70 Mới Chính Hãng</h2>
+                          <span class="price">8.190.000 VND</span>
+                          <span class="list-info">Màn hình: 6.5 inch 1231x555</span>
+                          <span class="list-info">Chipset: Apple A11</span>
+                          <span class="list-info">Ram: 3Gb</span>
+                          <span class="list-info">Rom: 64Gb</span>
+                          <span class="list-info">Khe sim: 1</span>
+                          <span class="list-info">Pin: 2500mah</span>
+                          <span class="list-info">OS: IOS 13</span>
+                      </div>
+                  </div>
+                  
+                  <div class="col-2s">
+                      <div class="mobile-phone">
+                          <img src="dttd/iphoneX-space-gray-300x400.png" alt="iphoneX">
+                          <h2 class="name">iPhoneX 64Gb Mới Chính Hãng</h2>
+                          <span class="price">11.190.000 VND</span>
+                      </div>
+                      <div class="hidden-info">
+                          <h2 class="name">iPhoneX 64Gb Mới Chính Hãng</h2>
+                          <span class="price">11.190.000 VND</span>
+                          <span class="list-info">Màn hình: 6.5 inch 1231x555</span>
+                          <span class="list-info">Chipset: Apple A11</span>
+                          <span class="list-info">Ram: 3Gb</span>
+                          <span class="list-info">Rom: 64Gb</span>
+                          <span class="list-info">Khe sim: 1</span>
+                          <span class="list-info">Pin: 2500mah</span>
+                          <span class="list-info">OS: IOS 13</span>
+                      </div>
+                  </div>
+                  <div class="col-2s">
+                      <div class="mobile-phone">
+                          <img src="dttd/s20-hong.png" alt="galaxys20">
+                          <h2 class="name">Samsung Galaxy S20 8Gb/256Gb Mới Chính Hãng</h2>
+                          <span class="price">19.490.000 VND</span>
+                      </div>
+                      <div class="hidden-info">
+                          <h2 class="name">Samsung Galaxy S20 8Gb/256Gb Mới Chính Hãng</h2>
+                          <span class="price">19.490.000 VND</span>
+                          <span class="list-info">Màn hình: 6.5 inch 1231x555</span>
+                          <span class="list-info">Chipset: Apple A11</span>
+                          <span class="list-info">Ram: 3Gb</span>
+                          <span class="list-info">Rom: 64Gb</span>
+                          <span class="list-info">Khe sim: 1</span>
+                          <span class="list-info">Pin: 2500mah</span>
+                          <span class="list-info">OS: IOS 13</span>
+                      </div>
+                  </div>
+                  <div class="col-2s">
+                      <div class="mobile-phone">
+                          <img src="dttd/iphone11-black-1.png" alt="iphone11">
+                          <h2 class="name">iPhone 11 64GB Mới Chính Hãng</h2>
+                          <span class="price">19.190.000 VND</span>
+                      </div>
+                      <div class="hidden-info">
+                          <h2 class="name">iPhone 11 64GB Mới Chính Hãng</h2>
+                          <span class="price">19.190.000 VND</span>
+                          <span class="list-info">Màn hình: 6.5 inch 1231x555</span>
+                          <span class="list-info">Chipset: Apple A11</span>
+                          <span class="list-info">Ram: 3Gb</span>
+                          <span class="list-info">Rom: 64Gb</span>
+                          <span class="list-info">Khe sim: 1</span>
+                          <span class="list-info">Pin: 2500mah</span>
+                          <span class="list-info">OS: IOS 13</span>
+                      </div>
+                  </div>
+                  <div class="col-2s">
+                      <div class="mobile-phone">
+                          <img src="dttd/SAMSUNG-GALAXY-S10-300x400.png" alt="galaxys10">
+                          <h2 class="name">Samsung Galaxy S10 128Gb Chính Hãng</h2>
+                          <span class="price">13.990.000 VND</span>
+                      </div>
+                      <div class="hidden-info">
+                          <h2 class="name">Samsung Galaxy S10 128Gb Chính Hãng</h2>
+                          <span class="price">13.990.000 VND</span>
+                          <span class="list-info">Màn hình: 6.5 inch 1231x555</span>
+                          <span class="list-info">Chipset: Apple A11</span>
+                          <span class="list-info">Ram: 3Gb</span>
+                          <span class="list-info">Rom: 64Gb</span>
+                          <span class="list-info">Khe sim: 1</span>
+                          <span class="list-info">Pin: 2500mah</span>
+                          <span class="list-info">OS: IOS 13</span>
+                      </div>
+                  </div>
+                  <div class="col-2s">
+                      <div class="mobile-phone">
+                          <img src="dttd/note-10-lite-trang.png" alt="note10lite">
+                          <h2 class="name">Samsung Note 10 Lite 8Gb/128Gb Chính Hãng</h2>
+                          <span class="price">10.190.000 VND</span>
+                      </div>
+                      <div class="hidden-info">
+                          <h2 class="name">Samsung Note 10 Lite 8Gb/128Gb Chính Hãng</h2>
+                          <span class="price">10.190.000 VND</span>
+                          <span class="list-info">Màn hình: 6.5 inch 1231x555</span>
+                          <span class="list-info">Chipset: Apple A11</span>
+                          <span class="list-info">Ram: 3Gb</span>
+                          <span class="list-info">Rom: 64Gb</span>
+                          <span class="list-info">Khe sim: 1</span>
+                          <span class="list-info">Pin: 2500mah</span>
+                          <span class="list-info">OS: IOS 13</span>
+                      </div>
+                  </div>
+                  
+              </div>
+              <div class="see-more">
+                  <button class="prm-btn">Xem Thêm</button>
+              </div>
+        </div>
+        <footer>
+            <div class="container">
+                <div class="row">
+                     <div class="col-3s">
+                         <a>Giới thiệu công ty</a>
+                         <a>Hệ thống cửa hàng</a>
+                         <a>Tuyển dụng</a>
+                         <a>Chính sách bảo mật</a>
+                     </div>
+                     <div class="col-3s">
+                         <a>Chính sách bảo hành</a>
+                         <a>Chính sách đổi trả sản phẩm</a>
+                         <a>Hỏi đáp mua hàng online</a>
+                         <a>Phương thức thanh toán</a>
+                     </div>
+                     <div class="col-4">
+                         <a>NIÊN LUẬN NGÀNH KỸ THUẬT PHẦN MỀM</a>
+                         <a>Giáo viên hướng dẫn: <strong> Cô Trương Thị Thanh Tuyển</strong></a>
+                         <a>Sinh viên 1: <strong> Trần Vi Khan - B1704736</strong></a>
+                         <a>Sinh viên 2: <strong> Nguyễn Tấn Thịnh - B1704773</strong></a>
+                     </div>
+                     <div class="col-2">
+                        <img src="assets/img/visa_30px.png">
+                        <img src="assets/img/mastercard_logo_100px.png">
+                        <img src="assets/img/jcb_100px.png">
+                     </div>
+                </div>
+            </div>
+        </footer>
+        <div class="coppy-right">
+            <p>BẢN QUYỀN THUỘC VỀ NHÓM TÁC GIẢ TRÊN</p>
+        </div>
+        <div class="nav-bottom">
+            <a href="index.html"><img src="assets/img/home_100px.png"></a>
+            <a onclick="show_search_bar()"><img src="assets/img/search_30px.png"></a>
+            <a href="#">
+                <img src="assets/img/shopping_cart_100px.png">
+                <span class="badge">3</span>
+            </a>
+            <a id="myBtn2"><img src="assets/img/thumbnails_100px.png"></a>
+        </div>
+        <img src="assets/img/slide_up_50px.png" onclick="scroll_top()" id="up-btn"
+            alt="...">
+        <div id="myModal" class="modal sign_in_up">
+            <!-- Modal content -->
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <div class="row">
+                    <div class="col-5">
+                        <h2 class="title" id="title_sign_form">ĐĂNG NHẬP</h2>
+                        <p id="content_sign">Đăng nhập để lưu lại giỏ hàng, mua sản phẩm, bình luận và nhiều hơn thế,...</p>
+                        <img src="assets/img/undraw_press_play_bx2d.svg">
+                    </div>
+                    <div class="col-7">
+                        <div class="g-btn">
+                            <button class="sd-btn tablinks active" onclick="openTab(event, 'login')">Đăng nhập</button>
+                            <button class="sd-btn tablinks" onclick="openTab(event, 'register')">Đăng kí</button>
+                        </div>
+                        <div id="login" class="tabcontent">
+                            <form action="#" method="POST">
+                        
+                                <label for="username"><img src="assets/img/male_user_30px.png"></label>
+                                <input type="text" id="username" placeholder="Tên đăng nhập">
+                                <label for="password"><img src="assets/img/secure_30px.png"></label>
+                                <input type="password" id="password" placeholder="Mật khẩu">
+                                <input class="thr-btn" type="submit" value="Đăng Nhập">
+                                <a href="#">Quên mật khẩu ?</a>
+                            </form>
+                        </div>
+                        <div id="register" class="tabcontent">
+                            <form action="#" method="POST">
+                                <label for="username2"><img src="assets/img/male_user_30px.png"></label>
+                                <input type="text" id="username2" placeholder="Tên đăng nhập">
+                                <label for="password2"><img src="assets/img/secure_30px.png"></label>
+                                <input type="password" id="password2" placeholder="Mật khẩu">
+                                <label for="re_password"><img src="assets/img/secure_30px.png"></label>
+                                <input type="password" id="re_password" placeholder="Nhập lại mật khẩu">
+                                <input class="thr-btn" type="submit" value="Đăng Kí">
+                               
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </body>
+     <script src="assets/js/main.js"></script>
+</html>
