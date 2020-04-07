@@ -10,5 +10,5 @@ function show_left_menu() {
 }
 //TAB LOADING PAGE
 function loadPage(pageURL) {
-    location.replace(pageURL)
+    location.assign(pageURL)
 }

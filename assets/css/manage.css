@@ -790,9 +790,10 @@ textarea:focus{
     }
 }
 #caidat>img,
-#trang>img{
-    position: relative;
+#trang>img {
+    position: absolute;
+    bottom: 0;
     width: 500px;
-    left: 50%;
-    transform: translateX(-50%);
+    right: 0;
+   
 }

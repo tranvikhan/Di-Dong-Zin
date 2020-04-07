@@ -81,3 +81,8 @@
     top: 100px;
     left: 175px;
 }
+@media only screen and (max-width: 768px) {
+    .switch {
+        top: 22px;
+    }
+}

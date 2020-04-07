@@ -141,6 +141,6 @@ function switchTheme(e) {
 toggleSwitch.addEventListener('change', switchTheme, false);
 /// LoadPage
 function loadPage(page) {
-    location.replace(page);
+    location.assign(page);
 
 }
