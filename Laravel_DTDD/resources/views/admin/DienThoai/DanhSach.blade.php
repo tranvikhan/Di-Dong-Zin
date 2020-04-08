@@ -91,7 +91,7 @@
                     <img src="DiDongZin/dttd/iphone11-black-1.png">
                 </td>
                 <td>
-                    iPhone11 64Gb Mới Chính Hãng 123
+                    iPhone11 64Gb Mới Chính Hãng 1232356k4kj46+5j6k.kj
                     <div class="mini-action">
                         <a href="#">Xem</a>
                         <a onclick="loadPage('admin/dienthoai/sua/1')">Chỉnh sửa</a>
