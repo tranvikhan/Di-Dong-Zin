@@ -61,8 +61,6 @@
                             ?>
                         @endif
 
-                        
-
                         <table>
                             <tr>
                                 <th>Tên hãng:</th>
