@@ -19,9 +19,9 @@
                         <p>Quốc gia: {{ $row->Quoc_gia }}</p>
                         <p>Số sản phẩm: {{ $row->ToDienThoaiDiDong->count() }}</p>
                         <img src="DiDongZin/assets/img/maintenance_30px.png">
-                        <a onclick="SuaHang('{{ $row->Ma_hang_dien_thoai }}')">Sửa</a>
+                        <a onclick="SuaHang('{{ $row->Ma_hang_dien_thoai }}', '{{ $row->Ten_hang }}', '{{ $row->Quoc_gia }}')">Sửa</a>
                         <img src="DiDongZin/assets/img/minus_30px.png">
-                        <a href="#">Xóa</a>
+                        <a href="admin/hangdienthoai/xoa/{{ $row->Ma_hang_dien_thoai }}">Xóa</a>
                     </div>
                 </div>
             @endforeach
@@ -35,15 +35,42 @@
             <div class="col-4 hangdt" id="themhangdt">
                 <div class="hangDtMoi">
                     <span class="close" onclick="closeThemHang()">&times;</span>
-                    <form method="POST" action="#">
+                    <form method="POST" action="admin/hangdienthoai/them">
+                        {{ csrf_field() }}
+
+                        <?php  $str = ""; ?>
+                        @if (count($errors)>0)
+                            @foreach ($errors->all() as $err)
+                                <?php
+                                    ($str == "") ? $str .= $err : $str .= '\\n\\n'.$err;
+                                ?>
+                            @endforeach
+                            <?php
+                                echo '<script>alert("' . $str . '")</script>';
+                            ?>
+                        @endif 
+                    
+                        @if (session('thongbaoThem'))
+                            <?php
+                                echo '<script>alert("'. session('thongbaoThem') .'");</script>';
+                            ?>
+                        @endif
+                        @if (session('thongbaoXoa'))
+                            <?php
+                                echo '<script>alert("'. session('thongbaoXoa') .'");</script>';
+                            ?>
+                        @endif
+
+                        
+
                         <table>
                             <tr>
                                 <th>Tên hãng:</th>
-                                <td><input type="text"></td>
+                                <td><input type="text" name="tenThem"></td>
                             </tr>
                             <tr>
                                 <th>Quốc gia:</th>
-                                <td><input type="text"></td>
+                                <td><input type="text" name="quocGiaThem"></td>
                             </tr>
                             <tr>
                                 <td colspan="2">
@@ -58,19 +85,39 @@
             <div class="col-4 hangdt" id="suahangdt">
                 <div class="hangDtMoi">
                     <span class="close" onclick="closeSuaHang()">&times;</span>
-                    <form method="POST" action="#">
+                    <form method="POST" action="admin/hangdienthoai/sua">
+                        {{ csrf_field() }}
+
+                        <?php  $str = ""; ?>
+                        @if (count($errors)>0)
+                            @foreach ($errors->all() as $err)
+                                <?php
+                                    ($str == "") ? $str .= $err : $str .= '\\n\\n'.$err;
+                                ?>
+                            @endforeach
+                            <?php
+                                echo '<script>alert("' . $str . '")</script>';
+                            ?>
+                        @endif 
+                    
+                        @if (session('thongbaoSua'))
+                            <?php
+                                echo '<script>alert("'. session('thongbaoSua') .'");</script>';
+                            ?>
+                        @endif
+
                         <table>
                             <tr>
                                 <th>Mã hãng:</th>
-                                <td><input id="IdHangDt" type="text" disabled></td>
+                                <td><input id="IdHangDt" name="idSua" type="text" readonly></td>
                             </tr>
                             <tr>
                                 <th>Tên hãng:</th>
-                                <td><input type="text"></td>
+                                <td><input id="TenHangDT" name="tenSua" type="text"></td>
                             </tr>
                             <tr>
                                 <th>Quốc gia:</th>
-                                <td><input type="text"></td>
+                                <td><input id="QuocGiaHangDT" name="quocGiaSua" type="text"></td>
                             </tr>
                             <tr>
                                 <td colspan="2">
@@ -86,5 +133,4 @@
     </div>
 </div>
 <script src="DiDongZin/assets/js/_hangdienthoai.js"></script>
-
 @endsection

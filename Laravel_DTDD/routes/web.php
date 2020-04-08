@@ -28,11 +28,11 @@ Route::group(['prefix'=>'admin'], function(){
 
     Route::group(['prefix'=>'hangdienthoai'], function(){
         Route::get('danhsach', 'HangDienThoaiController@getDanhSach');
+
+        Route::post('them', 'HangDienThoaiController@postThem');
+
+        Route::post('sua', 'HangDienThoaiController@postSua');
+
+        Route::get('xoa/{id}', 'HangDienThoaiController@getXoa');
     });
 });
-
-Route::get('temp', function(){
-    $phone = App\HangDienThoaiDiDong::find(1)->ToDienThoaiDiDong->count();
-
-    echo $phone;
-}); 
