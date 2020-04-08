@@ -11,7 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
     <link rel="stylesheet" type="text/css" href="assets/css/style-login-success.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/_user_thongtin.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/user_manage.css">
     <!--open lib animation-->
     <link rel="stylesheet" type="text/css" href="assets/css/animate.css">
     <!----------------------------------------------------->
@@ -95,7 +95,122 @@
     </div>
     <div class="container page-body">
         <div class="row">
-            
+            <div class="col-2 user-tab-menu">
+                <div>
+                    <a href="#" class="active">
+                        <img src="assets/img/male_user_50px.png">
+                        <span>Thông tin</span>
+                    </a>
+                    <a href="#">
+                        <img src="assets/img/purchase_order_50px.png">
+                        <span>Đơn hàng</span>
+                    </a>
+                    <a href="#">
+                        <img src="assets/img/mastercard_credit_card_50px.png">
+                        <span>Thanh Toán</span>
+                    </a>
+                    <a href="#">
+                        <img src="assets/img/settings_50px.png">
+                        <span>Cài đặt</span>
+                    </a>
+                    <a href="#">
+                        <img src="assets/img/login_rounded_50px.png">
+                        <span>Đăng xuất</span>
+                    </a>
+                </div>  
+            </div>
+            <div class="col-10 user-tab-content">
+                <h3 class="title">Thông tin tài khoản</h3>
+                <div class="row user-thongtin">
+                    <form method="POST" action="#" >
+                        <div class="col-4">
+                            <img src="avatar/avatar-cartoon-superman-png_244033.jpg">
+                            <input type="file" name="avatar">
+                        </div>
+                        <div class="col-8">
+                            <table>
+                                <tr>
+                                    <th>
+                                        Mã tài khoản
+                                    </th>
+                                    <td>
+                                        <input type="text" disabled="true" value="001" name="id">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        Tên đăng nhập
+                                    </th>
+                                    <td>
+                                        <input type="text" disabled value="tranvikhan" name="username">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        Mật khẩu mới
+                                    </th>
+                                    <td>
+                                        <input type="text" name="newPassword">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        Nhập lại mật khẩu mới
+                                    </th>
+                                    <td>
+                                        <input type="text" name="newRePassword">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        Họ và tên
+                                    </th>
+                                    <td>
+                                        <input type="text" name="fullname" value="Trần Vi Khan">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        Giới tính
+                                    </th>
+                                    <td>
+                                        <input type="text" name="fullname">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        Ngày sinh
+                                    </th>
+                                    <td>
+                                        <input type="date" name="dateOfBirth" value="1999-06-06">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        Số điện thoại
+                                    </th>
+                                    <td>
+                                        <input type="tel" name="phonenumber" value="0974184717">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        Địa chỉ
+                                    </th>
+                                    <td>
+                                        <input type="text" name="address" value="Ấp 8 xã Lương Nghĩa, huyện Long Mỹ, tỉnh Hậu Giang ">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <input type="submit" value="Cập nhật">
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
     <footer>
@@ -142,5 +257,5 @@
     <img src="assets/img/slide_up_50px.png" onclick="scroll_top()" id="up-btn" alt="...">
 </body>
 <script src="assets/js/main-login-success.js"></script>
-<script src="assets/js/_user_thongtin.js"></script>
+<script src="assets/js/user_manage.js"></script>
 </html>
