@@ -2,7 +2,7 @@
 <html lang="vi">
 
 <head>
-    <title>Trần Vi Khan</title>
+    <title>Tài Khoản - Trần Vi Khan</title>
     <meta charset="utf-8">
     <link
         href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
@@ -97,88 +97,76 @@
         <div class="row">
             <div class="col-2 user-tab-menu">
                 <div>
-                    <a href="_user_thongtin.html" class="active">
-                        <img src="assets/img/male_user_50px.png">
-                        <span>Thông tin</span>
-                    </a>
-                    <a href="_user_taikhoan.html">
-                        <img src="assets/img/privacy_50px.png">
-                        <span>Tài khoản</span>
-                    </a>
-                    <a href="_user_donhang.html" >
-                        <img src="assets/img/purchase_order_50px.png">
-                        <span>Đơn hàng</span>
-                    </a>
-                    <a href="_user_thanhtoan.html">
-                        <img src="assets/img/mastercard_credit_card_50px.png">
-                        <span>Thanh Toán</span>
-                    </a>
-                    <a href="_user_caidat.html">
-                        <img src="assets/img/settings_50px.png">
-                        <span>Cài đặt</span>
-                    </a>
-                    <a href="#">
-                        <img src="assets/img/login_rounded_50px.png">
-                        <span>Đăng xuất</span>
-                    </a>
+                     <a href="_user_thongtin.html" >
+                         <img src="assets/img/male_user_50px.png">
+                         <span>Thông tin</span>
+                     </a>
+                     <a href="_user_taikhoan.html" class="active">
+                         <img src="assets/img/privacy_50px.png">
+                         <span>Tài khoản</span>
+                     </a>
+                     <a href="_user_donhang.html" >
+                         <img src="assets/img/purchase_order_50px.png">
+                         <span>Đơn hàng</span>
+                     </a>
+                     <a href="_user_thanhtoan.html">
+                         <img src="assets/img/mastercard_credit_card_50px.png">
+                         <span>Thanh Toán</span>
+                     </a>
+                     <a href="_user_caidat.html">
+                         <img src="assets/img/settings_50px.png">
+                         <span>Cài đặt</span>
+                     </a>
+                     <a href="#">
+                         <img src="assets/img/login_rounded_50px.png">
+                         <span>Đăng xuất</span>
+                     </a>
                 </div>  
             </div>
             <div class="col-10 user-tab-content">
-                <h3 class="title">Thông tin thành viên</h3>
+                <h3 class="title">Tài khoản</h3>
                 <div class="row user-thongtin">
                     <form method="POST" action="#" >
-                        <div class="col-4">
-                            <img src="avatar/plus_150px.png" id="img_avatar">
-                            <input type="file" name="avatar" id="input_avatar">
-                            <p>Ảnh đại diện</p>
-                        </div>
-                        <div class="col-8">
+                        <div class="col-12">
                             <table>
                                 <tr>
                                     <th>
-                                        Họ và tên
+                                        Mã tài khoản
                                     </th>
                                     <td>
-                                        <input type="text" name="fullname" value="Trần Vi Khan">
+                                        <input type="text" disabled="true" value="001" name="id">
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>
-                                        Giới tính
+                                        Tên đăng nhập
                                     </th>
                                     <td>
-                                        <label class="myRadio">Nam
-                                            <input type="radio" name="sex" value="Nam" checked>
-                                            <span class="checkmark"></span>
-                                        </label>
-                                        <label class="myRadio">Nữ
-                                            <input type="radio" name="sex" value="Nữ">
-                                            <span class="checkmark"></span>
-                                        </label>
+                                        <input type="text" disabled value="tranvikhan" name="username">
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>
-                                        Ngày sinh
+                                        Mật khẩu hiện tại
                                     </th>
                                     <td>
-                                        <input type="date" name="dateOfBirth" value="1999-06-06">
+                                        <input type="password" name="Password">
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>
-                                        Số điện thoại
+                                        Mật khẩu mới
                                     </th>
                                     <td>
-                                        <input type="tel" name="phonenumber" value="0974184717">
+                                        <input type="password" name="newPassword">
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>
-                                        Địa chỉ
+                                        Nhập lại mật khẩu mới
                                     </th>
                                     <td>
-                                        <input type="text" name="address" value="Ấp 8 xã Lương Nghĩa, huyện Long Mỹ, tỉnh Hậu Giang ">
+                                        <input type="password" name="newRePassword">
                                     </td>
                                 </tr>
                                 <tr>

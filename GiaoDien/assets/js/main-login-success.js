@@ -1,3 +1,7 @@
+window.addEventListener("resize", function () {
+    hide_company();
+    if (window.innerWidth > 768) cp.style.left = "0";
+});
 //Trang chu
 function trangchu() {
     location.replace("index.html");

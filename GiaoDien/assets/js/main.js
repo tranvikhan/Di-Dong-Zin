@@ -19,6 +19,11 @@ function show_company() {
 function hide_company() {
     cp.style.left = "-200px";
 }
+window.addEventListener("resize",function () {
+    hide_company();
+    if (window.innerWidth > 768) cp.style.left = "0";
+});
+
 // Scroll Top
 function scroll_top() {
     var y;

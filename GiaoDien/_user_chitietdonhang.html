@@ -2,7 +2,7 @@
 <html lang="vi">
 
 <head>
-    <title>Đặt Hàng</title>
+    <title>Đơn hàng - Trần Vi Khan</title>
     <meta charset="utf-8">
     <link
         href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
@@ -12,6 +12,7 @@
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
     <link rel="stylesheet" type="text/css" href="assets/css/style-login-success.css">
     <link rel="stylesheet" type="text/css" href="assets/css/checkout.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/user_manage.css">
     <!--open lib animation-->
     <link rel="stylesheet" type="text/css" href="assets/css/animate.css">
     <!----------------------------------------------------->
@@ -27,7 +28,7 @@
         <img id="show_company" src="assets/img/menu_100px.png" alt="menu" onclick="show_company()">
         <div class="row">
 
-            <div class="col-4" onclick="loadPage('index-login-success.html')">
+            <div class="col-4" onclick="trangchu()">
                 <img src="assets/img/logo-min.png" alt="logo" />
                 <h2 class="animated infinite pulse">DIDONGZIN</h2>
             </div>
@@ -75,7 +76,7 @@
                         <img src="assets/img/camera_50px.png" alt="update-avatar" id="update_avatar">
                         <h2>Trần Vi Khan</h2>
                         <p>tranvikhan</p>
-                        <button onclick="loadPage('_user_thongtin.html')">Quản lý tài khoản</button>
+                        <button onclick="loadPage('_user_thongtin.html')">Cập nhật thông tin</button>
                         <button>Đăng Xuất</button>
                     </div>
                 </a>
@@ -95,157 +96,122 @@
     </div>
     <div class="container page-body">
         <div class="row">
-            <form action="dathang.php" method="POST">
-            <div class="col-12">
-                <h2 class="title">Giỏ Hàng</h2>
-                <table class="table table-bordered table-customize table-responsive">
-                    <thead>
-                        <tr>
-                            <th>Điện thoại</th>
-                            <th>Số lượng</th>
-                            <th>Giá</th>
-                            <th>Tạm tính</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td data-title="Điện Thoại">
-                                <img src="dttd/iphone11-black-1.png" alt="dtdd">
-                                <a href="#">iPhone11 64Gb Mới Chính Hãng</a>
-                            </td>
-                            <td data-title="Số Lượng">
-                                <span class="tru-dt">-</span>
-                                <span class="soluong-dt">1</span>
-                                <span class="cong-dt">+</span>
-                            </td>
-                            <td data-title="Giá">19.190.000 VND</td>
-                            <td data-title="Tạm tính">19.190.000 VND</td>
-                        </tr>
-                        <tr>
-                            <td data-title="Điện Thoại">
-                                <img src="dttd/iphone11-black-1.png" alt="dtdd">
-                                <a class="ten-dt" href="#">iPhone11 64Gb Mới Chính Hãng</a>
-                            </td>
-                            <td data-title="Số Lượng">
-                                <span class="tru-dt">-</span>
-                                <span class="soluong-dt">2</span>
-                                <span class="cong-dt">+</span>
-                            </td>
-                            <td data-title="Giá">19.190.000 VND</td>
-                            <td data-title="Tạm tính">19.190.000 VND</td>
-                        </tr>
-
-                    </tbody>
-                </table>
-            </div>  
-            <div class="col-6 thongtindathang">
-                    <h2 class="title">Cộng giỏ hàng</h2>
-                    <table>
-                        <tr>
-                            <th>Tạm tính:</th>
-                            <td>31.916.151 VND</td>
-                        </tr>
-                        <tr>
-                            <th>Thuế VAT:</th>
-                            <td>0 VND</td>
-                        </tr>
-                        <tr>
-                            <th>Tổng cộng:</th>
-                            <td class="tongcong">31.916.151 VND</td>
-                        </tr>
-                    </table>            
-            </div>  
-            <div class="col-6 thongtindathang thongtinthanhtoan">
-                <h2 class="title">Thông tin thanh toán</h2>
-                <table>
-                    <tr>
-                        <th>Họ tên*</th>
-                        <td>
-                            <input type="text" placeholder="Trần Vi Khan" name="tenKhachHang">
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>Số điện thoại*</th>
-                        <td>
-                            <input type="text" placeholder="097414717" name="soDT">
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                           Địa chỉ giao hàng*
-                        </th>
-                        <td> 
-                            <input type="text" placeholder="Ninh Kiều Cần Thơ" name="diaChi">
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            Hình thức thanh toán
-                        </th>
-                        <td>
-                            <select name="hinhthuc">
-                                <option>Thanh toán Online</option>
-                                <option>Thanh toán khi nhận hàng</option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr class="hint-thanhtoan">
-                        <th>
-                            Tên tài khoản ngân hàng
-                        </th>
-                        <td>
-                            <input type="text" placeholder="Trần Vi Khan" name="tenChuThe">
-                        </td>
-                    </tr>
-                    <tr class="hint-thanhtoan">
-                        <th>
-                            Số thẻ
-                        </th>
-                        <td>
-                            <input type="text" placeholder="000-000-000-000" name="soThe">
-                        </td>
-                    </tr>
-                    <tr class="hint-thanhtoan">
-                        <th>
-                            CVV/CVV2
-                        </th>
-                        <td>
-                            <input type="text" placeholder="" name="CVV">
-                        </td>
-                    </tr>
-                    <tr class="hint-thanhtoan">
-                        <th>
-                            Ngày hết hạn
-                        </th>
-                        <td>
-                            <select name="thangHetHan">
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
-                                <option>6</option>
-                                <option>7</option>
-                                <option>8</option>
-                                <option>9</option>
-                                <option>10</option>
-                                <option>11</option>
-                                <option>12</option>
-                            </select>
-                            <select name="namHetHan">
-                                <option>2020</option>
-                                <option>2021</option>
-                                <option>2022</option>
-                                <option>2023</option>
-                                <option>2024</option>
-                            </select>
-                        </td>
-                    </tr>
-                    
-                </table>
-                <input type="submit" value="Đặt Hàng">
+            <div class="col-2 user-tab-menu">
+                <div>
+                     <a href="_user_thongtin.html">
+                         <img src="assets/img/male_user_50px.png">
+                         <span>Thông tin</span>
+                     </a>
+                     <a href="_user_taikhoan.html">
+                         <img src="assets/img/privacy_50px.png">
+                         <span>Tài khoản</span>
+                     </a>
+                     <a href="_user_donhang.html" class="active">
+                         <img src="assets/img/purchase_order_50px.png">
+                         <span>Đơn hàng</span>
+                     </a>
+                     <a  href="_user_thanhtoan.html">
+                         <img src="assets/img/mastercard_credit_card_50px.png">
+                         <span>Thanh Toán</span>
+                     </a>
+                     <a href="_user_caidat.html">
+                         <img src="assets/img/settings_50px.png">
+                         <span>Cài đặt</span>
+                     </a>
+                     <a href="#">
+                         <img src="assets/img/login_rounded_50px.png">
+                         <span>Đăng xuất</span>
+                     </a>
+                </div>  
             </div>
-            </form>
+            <div class="col-10 user-tab-content">
+                <h3 class="title">Đơn hàng: 002</h3>
+                <div class="donhangmoi row">
+                    <table class="tb1 col-6">
+                        <tr>
+                            <th>Mã đơn hàng:</th>
+                            <td >002</td>
+                        
+                        </tr>
+                        <tr>
+                            <th>Khách hàng:</th>
+                            <td>Trần Vi Khan</td>
+                            
+                        </tr>
+                        <tr>
+                            <th>Số điện thoại:</th>
+                            <td >0974184717</td>
+                           
+                        </tr>
+                        <tr>
+                            <th>Địa chỉ nhận hàng:</th>
+                            <td>Cần Thơ</td>
+                        </tr>
+                    </table>
+                    <table class="tb1 col-6">
+                        <tr>
+                            <th>Ngày tạo:</th>
+                            <td>2/4/2020</td>
+                        </tr>
+                        <tr>
+                            <th>Mã khách hàng:</th>
+                            <td>001</td>
+                        </tr>
+                        <tr>
+                            <th>Hình thức thanh toán:</th>
+                            <td>Offline</td>
+                        </tr>
+                        <tr>
+                            <th>Trạng thái:</th>
+                            <td class="processing">Đã hoàn thành</td>
+                        </tr>
+                    </table>
+                    <table class="table table-bordered table-customize table-responsive col-12">
+                        <thead>
+                            <tr>
+                                <th>Điện thoại</th>
+                                <th>Số lượng</th>
+                                <th>Giá</th>
+                                <th>Tạm tính</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td data-title="Điện Thoại">
+                                    <img src="dttd/galaxy-a70-xanh.png" alt="dtdd">
+                                    <a href="#">Samsung galaxy a70</a>
+                                </td>
+                                <td data-title="Số Lượng">
+                                    1
+                                </td>
+                                <td data-title="Giá">4.190.000 VND</td>
+                                <td data-title="Tạm tính">4.190.000 VND</td>
+                            </tr>
+
+                             <tr>
+                                 <th class="title-th " >Tạm tính</th>
+                                 <td class="title-td dau-td" data-title="Tạm tính" colspan="3">
+                                     4.190.000 VND
+                                 </td>
+                             </tr>
+                             <tr>
+                                 <th class="title-th" >Thuế VAT</th>
+                                 <td class="title-td" data-title="Thuế VAT" colspan="3">
+                                    0
+                                    
+                                 </td>
+                             </tr>
+                             <tr>
+                                 <th class="title-th" >Tổng cộng</th>
+                                 <td class="title-td" data-title="Tổng cộng" colspan="3">
+                                      4.190.000 VND
+                                 </td>
+                             </tr>
+                        </tbody>
+                    </table>
+                    <button class="prm-btn">In hóa đơn</button>
+                </div>
+            </div>
         </div>
     </div>
     <footer>
@@ -287,11 +253,10 @@
             <img src="assets/img/shopping_cart_100px.png">
             <span class="badge">3</span>
         </a>
-        <a href="_user_thongtin.html"><img src="assets/img/thumbnails_100px.png"></a>
+        <a href="_user_thongtin.html" ><img src="assets/img/thumbnails_100px.png"></a>
     </div>
     <img src="assets/img/slide_up_50px.png" onclick="scroll_top()" id="up-btn" alt="...">
 </body>
 <script src="assets/js/main-login-success.js"></script>
-<script src="assets/js/checkout.js"></script>
-
+<script src="assets/js/user_manage.js"></script>
 </html>

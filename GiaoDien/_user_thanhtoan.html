@@ -2,7 +2,7 @@
 <html lang="vi">
 
 <head>
-    <title>Trần Vi Khan</title>
+    <title>Thanh Toán - Trần Vi Khan</title>
     <meta charset="utf-8">
     <link
         href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
@@ -97,7 +97,7 @@
         <div class="row">
             <div class="col-2 user-tab-menu">
                 <div>
-                    <a href="_user_thongtin.html" class="active">
+                    <a  href="_user_thongtin.html">
                         <img src="assets/img/male_user_50px.png">
                         <span>Thông tin</span>
                     </a>
@@ -105,11 +105,11 @@
                         <img src="assets/img/privacy_50px.png">
                         <span>Tài khoản</span>
                     </a>
-                    <a href="_user_donhang.html" >
+                    <a href="_user_donhang.html">
                         <img src="assets/img/purchase_order_50px.png">
                         <span>Đơn hàng</span>
                     </a>
-                    <a href="_user_thanhtoan.html">
+                    <a  class="active" href="_user_thanhtoan.html">
                         <img src="assets/img/mastercard_credit_card_50px.png">
                         <span>Thanh Toán</span>
                     </a>
@@ -124,61 +124,61 @@
                 </div>  
             </div>
             <div class="col-10 user-tab-content">
-                <h3 class="title">Thông tin thành viên</h3>
+                <h3 class="title">Thông tin thanh toán</h3>
                 <div class="row user-thongtin">
                     <form method="POST" action="#" >
-                        <div class="col-4">
-                            <img src="avatar/plus_150px.png" id="img_avatar">
-                            <input type="file" name="avatar" id="input_avatar">
-                            <p>Ảnh đại diện</p>
-                        </div>
-                        <div class="col-8">
+                        <div class="col-12">
                             <table>
-                                <tr>
+                                <tr class="hint-thanhtoan">
                                     <th>
-                                        Họ và tên
+                                        Tên tài khoản ngân hàng
                                     </th>
                                     <td>
-                                        <input type="text" name="fullname" value="Trần Vi Khan">
+                                        <input type="text" placeholder="Trần Vi Khan" name="tenChuThe">
                                     </td>
                                 </tr>
-                                <tr>
+                                <tr class="hint-thanhtoan">
                                     <th>
-                                        Giới tính
+                                        Số thẻ
                                     </th>
                                     <td>
-                                        <label class="myRadio">Nam
-                                            <input type="radio" name="sex" value="Nam" checked>
-                                            <span class="checkmark"></span>
-                                        </label>
-                                        <label class="myRadio">Nữ
-                                            <input type="radio" name="sex" value="Nữ">
-                                            <span class="checkmark"></span>
-                                        </label>
+                                        <input type="text" placeholder="000-000-000-000" name="soThe">
                                     </td>
                                 </tr>
-                                <tr>
+                                <tr class="hint-thanhtoan">
                                     <th>
-                                        Ngày sinh
+                                        CVV/CVV2
                                     </th>
                                     <td>
-                                        <input type="date" name="dateOfBirth" value="1999-06-06">
+                                        <input type="text" placeholder="" name="CVV">
                                     </td>
                                 </tr>
-                                <tr>
+                                <tr class="hint-thanhtoan">
                                     <th>
-                                        Số điện thoại
+                                        Ngày hết hạn
                                     </th>
                                     <td>
-                                        <input type="tel" name="phonenumber" value="0974184717">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>
-                                        Địa chỉ
-                                    </th>
-                                    <td>
-                                        <input type="text" name="address" value="Ấp 8 xã Lương Nghĩa, huyện Long Mỹ, tỉnh Hậu Giang ">
+                                        <select name="thangHetHan">
+                                            <option>1</option>
+                                            <option>2</option>
+                                            <option>3</option>
+                                            <option>4</option>
+                                            <option>5</option>
+                                            <option>6</option>
+                                            <option>7</option>
+                                            <option>8</option>
+                                            <option>9</option>
+                                            <option>10</option>
+                                            <option>11</option>
+                                            <option>12</option>
+                                        </select>
+                                        <select name="namHetHan">
+                                            <option>2020</option>
+                                            <option>2021</option>
+                                            <option>2022</option>
+                                            <option>2023</option>
+                                            <option>2024</option>
+                                        </select>
                                     </td>
                                 </tr>
                                 <tr>
@@ -232,7 +232,7 @@
             <img src="assets/img/shopping_cart_100px.png">
             <span class="badge">3</span>
         </a>
-        <a href="_user_thongtin.html" ><img src="assets/img/thumbnails_100px.png"></a>
+        <a href="_user_thongtin.html"><img src="assets/img/thumbnails_100px.png"></a>
     </div>
     <img src="assets/img/slide_up_50px.png" onclick="scroll_top()" id="up-btn" alt="...">
 </body>
