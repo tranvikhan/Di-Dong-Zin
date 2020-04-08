@@ -21,7 +21,7 @@
                         <img src="DiDongZin/assets/img/maintenance_30px.png">
                         <a onclick="SuaHang('{{ $row->Ma_hang_dien_thoai }}', '{{ $row->Ten_hang }}', '{{ $row->Quoc_gia }}')">Sửa</a>
                         <img src="DiDongZin/assets/img/minus_30px.png">
-                        <a href="admin/hangdienthoai/xoa/{{ $row->Ma_hang_dien_thoai }}">Xóa</a>
+                        <a onclick="return XoaHang('{{ $row->Ten_hang }}')" href="admin/hangdienthoai/xoa/{{ $row->Ma_hang_dien_thoai }}">Xóa</a>
                     </div>
                 </div>
             @endforeach

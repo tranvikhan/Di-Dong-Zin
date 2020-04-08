@@ -23,3 +23,8 @@ function SuaHang(idHangDt, Ten_hang, Quoc_gia) {
 function closeSuaHang() {
     suahangdt.style.display = "none";
 }
+
+function XoaHang(ten)
+{
+    return confirm('Bạn sẽ xóa hãng điện thoại '+ten);
+}
