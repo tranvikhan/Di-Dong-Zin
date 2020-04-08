@@ -13,9 +13,11 @@ function closeThemHang() {
 //SUA DIEN THOAI 
 var suahangdt = document.getElementById("suahangdt");
 
-function SuaHang(idHangDt) {
+function SuaHang(idHangDt, Ten_hang, Quoc_gia) {
     suahangdt.style.display = "block";
     document.getElementById("IdHangDt").value = idHangDt;
+    document.getElementById("TenHangDT").value = Ten_hang;
+    document.getElementById("QuocGiaHangDT").value = Quoc_gia;
 }
 
 function closeSuaHang() {
