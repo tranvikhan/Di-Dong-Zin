@@ -1,0 +1,95 @@
+:root {
+    --primary-color: #e74c3c;
+    --font-color1: #2f2e40;
+    --font-color2: #141d25;
+    --font-color3: #aaaaaa;
+    --font-color4: #2c3e50;
+    --font-color-light: #ffffff;
+    --backgroud-light: #ffffff;
+    --backgroud-color1: #ffffff;
+    --backgroud-color2: #2f2e40;
+    --backgroud-color3: #141d25;
+    --backgroud-color4: #2c3e50;
+    --border-item: #ecf0f1;
+    --backgroud-rbga1: rgba(255, 255, 255, 0.97);
+    --backgroud-rbga2: rgba(44, 62, 80, 0.97);
+    --backgroud-rbga3: rgba(236, 240, 241, 0.97);
+}
+.user-tab-menu,
+.user-tab-content {
+    padding: 20px 0;
+}
+.user-tab-menu>div{
+    background-color: transparent;
+    border-radius: 10px;
+}
+.user-tab-menu a{
+    text-decoration: none;
+    display: block;
+    padding: 10px 20px;
+    font-size: 15px;
+    border-radius: 10px;
+    color: var(--font-color4);
+    margin-bottom: 1px;
+}
+.user-tab-menu a:hover{
+    background-color: var(--border-item);
+}
+.user-tab-menu>div>a>img{
+    width: 30px;
+}
+.user-tab-menu>div>a>span{
+    position: relative;
+    top: -8px;
+    left: 5px;
+}
+.user-tab-menu .active {
+    background-color: var(--border-item);
+}
+.user-tab-content{
+    padding-left: 20px;
+    padding-right: 20px;
+}
+.title{
+    margin-top: 0;
+}
+.user-thongtin{
+    background-color:var(--border-item);
+    border-radius: 15px;
+    padding: 40px;
+}
+.user-thongtin>form>div>img{
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+}
+.user-thongtin .col-4{
+    text-align: center;
+}
+.user-thongtin>form>div>table{
+    text-align: left;
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 15px;
+    font-weight: 400;
+    font-family: 'Roboto',sans-serif;
+}
+.user-thongtin input{
+    border: none;
+    outline: none;
+    font-family: 'Roboto',sans-serif;
+    background-color: var(--backgroud-color1);
+    width: 100%;
+    padding: 5px 10px;
+    border-radius: 8px;
+}
+.user-thongtin input:disabled{
+    background-color: var(--font-color3);
+}
+.user-thongtin th{
+    font-weight: 400;
+    padding: 10px;
+}
+.user-thongtin td{
+    padding: 10px;
+}
