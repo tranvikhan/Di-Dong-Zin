@@ -130,71 +130,159 @@
                 </p>
                 <h2 class="title">Nhận xét</h2>
                 <div class="new-comment">
-                    <textarea rows="2" cols="48" placeholder="Mời bạn nhập nội dung nhận xét tại đây!"></textarea>
-                    <button><img src="assets/img/comments_50px.png">Gửi</button>
+                    <textarea rows="2" cols="48" placeholder="Mời bạn nhập nội dung nhận xét tại đây!" id="noiDungCmtMoi"></textarea>
+                    <button onclick="add_cmt()"><img src="assets/img/comments_50px.png">Gửi</button>
                 </div>
-                <div class="comment">
-                    <img src="avatar/avatar-cartoon-superman-png_244033.jpg" alt="avatar">
-                    <div>
-                        <span class="name-cmt">Trần Vi Khan</span>
-                        <span class="time-cmt">11:20 12/01/2019</span>
-                        <p class="content-cmt">
-                            Sản phẩm ok tôi rất hài lòng
-                        </p>
+                
+                <div class="docker" id="cmt-001">
+                    <div class="comment">
+                        <img src="avatar/avatar-cartoon-superman-png_244033.jpg" alt="avatar">
+                        <div>
+                            <span class="name-cmt">Trần Vi Khan</span>
+                            <span class="time-cmt">11:20 12/01/2019</span>
+                            <p class="content-cmt">
+                                Sản phẩm ok tôi rất hài lòng
+                            </p>
+                            <div class="action-g">
+                               <button class="reply-cmt" onclick="reply_cmt('cmt-reply-001')"><img
+                                       src="assets/img/left_2_30px.png">Trả lời</button>
+                                <button class="edit-cmt" onclick="edit_cmt('cmt-edit-001')"><img
+                                        src=" assets/img/design_30px.png">Chỉnh sửa</button>
+                                <button class="del-cmt" onclick="del_cmt('cmt-001')"><img src="assets/img/trash_can_30px.png">Xóa</button>
+                            </div>
+                        </div>
                     </div>
-                    
+                    <div class="comment tl-cmt reply-comment-tool" id="cmt-reply-001">
+                        <img src="avatar/avatar-cartoon-superman-png_244033.jpg">
+                        <div class="new-comment">
+                            <textarea rows="2" cols="48"
+                                placeholder="Mời bạn nhập nội dung trả lời nhận xét trên tại đây!"></textarea>
+                            <button onclick="new_cmt('cmt-reply-001','cmt-001')">Gửi</button>
+                            <button onclick="reply_cmt('cmt-reply-001')" class="cancle">Hủy</button>
+                        </div>
+                    </div>
+                    <div class="comment tl-cmt edit-comment-tool" id="cmt-edit-001">
+                        <img src="avatar/avatar-cartoon-superman-png_244033.jpg">
+                        <div class="new-comment">
+                            <textarea rows="2" cols="48" placeholder="Chỉnh sửa nội dung"></textarea>
+                            <button onclick="change_cmt('cmt-edit-001','cmt-001')">Lưu</button>
+                            <button class="cancle" onclick="edit_cmt('cmt-edit-001')">Hủy</button>
+                        </div>
+                    </div>
                 </div>
-                <div class="comment">
-                    <img src="avatar/avatar-doi-tren-facebook-1.jpg" alt="avatar">
-                    <div>
-                        <span class="name-cmt">Nguyễn Tấn Thịnh</span>
-                        <span class="time-cmt">10:20 12/01/2019</span>
-                        <p class="content-cmt">
-                            Được đấy mai tôi mua 100 cái về phan lon chơi
-                        </p>
+                <div class="docker" id="cmt-002">
+                    <div class="comment">
+                        <img src="avatar/avatar-doi-tren-facebook-1.jpg" alt="avatar">
+                        <div>
+                            <span class="name-cmt">Nguyễn Tấn Thịnh</span>
+                            <span class="time-cmt">10:20 12/01/2019</span>
+                            <p class="content-cmt">
+                                Được đấy mai tôi mua 100 cái về phan lon chơi
+                            </p>
+                            <div class="action-g">
+                                <button class="reply-cmt" onclick="reply_cmt('cmt-reply-002')"><img
+                                        src="assets/img/left_2_30px.png">Trả lời</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="comment tl-cmt reply-comment-tool" id="cmt-reply-002">
+                        <img src="avatar/avatar-cartoon-superman-png_244033.jpg">
+                        <div class="new-comment">
+                            <textarea rows="2" cols="48"
+                                placeholder="Mời bạn nhập nội dung trả lời nhận xét trên tại đây!"></textarea>
+                            <button onclick="new_cmt('cmt-reply-002','cmt-002')">Gửi</button>
+                            <button onclick="reply_cmt('cmt-reply-002')"  class="cancle">Hủy</button>
+                        </div>
                     </div>
                 </div>
-                <div class="comment">
-                    <img src="avatar/fc5162103264ed63d5b5a008b0872e5b.jpg" alt="avatar">
-                    <div>
-                        <span class="name-cmt">Thị Nở</span>
-                        <span class="time-cmt">7:20 12/01/2019</span>
-                        <p class="content-cmt">
-                            Anh CHí phèo ck tôi sẽ mua cho tôi đăng ảnh Facebook chơi
-                        </p>
+                <div class="docker" id="cmt-003">
+                    <div class="comment tl-cmt">
+                        <img src="avatar/avatar-cartoon-superman-png_244033.jpg" alt="avatar">
+                        <div>
+                            <span class="name-cmt">Trần Vi Khan</span>
+                            <span class="time-cmt">11:20 12/01/2019</span>
+                            <p class="content-cmt">
+                                Hay đấy Thinh
+                            </p>
+                            <div class="action-g">
+                                 <button class="edit-cmt" onclick="edit_cmt('cmt-edit-003')"><img src=" assets/img/design_30px.png">Chỉnh sửa</button>
+                                 <button class="del-cmt" onclick="del_cmt('cmt-003')"><img
+                                         src="assets/img/trash_can_30px.png">Xóa</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="comment tl-cmt edit-comment-tool" id="cmt-edit-003">
+                        <img src="avatar/avatar-cartoon-superman-png_244033.jpg">
+                        <div class="new-comment">
+                            <textarea rows="2" cols="48" placeholder="Chỉnh sửa nội dung"></textarea>
+                            <button onclick="change_cmt('cmt-edit-003','cmt-003')">Lưu</button>
+                            <button class="cancle" onclick="edit_cmt('cmt-edit-003')">Hủy</button>
+                        </div>
                     </div>
                 </div>
-                <div class="comment">
-                    <img src="avatar/avatar-cartoon-superman-png_244033.jpg" alt="avatar">
-                    <div>
-                        <span class="name-cmt">Trần Vi Khan</span>
-                        <span class="time-cmt">11:20 12/01/2019</span>
-                        <p class="content-cmt">
-                            Sản phẩm ok tôi rất hài lòng
-                        </p>
+                <div class="docker" id="cmt-004">
+                    <div class="comment tl-cmt">
+                        <img src="avatar/avatar-cartoon-superman-png_244033.jpg" alt="avatar">
+                        <div>
+                            <span class="name-cmt">Trần Vi Khan</span>
+                            <span class="time-cmt">11:20 12/01/2019</span>
+                            <p class="content-cmt">
+                                Hay đấy ! tôi chơi với ông
+                            </p>
+                            <div class="action-g">
+                                 <button class="edit-cmt" onclick="edit_cmt('cmt-edit-004')"><img src=" assets/img/design_30px.png">Chỉnh sửa</button>
+                                 <button class="del-cmt" onclick="del_cmt('cmt-004')"><img
+                                         src="assets/img/trash_can_30px.png">Xóa</button>
+                            </div>
+                        </div>
                     </div>
+                    <div class="comment tl-cmt edit-comment-tool" id="cmt-edit-004">
+                        <img src="avatar/avatar-cartoon-superman-png_244033.jpg">
+                        <div class="new-comment">
+                            <textarea rows="2" cols="48" placeholder="Chỉnh sửa nội dung"></textarea>
+                            <button onclick="change_cmt('cmt-edit-004','cmt-004')">Lưu</button>
+                            <button class="cancle" onclick="edit_cmt('cmt-edit-004')">Hủy</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="docker" id="cmt-005">
+                    <div class="comment">
+                        <img src="avatar/fc5162103264ed63d5b5a008b0872e5b.jpg" alt="avatar">
+                        <div>
+                            <span class="name-cmt">Thị Nở</span>
+                            <span class="time-cmt">1:20 10/01/2019</span>
+                            <p class="content-cmt">
+                                Làm ăn như quần
+                            </p>
+                            <div class="action-g">
+                                <button class="reply-cmt" onclick="reply_cmt('cmt-reply-005')"><img
+                                        src="assets/img/left_2_30px.png">Trả lời</button>
+                                <button class="edit-cmt" onclick="edit_cmt('cmt-edit-005')"><img
+                                        src=" assets/img/design_30px.png">Chỉnh sửa</button>
+                                <button class="del-cmt" onclick="del_cmt('cmt-005')"><img
+                                        src="assets/img/trash_can_30px.png">Xóa</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="comment tl-cmt reply-comment-tool" id="cmt-reply-005">
+                        <img src="avatar/avatar-cartoon-superman-png_244033.jpg">
+                        <div class="new-comment">
+                            <textarea rows="2" cols="48"
+                                placeholder="Mời bạn nhập nội dung trả lời nhận xét trên tại đây!"></textarea>
+                            <button onclick="new_cmt('cmt-reply-005','cmt-005')">Gửi</button>
+                            <button onclick="reply_cmt('cmt-reply-005')" class="cancle">Hủy</button>
+                        </div>
+                    </div>
+                    <div class="comment tl-cmt edit-comment-tool" id="cmt-edit-005">
+                        <img src="avatar/avatar-cartoon-superman-png_244033.jpg">
+                        <div class="new-comment">
+                            <textarea rows="2" cols="48" placeholder="Chỉnh sửa nội dung"></textarea>
+                            <button onclick="change_cmt('cmt-edit-005','cmt-005')">Lưu</button>
+                            <button class="cancle" onclick="edit_cmt('cmt-edit-005')">Hủy</button>
+                        </div>
+                    </div>
+                </div>
 
-                </div>
-                <div class="comment">
-                    <img src="avatar/avatar-doi-tren-facebook-1.jpg" alt="avatar">
-                    <div>
-                        <span class="name-cmt">Nguyễn Tấn Thịnh</span>
-                        <span class="time-cmt">10:20 12/01/2019</span>
-                        <p class="content-cmt">
-                            Được đấy mai tôi mua 100 cái về phan lon chơi
-                        </p>
-                    </div>
-                </div>
-                <div class="comment">
-                    <img src="avatar/fc5162103264ed63d5b5a008b0872e5b.jpg" alt="avatar">
-                    <div>
-                        <span class="name-cmt">Thị Nở</span>
-                        <span class="time-cmt">7:20 12/01/2019</span>
-                        <p class="content-cmt">
-                            Anh CHí phèo ck tôi sẽ mua cho tôi đăng ảnh Facebook chơi
-                        </p>
-                    </div>
-                </div>
                 <div class="pagination">
                     <a href="#">&laquo;</a>
                     <a href="#" class="active">1</a>
@@ -206,7 +294,9 @@
                     <a href="#">7</a>
                     <a href="#">&raquo;</a>
                 </div>
-            </div>
+
+
+            </div>  
             <div class="col-4 dt-cauhinh">
                 <h2 class="title">Cấu hình</h2>
                 <table>

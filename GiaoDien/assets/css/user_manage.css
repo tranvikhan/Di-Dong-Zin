@@ -288,4 +288,8 @@
         padding: 16px 14px 5px 0;
         font-weight: 400;
     }
+    .user-thongtin{
+        padding-left: 5px;
+        padding-right: 5px;
+    }
 } 

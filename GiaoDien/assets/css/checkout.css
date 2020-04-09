@@ -181,6 +181,9 @@
     .thongtinthanhtoan {
         padding-left: 0;
     }
+    .thongtindathang th {
+        width: 40%;
+    }
     .table-responsive,
     .table-responsive thead,
     .table-responsive tbody,
