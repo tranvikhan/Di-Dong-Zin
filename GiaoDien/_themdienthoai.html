@@ -201,21 +201,34 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td>% khuyến mãi:</td>
+                                <th > Khuyến mãi:</th>
                                 <td>
-                                    <input type="text" placeholder="2%">
+                                    <label class="mycheckbox">
+                                        <input type="checkbox" id="apDungKM" checked>
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            
+                            <tr>
+                                <td>% Giảm giá:</td>
+                                <td>
+                                    <input type="text" placeholder="2%" id="phanTramGiam">
                                 </td>
                             </tr>
                             <tr>
-                                <th colspan="2">Thời gian khuyến mãi:</th>
+                                <td>Quà tặng:</td>
+                                <td>
+                                    <textarea rows="3" cols="40" id="quaTang"></textarea>
+                                </td>
                             </tr>
                             <tr>
                                 <td>Từ ngày:</td>
-                                <td><input type="date"></td>
+                                <td><input type="date" id="ngayBatDau"></td>
                             </tr>
                             <tr>
                                 <td>Đến ngày:</td>
-                                <td><input type="date"></td>
+                                <td><input type="date" id="ngayKetThuc"></td>
                             </tr>
                             <tr>
                                 <th colspan="2">Ảnh sản phẩm:</th>
