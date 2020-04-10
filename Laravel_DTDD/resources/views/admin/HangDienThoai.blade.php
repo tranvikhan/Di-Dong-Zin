@@ -18,13 +18,29 @@
                         <p>Tên hãng: {{ $row->Ten_hang }}</p>
                         <p>Quốc gia: {{ $row->Quoc_gia }}</p>
                         <p>Số sản phẩm: {{ $row->ToDienThoaiDiDong->count() }}</p>
+                        
                         <img src="DiDongZin/assets/img/maintenance_30px.png">
                         <a onclick="SuaHang('{{ $row->Ma_hang_dien_thoai }}', '{{ $row->Ten_hang }}', '{{ $row->Quoc_gia }}')">Sửa</a>
+                        
                         <img src="DiDongZin/assets/img/minus_30px.png">
-                        <a onclick="return XoaHang('{{ $row->Ten_hang }}')" href="admin/hangdienthoai/xoa/{{ $row->Ma_hang_dien_thoai }}">Xóa</a>
+                        <a onclick="return XoaHang('{{ $row->Ten_hang }}', '{{ $row->ToDienThoaiDiDong->count() }}')" href="admin/hangdienthoai/xoa/{{ $row->Ma_hang_dien_thoai }}">Xóa</a>
                     </div>
                 </div>
             @endforeach
+
+            {{-- START -- BẮT LỖI ĐƯỢC GỬI VỀ TỪ CONTROLLER ............................................--}}
+            <?php  $str = ""; ?>
+            @if (count($errors)>0)
+                @foreach ($errors->all() as $err)
+                    <?php
+                        ($str == "") ? $str .= $err : $str .= '\\n'.$err;
+                    ?>
+                @endforeach
+                <?php
+                    echo '<script>alert("' . $str . '")</script>';
+                ?>
+            @endif
+            {{-- END -- BẮT LỖI ĐƯỢC GỬI VỀ TỪ CONTROLLER ............................................--}}
 
             <div class="col-2 col-2s hangdt" id="btn-themhangdt">
                 <img src="DiDongZin/assets/img/plus_30px.png">
@@ -38,18 +54,6 @@
                     <form method="POST" action="admin/hangdienthoai/them">
                         {{ csrf_field() }}
 
-                        <?php  $str = ""; ?>
-                        @if (count($errors)>0)
-                            @foreach ($errors->all() as $err)
-                                <?php
-                                    ($str == "") ? $str .= $err : $str .= '\\n\\n'.$err;
-                                ?>
-                            @endforeach
-                            <?php
-                                echo '<script>alert("' . $str . '")</script>';
-                            ?>
-                        @endif 
-                    
                         @if (session('thongbaoThem'))
                             <?php
                                 echo '<script>alert("'. session('thongbaoThem') .'");</script>';
@@ -86,18 +90,6 @@
                     <form method="POST" action="admin/hangdienthoai/sua">
                         {{ csrf_field() }}
 
-                        <?php  $str = ""; ?>
-                        @if (count($errors)>0)
-                            @foreach ($errors->all() as $err)
-                                <?php
-                                    ($str == "") ? $str .= $err : $str .= '\\n\\n'.$err;
-                                ?>
-                            @endforeach
-                            <?php
-                                echo '<script>alert("' . $str . '")</script>';
-                            ?>
-                        @endif 
-                    
                         @if (session('thongbaoSua'))
                             <?php
                                 echo '<script>alert("'. session('thongbaoSua') .'");</script>';

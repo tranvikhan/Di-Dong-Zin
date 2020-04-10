@@ -152,6 +152,11 @@
     padding: 5px 10px;
     border-radius: 5px;
     transition: 0.3s;
+    border: solid 1px var(--backgroud-color1);
+}
+.thongtinthanhtoan input:hover,
+.thongtinthanhtoan select:hover{
+    border-color: var(--primary-color);
 }
 .thongtinthanhtoan input[type='submit']{
     width: 100%;
@@ -175,6 +180,9 @@
     }
     .thongtinthanhtoan {
         padding-left: 0;
+    }
+    .thongtindathang th {
+        width: 40%;
     }
     .table-responsive,
     .table-responsive thead,

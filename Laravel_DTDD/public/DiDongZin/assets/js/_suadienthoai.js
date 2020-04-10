@@ -14,3 +14,18 @@ inputImage2.addEventListener("change", function () {
         ImageReview2.setAttribute("src", "assets/img/undraw_photo_4yb9.svg")
     }
 });
+//KHUYEN MAI
+const check = document.getElementById("apDungKM");
+check.addEventListener("change", function () {
+    if (!check.checked) {
+        document.getElementById("phanTramGiam").disabled = true;
+        document.getElementById("quaTang").disabled = true;
+        document.getElementById("ngayBatDau").disabled = true;
+        document.getElementById("ngayKetThuc").disabled = true;
+    } else {
+        document.getElementById("phanTramGiam").disabled = false;
+        document.getElementById("quaTang").disabled = false;
+        document.getElementById("ngayBatDau").disabled = false;
+        document.getElementById("ngayKetThuc").disabled = false;
+    }
+});

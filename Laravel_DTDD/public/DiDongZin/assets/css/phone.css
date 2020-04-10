@@ -185,6 +185,64 @@
     height: 50px;
     border-radius: 50%;
 }
+.comment:hover .action-g {
+    display: block;
+}
+.action-g{
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    display: none;
+    background-color: var(--border-item);
+}
+.comment button{
+    position: relative;
+    display: inline-block;
+    outline: none;
+    border: none;
+    background-color: var(--border-item);
+    font-size: 12px;
+    padding: 5px 5px 5px 24px;
+    cursor: pointer;
+    transition: 0.2s;
+    color: var(--font-color4);
+}
+.comment button:hover{
+    color: var(--primary-color);
+}
+.comment button img{
+    width: 20px;
+    position: absolute;
+    left: 0;
+    top: 2px;
+    padding-left: 3px;
+}
+.edit-comment-tool,
+.reply-comment-tool{
+    display: none;
+}
+
+.edit-comment-tool button,
+.reply-comment-tool button{
+    padding: 5px 15px;
+    color: var(--font-color-light);
+    background-color: var(--backgroud-color4);
+    margin-left: 5px;
+}
+.edit-comment-tool button:hover,
+.reply-comment-tool button:hover {
+    color: var(--font-color-light);
+}
+.reply-comment-tool .cancle,
+ .edit-comment-tool .cancle{
+    background-color: var(--border-item);
+    color: var(--font-color4);
+}
+.reply-comment-tool .cancle:hover,
+.edit-comment-tool .cancle:hover{
+    background-color: var(--border-item);
+    color: var(--primary-color);
+}
 .content-cmt{
     margin-top: 5px;
     color: var(--font-color1);
@@ -195,7 +253,6 @@
     margin-top: 30px;
     padding-left: 25%;
 }
-
 .pagination a {
     display: block;
     color: var(--font-color1);
@@ -218,8 +275,23 @@
     color: var(--font-color4);
     line-height: 150%;
 }
+.tl-cmt{
+  padding-left: 120px;
+}
+.tl-cmt>img{
+    left: 60px;
+}
 @media only screen and (max-width: 768px) {
     .pagination{
         padding:20px;
     }
+    .dt-anh{
+        padding: 0 20px;
+        min-height: auto;
+    }
+    .dt-thongtin{
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+    
 }
