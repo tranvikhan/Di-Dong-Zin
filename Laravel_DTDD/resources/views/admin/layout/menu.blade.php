@@ -1,42 +1,43 @@
 <!-- LEFT MENU..................................................................................-->
 <div id="left-menu">
     <ul>
-        <li class="tablinks " onclick="loadPage('_thongke.html')">
+        <li class="tablinks " id="thongKeMenu" onclick="loadPage('admin/thongke')">
             <img src="DiDongZin/assets/img/home_50px.png" alt="logo">
             <p>THỐNG KÊ</p>
         </li>
-        <li class="tablinks" onclick="loadPage('admin/dienthoai/danhsach')">
+        <li class="tablinks" id="dienThoaiMenu" onclick="loadPage('admin/dienthoai/danhsach')">
             <img src="DiDongZin/assets/img/smartphone_tablet_50px.png" alt="logo">
             <p>Điện thoại</p>
         </li>
-        <li class="tablinks" onclick="loadPage('admin/hangdienthoai/danhsach')">
+        <li class="tablinks" id="hangDienThoaiMenu" onclick="loadPage('admin/hangdienthoai/danhsach')">
             <img src="DiDongZin/assets/img/department_50px.png" alt="logo">
             <p>Hãng điện thoại</p>
         </li>
-        <li class="tablinks active" onclick="loadPage('_donhang.html')">
+        <li class="tablinks" id="donHangMenu" onclick="loadPage('_donhang.html')">
             <img src="DiDongZin/assets/img/purchase_order_50px.png" alt="logo">
             <p>Đơn hàng</p>
             <span class="sodonmoi">2</span>
         </li>
-        <li class="tablinks" onclick="loadPage('_hoadon.html')">
+        <li class="tablinks" id="hoaDonMenu" onclick="loadPage('_hoadon.html')">
             <img src="DiDongZin/assets/img/receipt_50px.png" alt="logo">
             <p>Hóa đơn</p>
         </li>
-        <li class="tablinks" onclick="loadPage('_thanhvien.html')">
+        <li class="tablinks" id="thanhVienMenu" onclick="loadPage('_thanhvien.html')">
             <img src="DiDongZin/assets/img/member_50px.png" alt="logo">
             <p>Thành viên</p>
         </li>
-        <li class="tablinks" onclick="loadPage('_trang.html')">
+        <li class="tablinks" id="trangMenu" onclick="loadPage('_trang.html')">
             <img src="DiDongZin/assets/img/page_50px.png" alt="logo">
             <p>Trang</p>
         </li>
-        <li class="tablinks" onclick="loadPage('_caidat.html')">
+        <li class="tablinks" id="caiDatMenu" onclick="loadPage('_trang.html')">
             <img src="DiDongZin/assets/img/settings_50px.png" alt="logo" id="ic-caidat">
             <p>Cài đặt</p>
         </li>
-        <li class="tablinks">
+        <li class="tablinks" id="dangXuatMenu">
             <img src="DiDongZin/assets/img/login_rounded_50px.png" alt="logo">
             <p>Đăng xuất</p>
         </li>
     </ul>
 </div>
+{{-- ........  class="active" để xác định đối tượng <li> đang hoạt động ...............--}}

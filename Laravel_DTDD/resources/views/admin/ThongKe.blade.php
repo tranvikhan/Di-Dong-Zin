@@ -64,8 +64,19 @@
               </div>
           </div>
     </div>
-    <script src="DiDongZin/assets/js/Chart.js"></script>
-    <script src="DiDongZin/assets/js/_thongke.js"></script>
 </div>
 
+@endsection
+
+{{-- SECTION 'SCRIPT' ................................................ --}}
+
+@section('script')
+    <script src="DiDongZin/assets/js/Chart.js"></script>
+    <script src="DiDongZin/assets/js/_thongke.js"></script>
+    <script>
+        window.onload = function()
+        {
+            document.getElementById('thongKeMenu').classList.add('active');
+        }
+    </script>
 @endsection

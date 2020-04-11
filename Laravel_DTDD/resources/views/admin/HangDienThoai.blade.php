@@ -122,5 +122,16 @@
         </div>
     </div>
 </div>
-<script src="DiDongZin/assets/js/_hangdienthoai.js"></script>
+@endsection
+
+{{-- SECTION 'SCRIPT' ................................................ --}}
+
+@section('script')
+    <script src="DiDongZin/assets/js/_hangdienthoai.js"></script>
+    <script>
+        window.onload = function()
+        {
+            document.getElementById('hangDienThoaiMenu').classList.add('active');
+        }
+    </script>    
 @endsection

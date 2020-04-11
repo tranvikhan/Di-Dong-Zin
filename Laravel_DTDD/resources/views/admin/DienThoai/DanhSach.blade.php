@@ -4,7 +4,6 @@
 
 <!-- NOI DUNG CHINH ..................................................................................-->
 <div class="content">
-    <!-- DIEN THOAI ..................................................................................-->
     <div id="dienthoai" class="tabcontent" >
         <h2>QUẢN LÝ ĐIỆN THOẠI</h2>
         <button onclick="loadPage('admin/dienthoai/them')" class="btnThemdienthoai">
@@ -42,8 +41,6 @@
                     <option>Sắp xếp theo</option>
                     <option>Giá cao</option>
                     <option>Giá thấp</option>
-                    <option>Ngày đăng trước</option>
-                    <option>Ngày đăng sau</option>
                 </select>
                 <button>Lọc sản phẩm</button>
 
@@ -74,108 +71,85 @@
                     Giá
                 </th>
                 <th>
-                    Hãng
+                    Giá khuyến mãi
                 </th>
                 <th>
-                    Ngày đăng
+                    Hãng
                 </th>
+                
             </tr>
-            <tr>
-                <td>
-                    <label class="mycheckbox">
-                        <input type="checkbox" name="check_phone[]">
-                        <span class="checkmark"></span>
-                    </label>
-                </td>
-                <td>
-                    <img src="DiDongZin/dttd/iphone11-black-1.png">
-                </td>
-                <td>
-                    iPhone11 64Gb Mới Chính Hãng 1232356k4kj46+5j6k.kj
-                    <div class="mini-action">
-                        <a href="#">Xem</a>
-                        <a onclick="loadPage('admin/dienthoai/sua/1')">Chỉnh sửa</a>
-                        <a onclick="delete_item(madienthoai='0001')">Xóa</a>
-                    </div>
-                </td>
-                <td>
-                    0001
-                </td>
-                <td>
-                    19.190.000 VND
-                </td>
-                <td>
-                    Apple
-                </td>
-                <td>
-                    12/3/2020 2365656 5656v165ds16v 55g6df
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label class="mycheckbox">
-                        <input type="checkbox" name="check_phone[]">
-                        <span class="checkmark"></span>
-                    </label>
-                </td>
-                <td>
-                    <img src="DiDongZin/dttd/iphoneX-space-gray-300x400.png">
-                </td>
-                <td>
-                    iPhoneX 64Gb Mới Chính Hãng
-                    <div class="mini-action">
-                        <a href="#">Xem</a>
-                        <a onclick="loadPage('admin/dienthoai/sua/1')">Chỉnh sửa</a>
-                        <a onclick="delete_item(madienthoai='0002')">Xóa</a>
-                    </div>
-                </td>
-                <td>
-                    0002
-                </td>
-                <td>
-                    11.190.000 VND
-                </td>
-                <td>
-                    Apple
-                </td>
-                <td>
-                    13/3/2020
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label class="mycheckbox">
-                        <input type="checkbox" name="check_phone[]">
-                        <span class="checkmark"></span>
-                    </label>
-                </td>
-                <td>
-                    <img src="DiDongZin/dttd/s20-hong.png">
-                </td>
-                <td>
-                    Samsung Galaxy S20 8Gb/256Gb Mới Chính Hãng
-                    <div class="mini-action">
-                        <a href="#">Xem</a>
-                        <a onclick="loadPage('admin/dienthoai/sua/1')">Chỉnh sửa</a>
-                        <a onclick="delete_item(madienthoai='0003')">Xóa</a>
-                    </div>
-                </td>
-                <td>
-                    0003
-                </td>
-                <td>
-                    19.490.000 VND
-                </td>
-                <td>
-                    Samsung
-                </td>
-                <td>
-                    13/3/2020
-                </td>
-            </tr>
+            @foreach ($dienthoai as $dt)
+                <tr>
+                    <td>
+                        <label class="mycheckbox">
+                            <input type="checkbox" name="check_phone[]">
+                            <span class="checkmark"></span>
+                        </label>
+                    </td>
+                    <td>
+                        <img src="DiDongZin/dttd/{{ $dt->Hinh_anh }}">
+                    </td>
+                    <td>
+                        {{ $dt->Ten_dien_thoai }}
+                        <div class="mini-action">
+                            <a href="#">Xem</a>
+                            <a onclick="loadPage('admin/dienthoai/sua/{{ $dt->Ma_dien_thoai }}')">Chỉnh sửa</a>
+                            <a onclick="delete_item(madienthoai='0001')">Xóa</a>
+                        </div>
+                    </td>
+                    <td>
+                        {{ $dt->Ma_dien_thoai }}
+                    </td>
+                    <td>
+                        {{ $dt->ToGiaBan->last()->Gia }}
+                    </td>
+                    <td>
+                        <?php
+                            //Lấy ngày hiện tại
+                            date_default_timezone_set('Asia/Ho_Chi_Minh');
+                            $today = date('Y-m-d');
+
+                            //Lấy giá điện thoại
+                            $gia = $dt->ToGiaBan->last()->Gia;
+
+                            //Lấy ra ngày bắt đầu và ngày kết thúc khuyến mãi
+                            $startDay = 0;
+                            $endDay = 0;    //Ngày khuyến mãi kết thúc
+                            $percent = 0;   //Phần tram khuyến mãi của chương trình này
+                            $khuyenMai = $dt->ToKhuyenMai->last();
+                            if($khuyenMai !== null)
+                            {
+                                $startDay = $khuyenMai->Tu_ngay;
+                                $endDay = $khuyenMai->Den_ngay;
+                                $percent = $khuyenMai->Phan_tram_khuyen_mai;
+                            }
+                        ?>
+                        @if ($startDay<=$today && $today <= $endDay)
+                            {{ $gia*(1-($percent/100)) }}
+                        @else
+                            {{ "--" }}
+                        @endif
+                    </td>
+                    <td>
+                        {{ $dt->ToHangDienThoaiDiDong->Ten_hang }}
+                    </td>
+                    
+                </tr>    
+            @endforeach
         </table>
     </div>
-    <script src="DiDongZin/assets/js/_dienthoai.js"></script>
 </div>
 
+@endsection
+
+{{-- SECTION 'SCRIPT' ................................................ --}}
+
+@section('script')
+    <script src="DiDongZin/assets/js/_dienthoai.js"></script>
+    <script>
+        window.onload = function()
+        {
+            document.getElementById('dienThoaiMenu').classList.add('active');
+        }
+    </script>    
 @endsection

@@ -28,6 +28,5 @@
     
 </body>
 <script src="DiDongZin/assets/js/manage.js"></script>
-<script src="DiDongZin/assets/js/_donhang.js"></script>
 
 </html>
