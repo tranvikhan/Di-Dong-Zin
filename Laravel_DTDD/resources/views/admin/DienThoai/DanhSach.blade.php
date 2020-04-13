@@ -87,7 +87,7 @@
                         </label>
                     </td>
                     <td>
-                        <img src="DiDongZin/dttd/{{ $dt->Hinh_anh }}">
+                        <img src="DiDongZin/imagePhone/{{ $dt->Hinh_anh }}">
                     </td>
                     <td>
                         {{ $dt->Ten_dien_thoai }}

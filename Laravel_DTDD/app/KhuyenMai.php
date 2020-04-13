@@ -10,6 +10,8 @@ class KhuyenMai extends Model
 
     protected $primaryKey = 'Ma_khuyen_mai';
 
+    public $timestamps = false;
+
     public function ToDienThoaiDiDong()
     {
         return $this->belongsTo('App\DienThoaiDiDong', 'Ma_dien_thoai', 'Ma_dien_thoai');

@@ -22,8 +22,12 @@ Route::group(['prefix'=>'admin'], function(){
         Route::get('danhsach', 'DienThoaiController@getDanhSach');
 
         Route::get('them', 'DienThoaiController@getThem');
+        Route::post('them', 'DienThoaiController@postThem');
 
         Route::get('sua/{id}', 'DienThoaiController@getSua');
+        Route::post('sua/{id}', 'DienThoaiController@postSua');
+
+        Route::get('xoa/{id}', 'DienThoaiController@getXoa');
     });
 
     Route::group(['prefix'=>'hangdienthoai'], function(){
