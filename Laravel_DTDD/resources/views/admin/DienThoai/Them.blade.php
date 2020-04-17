@@ -43,19 +43,19 @@
                         </tr>
                         <tr>
                             <td>Kích thước</td>
-                            <td><input type="text" placeholder=" --x--x-- mm" name="kichThuoc"></td>
+                            <td><input type="text" placeholder=" --x--x--mm" name="kichThuoc"></td>
                         </tr>
                         <tr>
                             <td>Trọng lượng</td>
-                            <td><input type="text" placeholder=" --g" name="trongLuong"></td>
+                            <td><input type="number" min="1" max="99999" placeholder=" --g" name="trongLuong"></td>
                         </tr>
                         <tr>
                             <td>Ram</td>
-                            <td><input type="text" placeholder=" --GB" name="ram"></td>
+                            <td><input type="number" min="1" max="99999" placeholder=" --GB" name="ram"></td>
                         </tr>
                         <tr>
                             <td>Rom</td>
-                            <td><input type="text" placeholder=" --GB" name="rom"></td>
+                            <td><input type="number" min="1" max="99999" placeholder=" --GB" name="rom"></td>
                         </tr>
                         <tr>
                             <td>Chipset</td>
@@ -75,11 +75,11 @@
                         </tr>
                         <tr>
                             <td>Camera sau</td>
-                            <td><input type="text" placeholder=" " name="cameraSau"></td>
+                            <td><input type="number" min="1" max="99999" placeholder=" --MP" name="cameraSau"></td>
                         </tr>
                         <tr>
                             <td>Camera trước</td>
-                            <td><input type="text" placeholder=" " name="cameraTruoc"></td>
+                            <td><input type="number" min="1" max="99999" placeholder=" --MP" name="cameraTruoc"></td>
                         </tr>
                         <tr>
                             <td>Wifi</td>
@@ -95,7 +95,7 @@
                         </tr>
                         <tr>
                             <td>Pin</td>
-                            <td><input type="text" placeholder=" " name="pin"></td>
+                            <td><input type="number" min="1" max="999999" placeholder=" --mAh" name="pin"></td>
                         </tr>
                         <tr>
                             <td>Hệ điều hành</td>
@@ -160,7 +160,7 @@
                         <tr>
                             <td>Giá bán:</td>
                             <td>
-                                <input type="text" placeholder="VNĐ" name="giaBan">
+                                <input type="number" min="1" max="9999999999" placeholder="VNĐ" name="giaBan">
                             </td>
                         </tr>
                         <tr>

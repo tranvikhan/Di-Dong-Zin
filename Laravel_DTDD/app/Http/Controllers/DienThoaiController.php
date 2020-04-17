@@ -228,8 +228,8 @@ class DienThoaiController extends Controller
         date_default_timezone_set('Asia/Ho_Chi_Minh');
         $today = date('Y-m-d');
 
-        //MÃ ĐIỆN THOẠI SẼ ĐƯỢC TẠO
-        $maDienThoai = DienThoaiDiDong::all()->max('Ma_dien_thoai') + 1; 
+        //Tìm đối tượng điện thoại
+        $dienThoai = DienThoaiDiDong::find($id);
 
         $this->validate($request, 
             [
@@ -256,7 +256,7 @@ class DienThoaiController extends Controller
                 'hangDienThoai'=>'required',
                 'moTa'=>'max:2000',
                 'giaBan'=>'required',
-                'anhSanPham'=>'required|mimes:png,jpg,jpeg'
+                'anhSanPham'=>'mimes:png,jpg,jpeg'
             ], 
             [
                 'kichThuoc.required'=>'Kích thước không được trống',
@@ -311,7 +311,6 @@ class DienThoaiController extends Controller
                 
                 'giaBan.required'=>'Giá bán không được trống',
                 
-                'anhSanPham.required'=>'Hình ảnh phải được chọn',
                 'anhSanPham.mimes'=>'Hình ảnh sản phẩm phải thuộc định dạng sau: png, jpg, jpeg'
             ]);
 
@@ -327,7 +326,7 @@ class DienThoaiController extends Controller
         $day = substr($kichThuoc, $temp2+1);
         if( !(is_numeric($dai) && is_numeric($rong) && is_numeric($day)) )
         {
-            return redirect('admin/dienthoai/them')->with('loi', 'Kích thước phải được nhập theo dài x rộng x dày, không cần nhập đơn vị, không được nhập dấu cách (để nhập hai phẩy năm=>2.5, đơn vị là mm)');
+            return redirect('admin/dienthoai/sua/'.$id)->with('loi', 'Kích thước phải được nhập theo dài x rộng x dày, không cần nhập đơn vị, không được nhập dấu cách (để nhập hai phẩy năm=>2.5, đơn vị là mm)');
         }
         
         if($request->apDungKM == 'on')
@@ -336,7 +335,7 @@ class DienThoaiController extends Controller
                 [
                     'phanTramGiamGia'=>'required',
                     'quaTang'=>'required|max:400',
-                    'tuNgay'=>'required|after_or_equal:'. $today,
+                    'tuNgay'=>'required',
                     'denNgay'=>'required|after_or_equal:tuNgay'
                 ], 
                 [
@@ -346,27 +345,76 @@ class DienThoaiController extends Controller
                     'quaTang.max'=>'Quà tặng chỉ được tối đa 50 ký tự',
                     
                     'tuNgay.required'=>'Ngày bắt đầu khuyến mãi không được trống',
-                    'tuNgay.after_or_equal'=>'Ngày bắt đầu khuyến mãi phải từ ngày hôm nay trở về sau',
                 
                     'denNgay.required'=>'Ngày kết thúc khuyến mãi không được trống',
                     'denNgay.after_or_equal'=>'Ngày kết thúc khuyến mãi phải sau ngày bắt đầu khuyến mãi',
                 ]);
+
+            //Xác định có khuyến mãi hiện tại mà ngày bắt đầu trước ngày hôm nay không?
+            $hasKM = false;
+            $khuyenMai = $dienThoai->ToKhuyenMai->last();
+            if( $khuyenMai !== null)
+            {
+                if($khuyenMai->Tu_ngay<$today && $today<=$khuyenMai->Den_ngay)
+                    $hasKM = true;
+            }
+            //Nếu có khuyến mãi sẽ bỏ qua điều kiện này, do ngày bắt đầu khuyến mãi có thể trước ngày hôm nay
+                //Điều kiện này chỉ áp dụng cho:
+                    //khuyến mãi có ngày bắt đầu sau
+                    //hoặc điện thoại chưa có chương trình khuyến mãi
+            if( !$hasKM )
+            {
+                $this->validate($request, 
+                    [
+                        'tuNgay'=>'after_or_equal:'.$today, 
+                    ], 
+                    [
+                        'tuNgay.after_or_equal'=>'Ngày bắt đầu khuyến mãi phải từ ngày hôm nay trở về sau',
+                    ]);
+            }
+
+            //lƯU HOẶC TẠO KHUYẾN MÃI
+            if( $khuyenMai === null)
+            {
+                //TẠO KHUYẾN MÃI
+                $KM = new KhuyenMai;
+                $KM->Tu_ngay = $request->tuNgay;
+                $KM->Den_ngay = $request->denNgay;
+                $KM->Phan_tram_khuyen_mai = $request->phanTramGiamGia;
+                $KM->Noi_dung = $request->quaTang;
+                $KM->Ma_dien_thoai = $dienThoai->Ma_dien_thoai;
+                $KM->save();
+            }
+            else
+            {
+                //LƯU KHUYẾN MÃI
+                $khuyenMai->Tu_ngay = $request->tuNgay;
+                $khuyenMai->Den_ngay = $request->denNgay;
+                $khuyenMai->Phan_tram_khuyen_mai = $request->phanTramGiamGia;
+                $khuyenMai->Noi_dung = $request->quaTang;
+                $khuyenMai->Ma_dien_thoai = $dienThoai->Ma_dien_thoai;
+                $khuyenMai->save();
+            }          
         }
         
-        // //DI CHUYỂN FILE
-        // $file = $request->file('anhSanPham');
-        // $ten = $file->getClientOriginalName();
-        // $ten = Str::random(4) .'_'. $ten;
-        // while(file_exists('DiDongZin/imagePhone/'.$ten))
-        // {
-        //     $ten = Str::random(4) .'_'. $ten;
-        // }
-        // $file->move('DiDongZin/imagePhone', $ten);
+        //DI CHUYỂN FILE
+        if($request->anhSanPham !== null)
+        {
+            $file = $request->file('anhSanPham');
+            $ten = $file->getClientOriginalName();
+            $ten = Str::random(4) .'_'. $ten;
+            while(file_exists('DiDongZin/imagePhone/'.$ten))
+            {
+                $ten = Str::random(4) .'_'. $ten;
+            }
+            $file->move('DiDongZin/imagePhone', $ten);
+
+            //LƯU LẠI TÊN ẢNH ĐIỆN THOẠI
+            $dienThoai->Hinh_anh = $ten;
+        }
         
         //TẠO ĐIỆN THOẠI
-        $dienThoai = DienThoaiDiDong::find($id);
         $dienThoai->Ten_dien_thoai = $request->tenDienThoai;
-        //$dienThoai->Hinh_anh = $ten;
         $dienThoai->Mo_ta = $request->moTa;
         $dienThoai->Kich_thuoc = $request->kichThuoc;
         $dienThoai->Trong_luong = $request->trongLuong;
@@ -390,27 +438,24 @@ class DienThoaiController extends Controller
         $dienThoai->Khe_the_nho = $request->kheTheNho;
         $dienThoai->Ma_hang_dien_thoai = $request->hangDienThoai;
         $dienThoai->save();
-//123565
-        // //TẠO KHUYẾN MÃI
-        // if($request->apDungKM == 'on')
-        // {
-        //     $khuyenMai = new KhuyenMai;
-        //     $khuyenMai->Tu_ngay = $request->tuNgay;
-        //     $khuyenMai->Den_ngay = $request->denNgay;
-        //     $khuyenMai->Phan_tram_khuyen_mai = $request->phanTramGiamGia;
-        //     $khuyenMai->Noi_dung = $request->quaTang;
-        //     $khuyenMai->Ma_dien_thoai = $maDienThoai;
-        //     $khuyenMai->save();
-        // }
 
-        // //TẠO GIÁ BÁN
-        // $giaBan = new GiaBan;
-        // $giaBan->Gia = $request->giaBan;
-        // $giaBan->Ngay_cap_nhat = $today;
-        // $giaBan->Trang_thai = 1;
-        // $giaBan->Ma_dien_thoai = $maDienThoai;
-        // $giaBan->save();
+        //TẠO GIÁ BÁN
+        $oldPrice = $dienThoai->ToGiaBan->last();
+        if($oldPrice->Gia !== $request->giaBan)
+        {
+            //THAY ĐỔI GIÁ CŨ, TRẠNG THÁI = 0
+            $oldPrice->Trang_thai = 0;
+            $oldPrice->save();
 
+            //TẠO GIÁ BÁN MỚI
+            $giaBan = new GiaBan;
+            $giaBan->Gia = $request->giaBan;
+            $giaBan->Ngay_cap_nhat = $today;
+            $giaBan->Trang_thai = 1;
+            $giaBan->Ma_dien_thoai = $dienThoai->Ma_dien_thoai;
+            $giaBan->save();
+        }
+        
         return redirect('admin/dienthoai/sua/'.$id)->with('thongbao', 'Bạn đã chỉnh sửa những thông tin của điện thoại thành công');
     }
 }
