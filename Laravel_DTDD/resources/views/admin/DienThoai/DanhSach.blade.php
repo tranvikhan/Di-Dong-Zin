@@ -79,64 +79,72 @@
                 
             </tr>
             @foreach ($dienthoai as $dt)
-                <tr>
-                    <td>
-                        <label class="mycheckbox">
-                            <input type="checkbox" name="check_phone[]">
-                            <span class="checkmark"></span>
-                        </label>
-                    </td>
-                    <td>
-                        <img src="DiDongZin/imagePhone/{{ $dt->Hinh_anh }}">
-                    </td>
-                    <td>
-                        {{ $dt->Ten_dien_thoai }}
-                        <div class="mini-action">
-                            <a href="#">Xem</a>
-                            <a onclick="loadPage('admin/dienthoai/sua/{{ $dt->Ma_dien_thoai }}')">Chỉnh sửa</a>
-                            <a onclick="delete_item(madienthoai='0001')">Xóa</a>
-                        </div>
-                    </td>
-                    <td>
-                        {{ $dt->Ma_dien_thoai }}
-                    </td>
-                    <td>
-                        {{ $dt->ToGiaBan->last()->Gia }}
-                    </td>
-                    <td>
-                        <?php
-                            //Lấy ngày hiện tại
-                            date_default_timezone_set('Asia/Ho_Chi_Minh');
-                            $today = date('Y-m-d');
+                @if ($dt->Dang_ban == 1)
+                    <tr>
+                        <td>
+                            <label class="mycheckbox">
+                                <input type="checkbox" name="check_phone[]">
+                                <span class="checkmark"></span>
+                            </label>
+                        </td>
+                        <td>
+                            <img src="DiDongZin/imagePhone/{{ $dt->Hinh_anh }}">
+                        </td>
+                        <td>
+                            {{ $dt->Ten_dien_thoai }}
+                            <div class="mini-action">
+                                <a href="#">Xem</a>
+                                <a onclick="loadPage('admin/dienthoai/sua/{{ $dt->Ma_dien_thoai }}')">Chỉnh sửa</a>
+                                <a href="admin/dienthoai/xoa/{{ $dt->Ma_dien_thoai }}" onclick="return XoaDienThoai('{{ $dt->Ten_dien_thoai }}')">Xóa</a>
+                            </div>
+                        </td>
+                        <td>
+                            {{ $dt->Ma_dien_thoai }}
+                        </td>
+                        <td>
+                            {{ $dt->ToGiaBan->last()->Gia }}
+                        </td>
+                        <td>
+                            <?php
+                                //Lấy ngày hiện tại
+                                date_default_timezone_set('Asia/Ho_Chi_Minh');
+                                $today = date('Y-m-d');
 
-                            //Lấy giá điện thoại
-                            $gia = $dt->ToGiaBan->last()->Gia;
+                                //Lấy giá điện thoại
+                                $gia = $dt->ToGiaBan->last()->Gia;
 
-                            //Lấy ra ngày bắt đầu và ngày kết thúc khuyến mãi
-                            $startDay = 0;
-                            $endDay = 0;    //Ngày khuyến mãi kết thúc
-                            $percent = 0;   //Phần tram khuyến mãi của chương trình này
-                            $khuyenMai = $dt->ToKhuyenMai->last();
-                            if($khuyenMai !== null)
-                            {
-                                $startDay = $khuyenMai->Tu_ngay;
-                                $endDay = $khuyenMai->Den_ngay;
-                                $percent = $khuyenMai->Phan_tram_khuyen_mai;
-                            }
-                        ?>
-                        @if ($startDay<=$today && $today <= $endDay)
-                            {{ $gia*(1-($percent/100)) }}
-                        @else
-                            {{ "--" }}
-                        @endif
-                    </td>
-                    <td>
-                        {{ $dt->ToHangDienThoaiDiDong->Ten_hang }}
-                    </td>
+                                //Lấy ra ngày bắt đầu và ngày kết thúc khuyến mãi
+                                $startDay = 0;
+                                $endDay = 0;    //Ngày khuyến mãi kết thúc
+                                $percent = 0;   //Phần tram khuyến mãi của chương trình này
+                                $khuyenMai = $dt->ToKhuyenMai->last();
+                                if($khuyenMai !== null)
+                                {
+                                    $startDay = $khuyenMai->Tu_ngay;
+                                    $endDay = $khuyenMai->Den_ngay;
+                                    $percent = $khuyenMai->Phan_tram_khuyen_mai;
+                                }
+                            ?>
+                            @if ($startDay<=$today && $today <= $endDay)
+                                {{ $gia*(1-($percent/100)) }}
+                            @else
+                                {{ "--" }}
+                            @endif
+                        </td>
+                        <td>
+                            {{ $dt->ToHangDienThoaiDiDong->Ten_hang }}
+                        </td>
+                        
+                    </tr>    
+                @endif
                     
-                </tr>    
             @endforeach
         </table>
+        @if (session('thongbao'))
+            <?php
+                echo '<script>alert("'. session('thongbao') .'")</script>';
+            ?>
+        @endif
     </div>
 </div>
 
@@ -150,6 +158,15 @@
         window.onload = function()
         {
             document.getElementById('dienThoaiMenu').classList.add('active');
+        }
+
+        function XoaDienThoai(ten)
+        {
+            if(confirm('Bạn sẽ xóa điện thoại '+ten+' cùng các thông tin liên quan ?') == true)
+            {
+                return confirm('Bạn sẽ xóa điện thoại này. Bạn chắc chứ ?');
+            }
+            return false;
         }
     </script>    
 @endsection

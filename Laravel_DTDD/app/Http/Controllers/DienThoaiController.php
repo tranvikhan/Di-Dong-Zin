@@ -4,11 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 
 use App\DienThoaiDiDong;
 use App\HangDienThoaiDiDong;
 use App\KhuyenMai;
 use App\GiaBan;
+use App\ChiTietGioHang;
+use App\GioHang;
 
 class DienThoaiController extends Controller
 {
@@ -213,7 +216,7 @@ class DienThoaiController extends Controller
         $giaBan->Ma_dien_thoai = $maDienThoai;
         $giaBan->save();
 
-        return redirect('admin/dienthoai/them')->with('thongbao', 'Bạn đã lưu lại những thông tin của điện thoại thành công');
+        return redirect('admin/dienthoai/them')->with('thongbao', 'Thêm điện thoại thành công');
     }
 
     public function getSua($id)
@@ -456,6 +459,59 @@ class DienThoaiController extends Controller
             $giaBan->save();
         }
         
-        return redirect('admin/dienthoai/sua/'.$id)->with('thongbao', 'Bạn đã chỉnh sửa những thông tin của điện thoại thành công');
+        return redirect('admin/dienthoai/sua/'.$id)->with('thongbao', 'Chỉnh sửa điện thoại thành công');
+    }
+
+    public function getXoa($id)
+    {
+        $dienThoai = DienThoaiDiDong::find($id);
+        
+        $dsChiTiet = $dienThoai->ToChiTietGioHang;
+        $hasInBill = false;
+
+        //XÁC ĐỊNH ĐIỆN THOẠI ĐÃ CÓ TRONG HÓA ĐƠN NÀO KHÔNG
+        foreach ($dsChiTiet as $item) {
+            if( $item->ToGioHang->ToHoaDon !== null)
+            {
+                $hasInBill = true;
+                break;
+            }
+        }
+
+        //XÓA CÁC BÌNH LUẬN VỀ ĐIỆN THOẠI ĐÓ
+        $dsBinhLuan = $dienThoai->ToBinhLuan;
+        foreach ($dsBinhLuan as $bl) {
+            $bl->delete();
+        }
+
+        //CÁC THAO TÁC TRONG 2 TRƯỜNG HỢP: ĐIỆN THOẠI CÓ HAY KHÔNG CÓ TRONG HÓA ĐƠN
+        if( $hasInBill )
+        {
+            //LƯU LẠI THUỘC TÍNH Dang_ban
+            $dienThoai->Dang_ban = 0;
+            $dienThoai->save();
+        }
+        else
+        {
+            //XÓA DỮ LIỆU LIÊN QUAN TỚI ĐIỆN THOẠI (XÓA HOÀN TOÀN)
+                //XÓA NHỮNG CHI TIẾT GIỎ HÀNG
+            DB::table('Chi_tiet_gio_hang')->where('Ma_dien_thoai', '=', $id)->delete();
+
+            //XÓA NHỮNG KHUYẾN MÃI
+            $dsKM = $dienThoai->ToKhuyenMai;
+            foreach ($dsKM as $item) {
+                $item->delete();
+            }
+
+            //XÓA NHỮNG GIÁ BÁN
+            $dsGiaBan = $dienThoai->ToGiaBan;
+            foreach ($dsGiaBan as $item) {
+                $item->delete();
+            }
+
+            //XÓA ĐIỆN THOẠI
+            $dienThoai->delete();
+        }
+        return redirect('admin/dienthoai/danhsach')->with('thongbao', 'Xóa điện thoại thành công');
     }
 }
