@@ -38,21 +38,16 @@ class DienThoaiController extends Controller
 
         $this->validate($request, 
             [
-                'kichThuoc'=>'required|max:50',
-                'ram'=>'required',
-                'rom'=>'required',
+                'kichThuoc'=>'max:50',
                 'chipset'=>'max:50',
-                'loaiManHinh'=>'required|max:50',
+                'loaiManHinh'=>'max:50',
                 'kichThuocManHinh'=>'max:50',
-                'doPhanGiaiManHinh'=>'required|max:50',
-                'cameraSau'=>'required',
-                'cameraTruoc'=>'required',
+                'doPhanGiaiManHinh'=>'max:50',
                 'wifi'=>'max:50',
                 'bluetooth'=>'max:50',
                 'nfc'=>'max:50',
-                'pin'=>'required',
-                'heDieuHanh'=>'required|max:50',
-                'phienBanHeDieuHanh'=>'required|max:50',
+                'heDieuHanh'=>'max:50',
+                'phienBanHeDieuHanh'=>'max:50',
                 'quayVideo'=>'max:100',
                 'camBien'=>'max:100',
                 'kheSim'=>'max:100',
@@ -64,39 +59,24 @@ class DienThoaiController extends Controller
                 'anhSanPham'=>'required|mimes:png,jpg,jpeg'
             ], 
             [
-                'kichThuoc.required'=>'Kích thước không được trống',
                 'kichThuoc.max'=>'Kích thước phải được nhập theo dài x rộng x dày, không cần nhập đơn vị, không được nhập dấu cách (để nhập hai phẩy năm=>2.5, đơn vị là mm)',
-                
-                'ram.required'=>'RAM không được trống (đơn vị là GB)',
-                
-                'rom.required'=>'ROM không được trống (đơn vị là GB)',
                 
                 'chipset.max'=>'Chipset chỉ được tối đa 50 ký tự',
                 
-                'loaiManHinh.required'=>'Loại màn hình không được trống',
                 'loaiManHinh.max'=>'Loại màn hình chỉ được tối đa 50 ký tự',
                 
                 'kichThuocManHinh.max'=>'Kích thước màn hình chỉ được tối đa 50 ký tự',
                 
-                'doPhanGiaiManHinh.required'=>'Độ phân giải màn hình không được trống',
                 'doPhanGiaiManHinh.max'=>'Độ phân giải màn hình chỉ được tối đa 50 ký tự',
-                
-                'cameraSau.required'=>'Camera Sau không được trống (đơn vị là MP-Megapixel)',
-                
-                'cameraTruoc.required'=>'Camera Trước không được trống (đơn vị là MP-Megapixel)',
                 
                 'wifi.max'=>'Wifi chỉ được tối đa 50 ký tự',
                 
                 'bluetooth.max'=>'Bluetooth chỉ được tối đa 50 ký tự',
                 
-                'nfc.max'=>'NFC chỉ được tối đa 50 ký   tự',
-                
-                'pin.required'=>'Pin không được trống (đơn vị là mAh)',
+                'nfc.max'=>'NFC chỉ được tối đa 50 ký tự',
 
-                'heDieuHanh.required'=>'Hệ điều hành không được trống',
                 'heDieuHanh.max'=>'Hệ điều hành chỉ được tối đa 50 ký tự',
                 
-                'phienBanHeDieuHanh.required'=>'Phiên bản hệ điều hành không được trống',
                 'phienBanHeDieuHanh.max'=>'Phiên bản hệ điều hành chỉ được tối đa 50 ký tự',
                 
                 'quayVideo.max'=>'Quay Video chỉ được tối đa 100 ký tự',
@@ -119,21 +99,6 @@ class DienThoaiController extends Controller
                 'anhSanPham.required'=>'Hình ảnh phải được chọn',
                 'anhSanPham.mimes'=>'Hình ảnh sản phẩm phải thuộc định dạng sau: png, jpg, jpeg'
             ]);
-
-        //KIỂM TRA KÍCH THƯỚC ĐƯỢC NHẬP VÀO
-        $kichThuoc = $request->kichThuoc;
-            //xác định vị trí 'x'
-        $temp1 = strpos($kichThuoc, 'x');
-        $temp2 = strpos($kichThuoc, 'x', $temp1+1);
-            //Tìm dài, rộng, dày
-                //substr(chuỗi, vị trí cắt, số ký tự cắt);
-        $dai = substr($kichThuoc, 0, $temp1);
-        $rong = substr($kichThuoc, $temp1+1, $temp2-$temp1-1);
-        $day = substr($kichThuoc, $temp2+1);
-        if( !(is_numeric($dai) && is_numeric($rong) && is_numeric($day)) )
-        {
-            return redirect('admin/dienthoai/them')->with('loi', 'Kích thước phải được nhập theo dài x rộng x dày, không cần nhập đơn vị, không được nhập dấu cách (để nhập hai phẩy năm=>2.5, đơn vị là mm)');
-        }
         
         if($request->apDungKM == 'on')
         {
@@ -170,6 +135,8 @@ class DienThoaiController extends Controller
         
         //TẠO ĐIỆN THOẠI
         $dienThoai = new DienThoaiDiDong;
+        $dienThoai->Ma_dien_thoai = $maDienThoai;
+        $dienThoai->Dang_ban = 1;
         $dienThoai->Ten_dien_thoai = $request->tenDienThoai;
         $dienThoai->Hinh_anh = $ten;
         $dienThoai->Mo_ta = $request->moTa;
@@ -236,21 +203,16 @@ class DienThoaiController extends Controller
 
         $this->validate($request, 
             [
-                'kichThuoc'=>'required|max:50',
-                'ram'=>'required',
-                'rom'=>'required',
+                'kichThuoc'=>'max:50',
                 'chipset'=>'max:50',
-                'loaiManHinh'=>'required|max:50',
+                'loaiManHinh'=>'max:50',
                 'kichThuocManHinh'=>'max:50',
-                'doPhanGiaiManHinh'=>'required|max:50',
-                'cameraSau'=>'required',
-                'cameraTruoc'=>'required',
+                'doPhanGiaiManHinh'=>'max:50',
                 'wifi'=>'max:50',
                 'bluetooth'=>'max:50',
                 'nfc'=>'max:50',
-                'pin'=>'required',
-                'heDieuHanh'=>'required|max:50',
-                'phienBanHeDieuHanh'=>'required|max:50',
+                'heDieuHanh'=>'max:50',
+                'phienBanHeDieuHanh'=>'max:50',
                 'quayVideo'=>'max:100',
                 'camBien'=>'max:100',
                 'kheSim'=>'max:100',
@@ -262,39 +224,24 @@ class DienThoaiController extends Controller
                 'anhSanPham'=>'mimes:png,jpg,jpeg'
             ], 
             [
-                'kichThuoc.required'=>'Kích thước không được trống',
                 'kichThuoc.max'=>'Kích thước phải được nhập theo dài x rộng x dày, không cần nhập đơn vị, không được nhập dấu cách (để nhập hai phẩy năm=>2.5, đơn vị là mm)',
-                
-                'ram.required'=>'RAM không được trống (đơn vị là GB)',
-                
-                'rom.required'=>'ROM không được trống (đơn vị là GB)',
                 
                 'chipset.max'=>'Chipset chỉ được tối đa 50 ký tự',
                 
-                'loaiManHinh.required'=>'Loại màn hình không được trống',
                 'loaiManHinh.max'=>'Loại màn hình chỉ được tối đa 50 ký tự',
                 
                 'kichThuocManHinh.max'=>'Kích thước màn hình chỉ được tối đa 50 ký tự',
                 
-                'doPhanGiaiManHinh.required'=>'Độ phân giải màn hình không được trống',
                 'doPhanGiaiManHinh.max'=>'Độ phân giải màn hình chỉ được tối đa 50 ký tự',
-                
-                'cameraSau.required'=>'Camera Sau không được trống (đơn vị là MP-Megapixel)',
-                
-                'cameraTruoc.required'=>'Camera Trước không được trống (đơn vị là MP-Megapixel)',
                 
                 'wifi.max'=>'Wifi chỉ được tối đa 50 ký tự',
                 
                 'bluetooth.max'=>'Bluetooth chỉ được tối đa 50 ký tự',
                 
-                'nfc.max'=>'NFC chỉ được tối đa 50 ký   tự',
-                
-                'pin.required'=>'Pin không được trống (đơn vị là mAh)',
+                'nfc.max'=>'NFC chỉ được tối đa 50 ký tự',
 
-                'heDieuHanh.required'=>'Hệ điều hành không được trống',
                 'heDieuHanh.max'=>'Hệ điều hành chỉ được tối đa 50 ký tự',
                 
-                'phienBanHeDieuHanh.required'=>'Phiên bản hệ điều hành không được trống',
                 'phienBanHeDieuHanh.max'=>'Phiên bản hệ điều hành chỉ được tối đa 50 ký tự',
                 
                 'quayVideo.max'=>'Quay Video chỉ được tối đa 100 ký tự',
@@ -316,21 +263,6 @@ class DienThoaiController extends Controller
                 
                 'anhSanPham.mimes'=>'Hình ảnh sản phẩm phải thuộc định dạng sau: png, jpg, jpeg'
             ]);
-
-        //KIỂM TRA KÍCH THƯỚC ĐƯỢC NHẬP VÀO
-        $kichThuoc = $request->kichThuoc;
-            //xác định vị trí 'x'
-        $temp1 = strpos($kichThuoc, 'x');
-        $temp2 = strpos($kichThuoc, 'x', $temp1+1);
-            //Tìm dài, rộng, dày
-                //substr(chuỗi, vị trí cắt, số ký tự cắt);
-        $dai = substr($kichThuoc, 0, $temp1);
-        $rong = substr($kichThuoc, $temp1+1, $temp2-$temp1-1);
-        $day = substr($kichThuoc, $temp2+1);
-        if( !(is_numeric($dai) && is_numeric($rong) && is_numeric($day)) )
-        {
-            return redirect('admin/dienthoai/sua/'.$id)->with('loi', 'Kích thước phải được nhập theo dài x rộng x dày, không cần nhập đơn vị, không được nhập dấu cách (để nhập hai phẩy năm=>2.5, đơn vị là mm)');
-        }
         
         if($request->apDungKM == 'on')
         {
@@ -416,7 +348,8 @@ class DienThoaiController extends Controller
             $dienThoai->Hinh_anh = $ten;
         }
         
-        //TẠO ĐIỆN THOẠI
+        //LƯU ĐIỆN THOẠI
+        $dienThoai->Dang_ban = 1;
         $dienThoai->Ten_dien_thoai = $request->tenDienThoai;
         $dienThoai->Mo_ta = $request->moTa;
         $dienThoai->Kich_thuoc = $request->kichThuoc;

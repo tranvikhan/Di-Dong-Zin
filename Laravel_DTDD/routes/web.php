@@ -39,6 +39,8 @@ Route::group(['prefix'=>'admin'], function(){
 
         Route::get('xoa/{id}', 'HangDienThoaiController@getXoa');
     });
+
+    Route::get('LocDienThoai/{hangDT}/{mucGia}/{sapXep}', 'AjaxController@FilterPhone');
 });
 
 Route::get('temp', function(){
