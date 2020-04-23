@@ -19,4 +19,9 @@ class ChiTietGioHang extends Model
     {
         return $this->belongsTo('App\GioHang', 'Ma_gio_hang', 'Ma_gio_hang');
     }
+
+    public function ToGiaBan()
+    {
+        return $this->belongsTo('App\GiaBan', 'Ma_gia_ban', 'Ma_gia_ban');
+    }
 }

@@ -6,212 +6,121 @@
 <div class="content">
     <div id="donhang" class="tabcontent">
         <h2>QUẢN LÝ ĐƠN HÀNG</h2>
-        <div class="donhangmoi">
-            <table class="tb1">
-                <tr>
-                    <th>Mã đơn hàng:</th>
-                    <td>001</td>
-                    <th>Ngày tạo:</th>
-                    <td>22/4/2020</td>
-                </tr>
-                <tr>
-                    <th>Khách hàng:</th>
-                    <td>Trần Vi Khan</td>
-                    <th>Mã khách hàng:</th>
-                    <td>001</td>
-                </tr>
-                <tr>
-                    <th>Số điện thoại:</th>
-                    <td >0974184717</td>
-                    <th>Hình thức thanh toán:</th>
-                    <td>Online</td>
-                </tr>
-                <tr>
-                    <th>Địa chỉ nhận hàng:</th>
-                    <td colspan="3">Long Mỹ, Hậu Giang</td>
+        @foreach ($hoaDon as $hd)
 
-                </tr>
-            </table>
-            <table class="tb2">
-                <tr>
-                    <th>
-                        STT
-                    </th>
-                    <th>
-                        Điện thoại
-                    </th>
-                    <th>
-                        Số lượng
-                    </th>
-                    <th>
-                        Đơn giá
-                    </th>
-                    <th>
-                        Thành tiền
-                    </th>
-                </tr>
-                <tr>
-                    <td>
-                        1
-                    </td>
-                    <td>
-                        <img src="DiDongZin/imagePhone/ABv0_s20-hong.png" width="50px">
-                        <span>iPhone11 64Gb Mới Chính Hãng</span>
-                    </td>
-                    <td>
-                        1
-                    </td>
-                    <td>
-                        19.190.000
-                    </td>
-                    <td>
-                        19.190.000
-                    </td>
-                </tr>
-                <tr>
-                    <th colspan="4">
-                        Tổng cộng:
-                    </th>
-                    <td>
-                        19.190.000
-                    </td>
-                </tr>
-                <tr>
-                    <th colspan="4">
-                        Thuế VAT:
-                    </th>
-                    <td>
-                        100.000
-                    </td>
-                </tr>
-                <tr>
-                    <th colspan="4">
-                        Tổng thanh toán:
-                    </th>
-                    <td>
-                        19.290.000
-                    </td>
-                </tr>
-            </table>
-            <div class="g-btn-xacnhan">
-                <button class="btnThemdienthoai"><img src="DiDongZin/assets/img/cancel_30px.png">Hủy bỏ</button>
-                <button class="btnThemdienthoai"><img src="DiDongZin/assets/img/checked_30px.png">Xác nhận</button>
+            <div class="donhangmoi">
+                <table class="tb1">
+                    <tr>
+                        <th>Mã đơn hàng:</th>
+                        <td>{{ $hd->Ma_hoa_don }}</td>
+                        <th>Ngày tạo:</th>
+                        <td>{{ $hd->Ngay_tao }}</td>
+                    </tr>
+                    <tr>
+                        <th>Khách hàng:</th>
+                        <td>{{ $hd->ToGioHang->ToTaiKhoan->Ho_va_ten_lot }} {{ $hd->ToGioHang->ToTaiKhoan->Ten }}</td>
+                        <th>Mã khách hàng:</th>
+                        <td>{{ $hd->ToGioHang->ToTaiKhoan->Ma_tai_khoan }}</td>
+                    </tr>
+                    <tr>
+                        <th>Số điện thoại:</th>
+                        <td>{{ $hd->ToGioHang->ToTaiKhoan->So_dien_thoai }}</td>
+                        <th>Hình thức thanh toán:</th>
+                        <td>{{ $hd->Hinh_thuc_thanh_toan }}</td>
+                    </tr>
+                    <tr>
+                        <th>Địa chỉ nhận hàng:</th>
+                        <td colspan="3">{{ $hd->Dia_chi_nhan_hang }}</td>
+
+                    </tr>
+                </table>
+                <table class="tb2">
+                    <tr>
+                        <th>
+                            STT
+                        </th>
+                        <th>
+                            Điện thoại
+                        </th>
+                        <th>
+                            Số lượng
+                        </th>
+                        <th>
+                            Đơn giá
+                        </th>
+                        <th>
+                            Thành tiền
+                        </th>
+                    </tr>
+                    <?php  
+                        $count = 1;
+                        $tongCong = 0;
+                    ?>
+                    @foreach ($hd->ToGioHang->ToChiTietGioHang as $chiTiet)
+                        <tr>
+                            <td>
+                                {{ $count }}
+                                <?php
+                                    $count++;
+                                ?>
+                            </td>
+                            <td>
+                            <img src="DiDongZin/imagePhone/{{ $chiTiet->ToDienThoaiDiDong->Hinh_anh }}" width="50px">
+                                <span>{{ $chiTiet->ToDienThoaiDiDong->Ten_dien_thoai }}</span>
+                            </td>
+                            <td>
+                                {{ $chiTiet->So_luong }}
+                            </td>
+                            <td>
+                                {{ $chiTiet->ToGiaBan->Gia }}
+                            </td>
+                            <td>
+                                {{ $chiTiet->So_luong *  $chiTiet->ToGiaBan->Gia}}
+                                <?php  
+                                    $tongCong +=  $chiTiet->So_luong *  $chiTiet->ToGiaBan->Gia; 
+                                ?>
+                            </td>
+                        </tr>
+                    @endforeach
+                    
+                    <tr>
+                        <th colspan="4">
+                            Tổng cộng:
+                        </th>
+                        <td>
+                            {{ $tongCong }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th colspan="4">
+                            Thuế VAT:
+                        </th>
+                        <td>
+                            {{ ($hd->Thue_VAT / 100) * $tongCong }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th colspan="4">
+                            Tổng thanh toán:
+                        </th>
+                        <td>
+                            {{ $tongCong + ($hd->Thue_VAT / 100) * $tongCong }}
+                        </td>
+                    </tr>
+                </table>
+                <div class="g-btn-xacnhan">
+                    <button class="btnThemdienthoai" onclick="HuyBo({{ $hd->Ma_hoa_don }})"><img src="DiDongZin/assets/img/cancel_30px.png">Hủy bỏ</button>
+                    <button class="btnThemdienthoai" onclick="XacNhan({{ $hd->Ma_hoa_don }})"><img src="DiDongZin/assets/img/checked_30px.png">Xác nhận</button>
+                </div>
+                
             </div>
+        @endforeach
 
-
-        </div>
-        <div class="donhangmoi">
-            <table class="tb1">
-                <tr>
-                    <th>Mã đơn hàng:</th>
-                    <td colspan="3">002</td>
-                    <th>Ngày tạo:</th>
-                    <td>22/4/2020</td>
-                </tr>
-                <tr>
-                    <th>Khách hàng:</th>
-                    <td colspan="3">Nguyễn Tấn Thịnh</td>
-                    <th>Mã khách hàng:</th>
-                    <td>002</td>
-                </tr>
-                <tr>
-                    <th>Số điện thoại:</th>
-                    <td colspan="3">097654512</td>
-                    <th>Hình thức thanh toán:</th>
-                    <td>Offline</td>
-                </tr>
-                <tr>
-                    <th>Địa chỉ nhận hàng:</th>
-                    <td colspan="5">Campuchia</td>
-
-                </tr>
-            </table>
-            <table class="tb2">
-                <tr>
-                    <th>
-                        STT
-                    </th>
-                    <th>
-                        Điện thoại
-                    </th>
-                    <th>
-                        Số lượng
-                    </th>
-                    <th>
-                        Đơn giá
-                    </th>
-                    <th>
-                        Thành tiền
-                    </th>
-                </tr>
-                <tr>
-                    <td>
-                        1
-                    </td>
-                    <td>
-                        <img src="DiDongZin/imagePhone/ABv0_s20-hong.png" width="50px">
-                        <span>Samsung Galaxy S20 8Gb/256Gb Mới Chính Hãng</span>
-                    </td>
-                    <td>
-                        1
-                    </td>
-                    <td>
-                        19.490.000
-                    </td>
-                    <td>
-                        19.490.000
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        1
-                    </td>
-                    <td>
-                        <img src="DiDongZin/imagePhone/ABv0_s20-hong.png" width="50px">
-                        <span>iPhone11 64Gb Mới Chính Hãng</span>
-                    </td>
-                    <td>
-                        1
-                    </td>
-                    <td>
-                        19.490.000
-                    </td>
-                    <td>
-                        19.490.000
-                    </td>
-                </tr>
-                <tr>
-                    <th colspan="4">
-                        Tổng cộng:
-                    </th>
-                    <td>
-                        38.680.000
-                    </td>
-                </tr>
-                <tr>
-                    <th colspan="4">
-                        Thuế VAT:
-                    </th>
-                    <td>
-                        200.000
-                    </td>
-                </tr>
-                <tr>
-                    <th colspan="4">
-                        Tổng thanh toán:
-                    </th>
-                    <td>
-                        38.880.000
-                    </td>
-                </tr>
-            </table>
-            <div class="g-btn-xacnhan">
-                <button class="btnThemdienthoai"><img src="DiDongZin/assets/img/cancel_30px.png">Hủy bỏ</button>
-                <button class="btnThemdienthoai"><img src="DiDongZin/assets/img/checked_30px.png">Xác nhận</button>
-            </div>
-
-
-        </div>
+        @if (session('thongbao'))
+            <?php
+                echo '<script>alert("'. session('thongbao') .'")</script>';
+            ?>
+        @endif
     </div>
 </div>
 
@@ -222,6 +131,25 @@
     <script>
         window.onload = function(){
             document.getElementById('donHangMenu').classList.add('active');
+        }
+
+        function HuyBo(ma)
+        {
+            if(confirm("Bạn không đồng ý xác nhận đơn hàng có mã là: "+ma))
+            {
+                if(confirm("Bạn sẽ xóa bỏ đơn hàng này ra khỏi danh sách đơn hàng"))
+                {
+                    window.location.href = "admin/donhang/huybo/"+ ma;
+                }
+            }
+        }
+
+        function XacNhan(ma)
+        {
+            if( confirm("Bạn đồng ý xác nhận đơn hàng có mã là: "+ma) )
+            {
+                window.location.href = "admin/donhang/xacnhan/"+ ma;
+            }
         }
     </script>
 @endsection

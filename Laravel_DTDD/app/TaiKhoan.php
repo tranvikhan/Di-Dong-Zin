@@ -41,7 +41,7 @@ class TaiKhoan extends Authenticatable
 
     protected $primaryKey = 'Ma_tai_khoan';
 
-    protected $timestamps = false;
+    public $timestamps = false;
 
     public function ToGioHang()
     {

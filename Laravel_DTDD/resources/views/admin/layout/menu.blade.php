@@ -13,12 +13,12 @@
             <img src="DiDongZin/assets/img/department_50px.png" alt="logo">
             <p>Hãng điện thoại</p>
         </li>
-        <li class="tablinks" id="donHangMenu" onclick="loadPage('_donhang.html')">
+        <li class="tablinks" id="donHangMenu" onclick="loadPage('admin/donhang/danhsach')">
             <img src="DiDongZin/assets/img/purchase_order_50px.png" alt="logo">
             <p>Đơn hàng</p>
-            <span class="sodonmoi">2</span>
+            <span class="sodonmoi">{{ $sodonhang }}</span>
         </li>
-        <li class="tablinks" id="hoaDonMenu" onclick="loadPage('_hoadon.html')">
+        <li class="tablinks" id="hoaDonMenu" onclick="loadPage('admin/hoadon')">
             <img src="DiDongZin/assets/img/receipt_50px.png" alt="logo">
             <p>Hóa đơn</p>
         </li>
