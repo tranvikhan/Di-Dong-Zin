@@ -18,6 +18,10 @@ Route::group(['prefix'=>'admin'], function(){
         return view('admin.ThongKe');
     });
 
+    Route::group(['prefix'=>'donhang'], function(){
+        Route::get('danhsach', 'DonHangController@ShowView');
+    });
+
     Route::group(['prefix'=>'dienthoai'], function(){
         Route::get('danhsach', 'DienThoaiController@getDanhSach');
 
@@ -40,7 +44,12 @@ Route::group(['prefix'=>'admin'], function(){
         Route::get('xoa/{id}', 'HangDienThoaiController@getXoa');
     });
 
-    Route::get('LocDienThoai/{hangDT}/{mucGia}/{sapXep}', 'AjaxController@FilterPhone');
+    Route::group(['prefix'=>'ajax'], function(){
+        Route::get('LocDienThoai/{hangDT}/{mucGia}/{sapXep}', 'AjaxController@FilterPhone');
+
+        Route::get('TimKiemDienThoai/{noiDung}', 'AjaxController@FindPhone');
+    });
+    
 });
 
 Route::get('temp', function(){

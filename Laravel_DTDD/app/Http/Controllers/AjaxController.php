@@ -16,7 +16,7 @@ class AjaxController extends Controller
         $dsMaDienThoaiTheoGia = array();      //danh sách mã điện thoại đã lọc theo mức giá
         $dsMaDienThoaiTheoSapXep = array();   //danh sách mã điện thoại đã lọc theo sắp xếp
 
-        //LỌC ĐIỆN THOẠI THEO HÃNG ---------------------------------------------
+        //------------- LỌC ĐIỆN THOẠI THEO HÃNG ---------------------------------------------
         if($hangDT != "khongChon")
         {
             $dsHangDT = DienThoaiDiDong::where([
@@ -33,12 +33,8 @@ class AjaxController extends Controller
             $amount = count($dsMaDienThoaiTheoHang);
             $dsMaDienThoaiTheoHang[$amount] = $dt->Ma_dien_thoai;
         }
-
-        foreach ($dsMaDienThoaiTheoHang as $maDT) {
-            echo '<p>'.$maDT.'</p>';
-        }
         
-        //LỌC THEO MỨC GIÁ ---------------------------------------------
+        //--------------- LỌC THEO MỨC GIÁ ---------------------------------------------
         if($mucGia == 'khongChon')
         {
             $dsMaDienThoaiTheoGia = $dsMaDienThoaiTheoHang;
@@ -110,14 +106,8 @@ class AjaxController extends Controller
                 }
             }
         }
-        
-            
-    
-        foreach ($dsMaDienThoaiTheoGia as $maDT) {
-            echo '<p>'.$maDT.'</p>';
-        } 
 
-        //SẮP XẾP ĐIỆN THOẠI THEO GIÁ BÁN -----------------------------
+        //------------ SẮP XẾP ĐIỆN THOẠI THEO GIÁ BÁN -----------------------------
             
             //TẠO DANH SÁCH MÃ ĐIỆN THOẠI DÙNG ĐỂ SẮP XẾP LẠI
         $dsMaDienThoaiTheoSapXep = $dsMaDienThoaiTheoGia;
@@ -138,9 +128,6 @@ class AjaxController extends Controller
                     $dsGia[$amount] = $item->Gia;
                 }
             }
-        }
-        foreach ($dsGia as $gia) {
-            echo $gia.' ';
         }
 
         //SẮP XẾP THEO GIÁ CAO ĐẾN THẤP
@@ -184,16 +171,7 @@ class AjaxController extends Controller
                 }
             }
         }
-        //GHI CHÚ: Ta không cần xét trường hợp 'khongChon', do ban đầu ta đã có $dsDienThoaiTheoSapXep = $dsDienThoaiTheoGia;
-        
-        echo '<br/>';
-        foreach ($dsGia as $gia) {
-            echo $gia.' ';
-        }
-        foreach ($dsMaDienThoaiTheoSapXep as $maDT) {
-            echo $maDT.' ';
-        }
-        
+        //GHI CHÚ: Ta không cần xét trường hợp 'khongChon', do ban đầu ta đã có $dsDienThoaiTheoSapXep = $dsDienThoaiTheoGia;       
 
         echo '<table>';
                 echo '<tr>';
@@ -224,6 +202,130 @@ class AjaxController extends Controller
                     
                 echo '</tr>';
                 foreach ($dsMaDienThoaiTheoSapXep as $maDT) 
+                {
+                    $dt = DienThoaiDiDong::find($maDT);
+                    if($dt->Dang_ban == 1)
+                    {
+                        echo '<tr>';
+                            echo '<td>';
+                                echo '<label class="mycheckbox">';
+                                    echo '<input type="checkbox" name="check_phone[]">';
+                                    echo '<span class="checkmark"></span>';
+                                echo '</label>';
+                            echo '</td>';
+                            echo '<td>';
+                                echo '<img src="DiDongZin/imagePhone/'. $dt->Hinh_anh .'">';
+                            echo '</td>';
+                            echo '<td>';
+                                echo $dt->Ten_dien_thoai;
+                                echo '<div class="mini-action">';
+                                    echo '<a href="#">Xem</a>';
+                                    echo '<a onclick="loadPage(\'admin/dienthoai/sua/'. $dt->Ma_dien_thoai .'\')">Chỉnh sửa</a>';
+                                    echo '<a href="admin/dienthoai/xoa/'. $dt->Ma_dien_thoai .'" onclick="return XoaDienThoai(\''. $dt->Ten_dien_thoai .'\')">Xóa</a>';
+                                echo '</div>';
+                            echo '</td>';
+                            echo '<td>';
+                                echo $dt->Ma_dien_thoai;
+                            echo '</td>';
+                            echo '<td>';
+                                echo $dt->ToGiaBan->last()->Gia;
+                            echo '</td>';
+                            echo '<td>';
+                                //Lấy ngày hiện tại
+                                date_default_timezone_set('Asia/Ho_Chi_Minh');
+                                $today = date('Y-m-d');
+
+                                //Lấy giá điện thoại
+                                $gia = $dt->ToGiaBan->last()->Gia;
+
+                                //Lấy ra ngày bắt đầu và ngày kết thúc khuyến mãi
+                                $startDay = 0;
+                                $endDay = 0;    //Ngày khuyến mãi kết thúc
+                                $percent = 0;   //Phần trăm khuyến mãi của chương trình này
+                                $khuyenMai = $dt->ToKhuyenMai->last();
+                                if($khuyenMai !== null)
+                                {
+                                    $startDay = $khuyenMai->Tu_ngay;
+                                    $endDay = $khuyenMai->Den_ngay;
+                                    $percent = $khuyenMai->Phan_tram_khuyen_mai;
+                                }
+                                
+                                if($startDay<=$today && $today <= $endDay)
+                                {
+                                    echo $gia*(1-($percent/100));
+                                }
+                                else
+                                {
+                                    echo '--';
+                                }
+                                    
+                            echo '</td>';
+                            echo '<td>';
+                                echo $dt->ToHangDienThoaiDiDong->Ten_hang;
+                            echo '</td>';
+                            
+                        echo '</tr>';
+                    }      
+                }                
+        echo '</table>';
+    }
+
+    function FindPhone($noiDung)
+    {
+        $dienThoai = DienThoaiDiDong::where('Dang_ban', '=', 1)->get();
+        $dsMaDienThoai = array();
+
+        if( is_numeric($noiDung) )
+        {
+            $max = DienThoaiDiDong::where('Dang_ban', '=', 1)->max('Ma_dien_thoai');
+            $num = (int)$noiDung;
+
+            if( 1<=$noiDung && $noiDung<=$max)
+            {
+                $count = count($dsMaDienThoai);
+                $dsMaDienThoai[$count] = $num;
+            }
+        }
+        else //Nếu dữ liệu nhập vào không phải là số
+        {
+            foreach ($dienThoai as $dt) {
+                if( strpos($dt->Ten_dien_thoai, $noiDung) !== false )
+                {
+                    $count = count($dsMaDienThoai);
+                    $dsMaDienThoai[$count] = $dt->Ma_dien_thoai;
+                }
+            }
+        }
+        
+        echo '<table>';
+                echo '<tr>';
+                    echo '<th>';
+                        echo '<label class="mycheckbox">';
+                            echo '<input type="checkbox" id="checkAll">';
+                            echo '<span class="checkmark"></span>';
+                        echo '</label>';
+                    echo '</th>';
+                    echo '<th>';
+                        echo 'Ảnh';
+                    echo '</th>';
+                    echo '<th>';
+                        echo 'Tên';
+                    echo '</th>';
+                    echo '<th>';
+                        echo 'Mã';
+                    echo '</th>';
+                    echo '<th>';
+                        echo 'Giá';
+                    echo '</th>';
+                    echo '<th>';
+                        echo 'Giá khuyến mãi';
+                    echo '</th>';
+                    echo '<th>';
+                        echo 'Hãng';
+                    echo '</th>';
+                    
+                echo '</tr>';
+                foreach ($dsMaDienThoai as $maDT) 
                 {
                     $dt = DienThoaiDiDong::find($maDT);
                     if($dt->Dang_ban == 1)

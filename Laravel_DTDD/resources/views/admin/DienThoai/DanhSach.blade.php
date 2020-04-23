@@ -42,8 +42,8 @@
 
             </div>
             <div class="g-timkiem col-3">
-                <input type="text" placeholder="Nhập tên hoặc mã điện thoại">
-                <button>Tìm kiếm</button>
+                <input type="text" placeholder="Nhập tên hoặc mã điện thoại" id="timKiem">
+                <button id="btnTimKiem">Tìm kiếm</button>
             </div>
         </div>
         <div id="table">
@@ -172,7 +172,7 @@
                 hangDT = document.getElementById("hangDT").value;
                 mucGia = document.getElementById("mucGia").value;
                 sapXep = document.getElementById("sapXep").value;
-                alert(hangDT+" "+mucGia+' '+sapXep);
+
                 if( hangDT!="" || mucGia!="" || sapXep!="" )
                 {
                     if(hangDT == "")
@@ -187,17 +187,41 @@
                     {
                         sapXep = "khongChon";
                     }
-                    alert(hangDT+" "+mucGia+' '+sapXep);
-                    $.get("admin/LocDienThoai/"+hangDT+"/"+mucGia+"/"+sapXep, function($data){
+
+                    $.get("admin/ajax/LocDienThoai/"+hangDT+"/"+mucGia+"/"+sapXep, function($data){
                         $("#table").html($data);
-                        alert($data);
                     });
                 }
                 else
                 {
                     alert('Bạn phải chọn một trong các điều kiện lọc sản phẩm');
+                    location.reload();
                 }
-                    
+
+                //Khung tìm kiếm trở về rỗng
+                document.getElementById("timKiem").value = "";
+            });
+        });
+
+        $(document).ready(function(){
+            $("#btnTimKiem").click(function(){
+                noiDung = $("#timKiem").val();
+
+                if(noiDung == "")
+                {
+                    alert("Bạn phải nhập từ khóa ngẫu nhiên để tìm kiếm");
+                }
+                else
+                {
+                    $.get("admin/ajax/TimKiemDienThoai/"+noiDung, function($data){
+                    $("#table").html($data);
+                    });
+                }      
+                
+                //Khung lọc sản phẩm trở về rỗng
+                document.getElementById("hangDT").value = "";
+                document.getElementById("mucGia").value = "";
+                document.getElementById("sapXep").value = "";
             });
         });
     </script>    
