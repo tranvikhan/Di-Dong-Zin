@@ -144,7 +144,7 @@
             $('#btnTimHoaDon').click(function(){
                 $id = document.getElementById("timKiem").value;
 
-                $.get('admin/ajax/TimHoaDon/'+$id, function($data){
+                $.get('admin/hoadon/TimHoaDonAjax/'+$id, function($data){
                     if($data == '0')
                     {
                         alert('Không tìm thấy mã hóa đơn: '+ $id);

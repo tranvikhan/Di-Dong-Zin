@@ -188,7 +188,7 @@
                         sapXep = "khongChon";
                     }
 
-                    $.get("admin/ajax/LocDienThoai/"+hangDT+"/"+mucGia+"/"+sapXep, function($data){
+                    $.get("admin/dienthoai/LocDienThoaiAjax/"+hangDT+"/"+mucGia+"/"+sapXep, function($data){
                         $("#table").html($data);
                     });
                 }
@@ -213,7 +213,7 @@
                 }
                 else
                 {
-                    $.get("admin/ajax/TimKiemDienThoai/"+noiDung, function($data){
+                    $.get("admin/dienthoai/TimKiemDienThoaiAjax/"+noiDung, function($data){
                     $("#table").html($data);
                     });
                 }      

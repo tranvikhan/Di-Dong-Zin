@@ -14,15 +14,21 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['prefix'=>'admin'], function(){
+    
     Route::get('thongke', function(){
         return view('admin.ThongKe');
     });
 
-    Route::get('hoadon', function(){
-        $hoaDon = App\HoaDon::where('Trang_thai', '=', 1)->get();
-        $sodonhang = App\HoaDon::where('Trang_thai', '=', 0)->count();
-        View::share('sodonhang', $sodonhang);
-        return view('admin.HoaDon', ['hoaDon'=>$hoaDon]);
+    Route::group(['prefix'=>'hoadon'], function(){
+        Route::get('danhsach', 'HoaDonController@getDanhSach');
+
+        Route::get('TimHoaDonAjax/{id}', 'HoaDonController@FindBill');
+    });
+
+    Route::group(['prefix'=>'thanhvien'], function(){
+        Route::get('danhsach', 'ThanhVienController@getDanhSach');
+
+        //Route::get('TimHoaDonAjax/{id}', 'HoaDonController@FindBill');
     });
 
     Route::group(['prefix'=>'donhang'], function(){
@@ -43,6 +49,10 @@ Route::group(['prefix'=>'admin'], function(){
         Route::post('sua/{id}', 'DienThoaiController@postSua');
 
         Route::get('xoa/{id}', 'DienThoaiController@getXoa');
+
+        Route::get('LocDienThoaiAjax/{hangDT}/{mucGia}/{sapXep}', 'DienThoaiController@FilterPhone');
+
+        Route::get('TimKiemDienThoaiAjax/{noiDung}', 'DienThoaiController@FindPhone');
     });
 
     Route::group(['prefix'=>'hangdienthoai'], function(){
@@ -56,11 +66,9 @@ Route::group(['prefix'=>'admin'], function(){
     });
 
     Route::group(['prefix'=>'ajax'], function(){
-        Route::get('LocDienThoai/{hangDT}/{mucGia}/{sapXep}', 'AjaxController@FilterPhone');
+        
 
-        Route::get('TimKiemDienThoai/{noiDung}', 'AjaxController@FindPhone');
-
-        Route::get('TimHoaDon/{id}', 'AjaxController@FindBill');
+        
     });
     
 });

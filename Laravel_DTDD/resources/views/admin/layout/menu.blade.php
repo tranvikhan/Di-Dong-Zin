@@ -18,11 +18,11 @@
             <p>Đơn hàng</p>
             <span class="sodonmoi">{{ $sodonhang }}</span>
         </li>
-        <li class="tablinks" id="hoaDonMenu" onclick="loadPage('admin/hoadon')">
+        <li class="tablinks" id="hoaDonMenu" onclick="loadPage('admin/hoadon/danhsach')">
             <img src="DiDongZin/assets/img/receipt_50px.png" alt="logo">
             <p>Hóa đơn</p>
         </li>
-        <li class="tablinks" id="thanhVienMenu" onclick="loadPage('_thanhvien.html')">
+        <li class="tablinks" id="thanhVienMenu" onclick="loadPage('admin/thanhvien/danhsach')">
             <img src="DiDongZin/assets/img/member_50px.png" alt="logo">
             <p>Thành viên</p>
         </li>
