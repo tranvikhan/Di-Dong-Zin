@@ -16,7 +16,18 @@ use Illuminate\Support\Facades\Route;
 Route::group(['prefix'=>'admin'], function(){
     
     Route::get('thongke', function(){
-        return view('admin.ThongKe');
+        $sodonhang = App\HoaDon::where('Trang_thai', '=', 0)->count();
+        return view('admin.ThongKe', ['sodonhang'=>$sodonhang]);
+    });
+
+    Route::get('trang', function(){
+        $sodonhang = App\HoaDon::where('Trang_thai', '=', 0)->count();
+        return view('admin.Trang', ['sodonhang'=>$sodonhang]);
+    });
+
+    Route::get('caidat', function(){
+        $sodonhang = App\HoaDon::where('Trang_thai', '=', 0)->count();
+        return view('admin.CaiDat', ['sodonhang'=>$sodonhang]);
     });
 
     Route::group(['prefix'=>'hoadon'], function(){
@@ -28,7 +39,9 @@ Route::group(['prefix'=>'admin'], function(){
     Route::group(['prefix'=>'thanhvien'], function(){
         Route::get('danhsach', 'ThanhVienController@getDanhSach');
 
-        //Route::get('TimHoaDonAjax/{id}', 'HoaDonController@FindBill');
+        Route::post('SuaThanhVien', 'ThanhVienController@postSua');
+
+        Route::get('TimThanhVienAjax/{noiDung}', 'ThanhVienController@FindMember');
     });
 
     Route::group(['prefix'=>'donhang'], function(){

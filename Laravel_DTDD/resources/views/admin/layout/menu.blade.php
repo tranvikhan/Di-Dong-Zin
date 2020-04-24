@@ -26,11 +26,11 @@
             <img src="DiDongZin/assets/img/member_50px.png" alt="logo">
             <p>Thành viên</p>
         </li>
-        <li class="tablinks" id="trangMenu" onclick="loadPage('_trang.html')">
+        <li class="tablinks" id="trangMenu" onclick="loadPage('admin/trang')">
             <img src="DiDongZin/assets/img/page_50px.png" alt="logo">
             <p>Trang</p>
         </li>
-        <li class="tablinks" id="caiDatMenu" onclick="loadPage('_trang.html')">
+        <li class="tablinks" id="caiDatMenu" onclick="loadPage('admin/caidat')">
             <img src="DiDongZin/assets/img/settings_50px.png" alt="logo" id="ic-caidat">
             <p>Cài đặt</p>
         </li>
