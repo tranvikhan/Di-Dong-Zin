@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['prefix'=>'admin'], function(){
+Route::group(['prefix'=>'admin', 'middleware'=>'MyMiddleware'], function(){
     
     Route::get('thongke', function(){
         $sodonhang = App\HoaDon::where('Trang_thai', '=', 0)->count();
@@ -78,12 +78,28 @@ Route::group(['prefix'=>'admin'], function(){
         Route::get('xoa/{id}', 'HangDienThoaiController@getXoa');
     });
 
-    Route::group(['prefix'=>'ajax'], function(){
-        
-
-        
+    Route::get('dangxuat', function(){
+        Auth::logout();
+        return redirect('trangchu')->with('dangXuat', 'Đăng xuất thành công');
     });
-    
+});
+
+Route::get('TrangChu', 'UserController@getTrangChu');
+
+Route::get('logout', 'UserController@getDangXuat');
+
+Route::post('dangnhap', 'UserController@postDangNhap');
+
+Route::group(['prefix'=>'taikhoan'], function(){
+    Route::get('ThongTinCaNhan', 'UserController@getThongTinCaNhan');
+
+    Route::get('CapNhatTaiKhoan', 'UserController@getCapNhatTaiKhoan');
+
+    Route::get('DonHang', 'UserController@getDonHang');
+
+    Route::get('ThongTinThanhToan', 'UserController@getThongTinThanhToan');
+
+    Route::get('CaiDat', 'UserController@getCaiDat');
 });
 
 Route::get('temp', function(){
@@ -92,3 +108,5 @@ Route::get('temp', function(){
     $time = date('Y-m-d H:i:s');
     echo $time;
 });
+
+route::get('taouser', 'UserController@taoUser');

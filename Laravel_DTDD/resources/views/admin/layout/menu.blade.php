@@ -34,7 +34,7 @@
             <img src="DiDongZin/assets/img/settings_50px.png" alt="logo" id="ic-caidat">
             <p>Cài đặt</p>
         </li>
-        <li class="tablinks" id="dangXuatMenu">
+        <li class="tablinks" id="dangXuatMenu" onclick="loadPage('admin/dangxuat')">
             <img src="DiDongZin/assets/img/login_rounded_50px.png" alt="logo">
             <p>Đăng xuất</p>
         </li>
