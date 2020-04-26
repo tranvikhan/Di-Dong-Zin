@@ -12,7 +12,117 @@ class UserController extends Controller
 {
     function getTrangChu()
     {
-        return view('user.content');
+        $soLuongDT = DienThoaiDiDong::where('Dang_ban', '=', 1)->count();
+        $dsDienThoai;
+
+        //Danh sách điện thoại ---------------------------------------------------------
+        if($soLuongDT >= 12)
+        {
+            $dsDienThoai = DienThoaiDiDong::where('Dang_ban', '=', 1)->orderBy('Ma_dien_thoai', 'desc')->take(12)->get();
+        }
+        else
+        {
+            $dsDienThoai = DienThoaiDiDong::where('Dang_ban', '=', 1)->orderBy('Ma_dien_thoai', 'desc')->get();
+        }       
+        
+        //Danh sách điện thoại bán chạy --------------------------------------------------
+        $dsMaDT = array();
+        $dsSoLuongBan = array();
+        $count = 0;
+
+        $dienThoai = DienThoaiDiDong::where('Dang_ban', '=', 1)->get();
+        foreach ($dienThoai as $dt) {
+            $dsMaDT[$count] = $dt->Ma_dien_thoai;
+            $dsSoLuongBan[$count] = $dt->ToChiTietGioHang->count();
+            $count++;
+        }
+        for ($i=0; $i < count($dsMaDT)-1; $i++) { 
+            for ($j=$i+1; $j < count($dsMaDT); $j++) { 
+                if($dsSoLuongBan[$i] < $dsSoLuongBan[$j])
+                {
+                    //SWAP $dsSoLuongBan
+                    $temp = $dsSoLuongBan[$i];
+                    $dsSoLuongBan[$i] = $dsSoLuongBan[$j];
+                    $dsSoLuongBan[$j] = $temp;
+
+                    //SWAP $dsMaDT
+                    $temp = $dsMaDT[$i];
+                    $dsMaDT[$i] = $dsMaDT[$j];
+                    $dsMaDT[$j] = $temp;
+                }
+            }
+        }
+        $soLuongToiThieu;
+        if(count($dsMaDT) < 6){
+            $soLuongToiThieu = count($dsMaDT);
+        }
+        else{
+            $soLuongToiThieu = 6;
+        }
+            
+        $dsMaBanChay = array();
+        for ($i=0; $i < $soLuongToiThieu; $i++) { 
+            $dsMaBanChay[$i] = $dsMaDT[$i];
+        }
+
+        //Danh sách điện thoại giảm giá mạnh -------------------------------------------------
+        $dsMaDT = array();
+        $dsSoLuongKM = array();
+        $count = 0;
+
+            //Lấy ngày hôm nay
+        date_default_timezone_set('Asia/Ho_Chi_Minh');
+        $today = date('Y-m-d');
+
+        $dienThoai = DienThoaiDiDong::where('Dang_ban', '=', 1)->get();
+        foreach ($dienThoai as $dt) {
+            $hasKM = false;
+            $km =$dt->ToKhuyenMai->last();
+            if($km !== null)
+            {
+                if( $km->Tu_ngay<=$today && $today<=$km->Den_ngay )
+                {
+                    $hasKM = true;
+                }
+            }
+            
+            if( $hasKM )
+            {
+                $dsMaDT[$count] = $dt->Ma_dien_thoai;
+                $dsSoLuongKM[$count] = $km->Phan_tram_khuyen_mai;
+                $count++;
+            }
+        }
+        for ($i=0; $i < count($dsMaDT)-1; $i++) { 
+            for ($j=$i+1; $j < count($dsMaDT); $j++) { 
+                if($dsSoLuongKM[$i] < $dsSoLuongKM[$j])
+                {
+                    //SWAP $dsSoLuongKM
+                    $temp = $dsSoLuongKM[$i];
+                    $dsSoLuongKM[$i] = $dsSoLuongKM[$j];
+                    $dsSoLuongKM[$j] = $temp;
+
+                    //SWAP $dsMaDT
+                    $temp = $dsMaDT[$i];
+                    $dsMaDT[$i] = $dsMaDT[$j];
+                    $dsMaDT[$j] = $temp;
+                }
+            }
+        }
+        $soLuongToiThieu;
+        if(count($dsMaDT) < 6){
+            $soLuongToiThieu = count($dsMaDT);
+        }
+        else{
+            $soLuongToiThieu = 6;
+        }
+            
+        $dsMaGiamGia = array();
+        for ($i=0; $i < $soLuongToiThieu; $i++) { 
+            $dsMaGiamGia[$i] = $dsMaDT[$i];
+        }
+
+        return view('user.content', ['dsDienThoai'=>$dsDienThoai, 'dsMaBanChay'=>$dsMaBanChay, 'dsMaGiamGia'=>$dsMaGiamGia]);
     }
     
     function postDangNhap(Request $request)
@@ -44,27 +154,27 @@ class UserController extends Controller
     //CÁC TRANG QUẢN LÝ TÀI KHOẢN
     function getThongTinCaNhan()
     {
-        return view('user.ThongTin');
+        return view('user.account.ThongTin');
     }
 
     function getCapNhatTaiKhoan()
     {
-        return view('user.TaiKhoan');
+        return view('user.account.TaiKhoan');
     }
 
     function getDonHang()
     {
-        return view('user.DonHang');
+        return view('user.account.DonHang');
     }
 
     function getThongTinThanhToan()
     {
-        return view('user.ThongTinThanhToan');
+        return view('user.account.ThongTinThanhToan');
     }
 
     function getCaiDat()
     {
-        return view('user.CaiDat');
+        return view('user.account.CaiDat');
     }
     //- THE END ------------------ CÁC TRANG QUẢN LÝ TÀI KHOẢN
 

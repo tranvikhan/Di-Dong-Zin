@@ -40,443 +40,119 @@
             </div>
         </div> 
     </div>
-    <div   class="list-phone row">
-        <div class="col-2s ">
-            <div class="mobile-phone">
-                <img src="DiDongZin/imagePhone/iphone11-black-1.png" alt="iphone11">
-                <h2 class="name">iPhone 11 64GB Mới Chính Hãng</h2>
-                <span class="price">19.190.000 VND</span>
+    <div class="list-phone row">
+        @foreach($dsDienThoai as $dt)
+            <div class="col-2s ">
+                <div class="mobile-phone">
+                    <img src="DiDongZin/imagePhone/{{ $dt->Hinh_anh }}" style="height: 215px" alt="{{ $dt->Ten_dien_thoai }}">
+                    <h2 class="name">{{ $dt->Ten_dien_thoai }}</h2>
+                    <span class="price">{{ ShowPrice($dt->ToGiaBan->last()->Gia) }} VND</span>
+                </div>
+                <div class="hidden-info">
+                    <h2 class="name">{{ $dt->Ten_dien_thoai }}</h2>
+                    <span class="price">{{ ShowPrice($dt->ToGiaBan->last()->Gia) }} VND</span>
+                    <span class="list-info">Màn hình: {{ $dt->Kich_thuoc_man_hinh }} {{ $dt->Do_phan_giai_man_hinh }}</span>
+                    <span class="list-info">Chipset: {{ $dt->Chipset }}</span>
+                    <span class="list-info">Ram: {{ $dt->RAM }}GB</span>
+                    <span class="list-info">Rom: {{ $dt->ROM }}GB</span>
+                    <span class="list-info">Khe sim: {{ $dt->Khe_sim }}</span>
+                    <span class="list-info">Pin: {{ $dt->Pin }}mah</span>
+                    <span class="list-info">OS: {{ $dt->OS }} {{ $dt->Phien_ban_OS }}</span>
+                </div>
             </div>
-            <div class="hidden-info">
-                <h2 class="name">iPhone 11 64GB Mới Chính Hãng</h2>
-                <span class="price">19.190.000 VND</span>
-                <span class="list-info">Màn hình: 6.5 inch 1231x555</span>
-                <span class="list-info">Chipset: Apple A11</span>
-                <span class="list-info">Ram: 3Gb</span>
-                <span class="list-info">Rom: 64Gb</span>
-                <span class="list-info">Khe sim: 1</span>
-                <span class="list-info">Pin: 2500mah</span>
-                <span class="list-info">OS: IOS 13</span>
-            </div>
-        </div>
-        <div class="col-2s">
-            <div class="mobile-phone">
-                <img src="DiDongZin/imagePhone/iphoneX-space-gray-300x400.png" alt="iphoneX">
-                <h2 class="name">iPhoneX 64Gb Mới Chính Hãng</h2>
-                <span class="price">11.190.000 VND</span>
-            </div>
-            <div class="hidden-info">
-                <h2 class="name">iPhoneX 64Gb Mới Chính Hãng</h2>
-                <span class="price">11.190.000 VND</span>
-                <span class="list-info">Màn hình: 6.5 inch 1231x555</span>
-                <span class="list-info">Chipset: Apple A11</span>
-                <span class="list-info">Ram: 3Gb</span>
-                <span class="list-info">Rom: 64Gb</span>
-                <span class="list-info">Khe sim: 1</span>
-                <span class="list-info">Pin: 2500mah</span>
-                <span class="list-info">OS: IOS 13</span>
-            </div>
-        </div>
-        <div class="col-2s">
-            <div class="mobile-phone">
-                <img src="DiDongZin/imagePhone/s20-hong.png" alt="galaxys20">
-                <h2 class="name">Samsung Galaxy S20 8Gb/256Gb Mới Chính Hãng</h2>
-                <span class="price">19.490.000 VND</span>
-            </div>
-            <div class="hidden-info">
-                <h2 class="name">Samsung Galaxy S20 8Gb/256Gb Mới Chính Hãng</h2>
-                <span class="price">19.490.000 VND</span>
-                <span class="list-info">Màn hình: 6.5 inch 1231x555</span>
-                <span class="list-info">Chipset: Apple A11</span>
-                <span class="list-info">Ram: 3Gb</span>
-                <span class="list-info">Rom: 64Gb</span>
-                <span class="list-info">Khe sim: 1</span>
-                <span class="list-info">Pin: 2500mah</span>
-                <span class="list-info">OS: IOS 13</span>
-            </div>
-        </div>
-        <div class="col-2s">
-            <div class="mobile-phone">
-                <img src="DiDongZin/imagePhone/SAMSUNG-GALAXY-S10-300x400.png" alt="galaxys10">
-                <h2 class="name">Samsung Galaxy S10 128Gb Chính Hãng</h2>
-                <span class="price">13.990.000 VND</span>
-            </div>
-            <div class="hidden-info">
-                <h2 class="name">Samsung Galaxy S10 128Gb Chính Hãng</h2>
-                <span class="price">13.990.000 VND</span>
-                <span class="list-info">Màn hình: 6.5 inch 1231x555</span>
-                <span class="list-info">Chipset: Apple A11</span>
-                <span class="list-info">Ram: 3Gb</span>
-                <span class="list-info">Rom: 64Gb</span>
-                <span class="list-info">Khe sim: 1</span>
-                <span class="list-info">Pin: 2500mah</span>
-                <span class="list-info">OS: IOS 13</span>
-            </div>
-        </div>
-        <div class="col-2s">
-            <div class="mobile-phone">
-                <img src="DiDongZin/imagePhone/note-10-lite-trang.png" alt="note10lite">
-                <h2 class="name">Samsung Note 10 Lite 8Gb/128Gb Chính Hãng</h2>
-                <span class="price">10.190.000 VND</span>
-            </div>
-            <div class="hidden-info">
-                <h2 class="name">Samsung Note 10 Lite 8Gb/128Gb Chính Hãng</h2>
-                <span class="price">10.190.000 VND</span>
-                <span class="list-info">Màn hình: 6.5 inch 1231x555</span>
-                <span class="list-info">Chipset: Apple A11</span>
-                <span class="list-info">Ram: 3Gb</span>
-                <span class="list-info">Rom: 64Gb</span>
-                <span class="list-info">Khe sim: 1</span>
-                <span class="list-info">Pin: 2500mah</span>
-                <span class="list-info">OS: IOS 13</span>
-            </div>
-        </div>
-        <div class="col-2s">
-            <div class="mobile-phone">
-                <img src="DiDongZin/imagePhone/galaxy-a70-xanh.png" alt="galaxya70">
-                <h2 class="name">Samsung Galaxy A70 Mới Chính Hãng</h2>
-                <span class="price">8.190.000 VND</span>
-            </div>
-            <div class="hidden-info">
-                <h2 class="name">Samsung Galaxy A70 Mới Chính Hãng</h2>
-                <span class="price">8.190.000 VND</span>
-                <span class="list-info">Màn hình: 6.5 inch 1231x555</span>
-                <span class="list-info">Chipset: Apple A11</span>
-                <span class="list-info">Ram: 3Gb</span>
-                <span class="list-info">Rom: 64Gb</span>
-                <span class="list-info">Khe sim: 1</span>
-                <span class="list-info">Pin: 2500mah</span>
-                <span class="list-info">OS: IOS 13</span>
-            </div>
-        </div>
-        <div class="col-2s">
-            <div class="mobile-phone">
-                <img src="DiDongZin/imagePhone/iphone11-black-1.png" alt="iphone11">
-                <h2 class="name">iPhone 11 64GB Mới Chính Hãng</h2>
-                <span class="price">19.190.000 VND</span>
-            </div>
-            <div class="hidden-info">
-                <h2 class="name">iPhone 11 64GB Mới Chính Hãng</h2>
-                <span class="price">19.190.000 VND</span>
-                <span class="list-info">Màn hình: 6.5 inch 1231x555</span>
-                <span class="list-info">Chipset: Apple A11</span>
-                <span class="list-info">Ram: 3Gb</span>
-                <span class="list-info">Rom: 64Gb</span>
-                <span class="list-info">Khe sim: 1</span>
-                <span class="list-info">Pin: 2500mah</span>
-                <span class="list-info">OS: IOS 13</span>
-            </div>
-        </div>
-        <div class="col-2s">
-            <div class="mobile-phone">
-                <img src="DiDongZin/imagePhone/iphoneX-space-gray-300x400.png" alt="iphoneX">
-                <h2 class="name">iPhoneX 64Gb Mới Chính Hãng</h2>
-                <span class="price">11.190.000 VND</span>
-            </div>
-            <div class="hidden-info">
-                <h2 class="name">iPhoneX 64Gb Mới Chính Hãng</h2>
-                <span class="price">11.190.000 VND</span>
-                <span class="list-info">Màn hình: 6.5 inch 1231x555</span>
-                <span class="list-info">Chipset: Apple A11</span>
-                <span class="list-info">Ram: 3Gb</span>
-                <span class="list-info">Rom: 64Gb</span>
-                <span class="list-info">Khe sim: 1</span>
-                <span class="list-info">Pin: 2500mah</span>
-                <span class="list-info">OS: IOS 13</span>
-            </div>
-        </div>
-        <div class="col-2s">
-            <div class="mobile-phone">
-                <img src="DiDongZin/imagePhone/s20-hong.png" alt="galaxys20">
-                <h2 class="name">Samsung Galaxy S20 8Gb/256Gb Mới Chính Hãng</h2>
-                <span class="price">19.490.000 VND</span>
-            </div>
-            <div class="hidden-info">
-                <h2 class="name">Samsung Galaxy S20 8Gb/256Gb Mới Chính Hãng</h2>
-                <span class="price">19.490.000 VND</span>
-                <span class="list-info">Màn hình: 6.5 inch 1231x555</span>
-                <span class="list-info">Chipset: Apple A11</span>
-                <span class="list-info">Ram: 3Gb</span>
-                <span class="list-info">Rom: 64Gb</span>
-                <span class="list-info">Khe sim: 1</span>
-                <span class="list-info">Pin: 2500mah</span>
-                <span class="list-info">OS: IOS 13</span>
-            </div>
-        </div>
-        <div class="col-2s">
-            <div class="mobile-phone">
-                <img src="DiDongZin/imagePhone/SAMSUNG-GALAXY-S10-300x400.png" alt="galaxys10">
-                <h2 class="name">Samsung Galaxy S10 128Gb Chính Hãng</h2>
-                <span class="price">13.990.000 VND</span>
-            </div>
-            <div class="hidden-info">
-                <h2 class="name">Samsung Galaxy S10 128Gb Chính Hãng</h2>
-                <span class="price">13.990.000 VND</span>
-                <span class="list-info">Màn hình: 6.5 inch 1231x555</span>
-                <span class="list-info">Chipset: Apple A11</span>
-                <span class="list-info">Ram: 3Gb</span>
-                <span class="list-info">Rom: 64Gb</span>
-                <span class="list-info">Khe sim: 1</span>
-                <span class="list-info">Pin: 2500mah</span>
-                <span class="list-info">OS: IOS 13</span>
-            </div>
-        </div>
-        <div class="col-2s">
-            <div class="mobile-phone">
-                <img src="DiDongZin/imagePhone/note-10-lite-trang.png" alt="note10lite">
-                <h2 class="name">Samsung Note 10 Lite 8Gb/128Gb Chính Hãng</h2>
-                <span class="price">10.190.000 VND</span>
-            </div>
-            <div class="hidden-info">
-                <h2 class="name">Samsung Note 10 Lite 8Gb/128Gb Chính Hãng</h2>
-                <span class="price">10.190.000 VND</span>
-                <span class="list-info">Màn hình: 6.5 inch 1231x555</span>
-                <span class="list-info">Chipset: Apple A11</span>
-                <span class="list-info">Ram: 3Gb</span>
-                <span class="list-info">Rom: 64Gb</span>
-                <span class="list-info">Khe sim: 1</span>
-                <span class="list-info">Pin: 2500mah</span>
-                <span class="list-info">OS: IOS 13</span>
-            </div>
-        </div>
-        
+        @endforeach
+                
     </div>
     <div class="see-more">
         <button class="prm-btn">Xem Thêm</button>
     </div>
     <!-- XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-->
-     <h2 class="title">BÁN CHẠY</h2>
-     <div class="top-sale row">
-         <div class="col-2s">
-             <div class="mobile-phone">
-                 <img src="DiDongZin/imagePhone/iphone11-black-1.png" alt="iphone11">
-                 <h2 class="name">iPhone 11 64GB Mới Chính Hãng</h2>
-                 <span class="price">19.190.000 VND</span>
-             </div>
-             <div class="hidden-info">
-                 <h2 class="name">iPhone 11 64GB Mới Chính Hãng</h2>
-                 <span class="price">19.190.000 VND</span>
-                 <span class="list-info">Màn hình: 6.5 inch 1231x555</span>
-                 <span class="list-info">Chipset: Apple A11</span>
-                 <span class="list-info">Ram: 3Gb</span>
-                 <span class="list-info">Rom: 64Gb</span>
-                 <span class="list-info">Khe sim: 1</span>
-                 <span class="list-info">Pin: 2500mah</span>
-                 <span class="list-info">OS: IOS 13</span>
-             </div>
-         </div>
-         <div class="col-2s">
-             <div class="mobile-phone">
-                 <img src="DiDongZin/imagePhone/iphoneX-space-gray-300x400.png" alt="iphoneX">
-                 <h2 class="name">iPhoneX 64Gb Mới Chính Hãng</h2>
-                 <span class="price">11.190.000 VND</span>
-             </div>
-             <div class="hidden-info">
-                 <h2 class="name">iPhoneX 64Gb Mới Chính Hãng</h2>
-                 <span class="price">11.190.000 VND</span>
-                 <span class="list-info">Màn hình: 6.5 inch 1231x555</span>
-                 <span class="list-info">Chipset: Apple A11</span>
-                 <span class="list-info">Ram: 3Gb</span>
-                 <span class="list-info">Rom: 64Gb</span>
-                 <span class="list-info">Khe sim: 1</span>
-                 <span class="list-info">Pin: 2500mah</span>
-                 <span class="list-info">OS: IOS 13</span>
-             </div>
-         </div>
-         <div class="col-2s">
-             <div class="mobile-phone">
-                 <img src="DiDongZin/imagePhone/s20-hong.png" alt="galaxys20">
-                 <h2 class="name">Samsung Galaxy S20 8Gb/256Gb Mới Chính Hãng</h2>
-                 <span class="price">19.490.000 VND</span>
-             </div>
-             <div class="hidden-info">
-                 <h2 class="name">Samsung Galaxy S20 8Gb/256Gb Mới Chính Hãng</h2>
-                 <span class="price">19.490.000 VND</span>
-                 <span class="list-info">Màn hình: 6.5 inch 1231x555</span>
-                 <span class="list-info">Chipset: Apple A11</span>
-                 <span class="list-info">Ram: 3Gb</span>
-                 <span class="list-info">Rom: 64Gb</span>
-                 <span class="list-info">Khe sim: 1</span>
-                 <span class="list-info">Pin: 2500mah</span>
-                 <span class="list-info">OS: IOS 13</span>
-             </div>
-         </div>
-         <div class="col-2s">
-             <div class="mobile-phone">
-                 <img src="DiDongZin/imagePhone/SAMSUNG-GALAXY-S10-300x400.png" alt="galaxys10">
-                 <h2 class="name">Samsung Galaxy S10 128Gb Chính Hãng</h2>
-                 <span class="price">13.990.000 VND</span>
-             </div>
-             <div class="hidden-info">
-                 <h2 class="name">Samsung Galaxy S10 128Gb Chính Hãng</h2>
-                 <span class="price">13.990.000 VND</span>
-                 <span class="list-info">Màn hình: 6.5 inch 1231x555</span>
-                 <span class="list-info">Chipset: Apple A11</span>
-                 <span class="list-info">Ram: 3Gb</span>
-                 <span class="list-info">Rom: 64Gb</span>
-                 <span class="list-info">Khe sim: 1</span>
-                 <span class="list-info">Pin: 2500mah</span>
-                 <span class="list-info">OS: IOS 13</span>
-             </div>
-         </div>
-         <div class="col-2s">
-             <div class="mobile-phone">
-                 <img src="DiDongZin/imagePhone/note-10-lite-trang.png" alt="note10lite">
-                 <h2 class="name">Samsung Note 10 Lite 8Gb/128Gb Chính Hãng</h2>
-                 <span class="price">10.190.000 VND</span>
-             </div>
-             <div class="hidden-info">
-                 <h2 class="name">Samsung Note 10 Lite 8Gb/128Gb Chính Hãng</h2>
-                 <span class="price">10.190.000 VND</span>
-                 <span class="list-info">Màn hình: 6.5 inch 1231x555</span>
-                 <span class="list-info">Chipset: Apple A11</span>
-                 <span class="list-info">Ram: 3Gb</span>
-                 <span class="list-info">Rom: 64Gb</span>
-                 <span class="list-info">Khe sim: 1</span>
-                 <span class="list-info">Pin: 2500mah</span>
-                 <span class="list-info">OS: IOS 13</span>
-             </div>
-         </div>
-         <div class="col-2s">
-             <div class="mobile-phone">
-                 <img src="DiDongZin/imagePhone/galaxy-a70-xanh.png" alt="galaxya70">
-                 <h2 class="name">Samsung Galaxy A70 Mới Chính Hãng</h2>
-                 <span class="price">8.190.000 VND</span>
-             </div>
-             <div class="hidden-info">
-                 <h2 class="name">Samsung Galaxy A70 Mới Chính Hãng</h2>
-                 <span class="price">8.190.000 VND</span>
-                 <span class="list-info">Màn hình: 6.5 inch 1231x555</span>
-                 <span class="list-info">Chipset: Apple A11</span>
-                 <span class="list-info">Ram: 3Gb</span>
-                 <span class="list-info">Rom: 64Gb</span>
-                 <span class="list-info">Khe sim: 1</span>
-                 <span class="list-info">Pin: 2500mah</span>
-                 <span class="list-info">OS: IOS 13</span>
-             </div>
-         </div>
+    <h2 class="title">BÁN CHẠY</h2>
+    <div class="top-sale row">
+        @foreach($dsMaBanChay as $maDT)
+            <?php
+                $dt = App\DienThoaiDiDong::find($maDT);
+            ?>
+            <div class="col-2s ">
+                <div class="mobile-phone">
+                    <img src="DiDongZin/imagePhone/{{ $dt->Hinh_anh }}" style="height: 215px" alt="{{ $dt->Ten_dien_thoai }}">
+                    <h2 class="name">{{ $dt->Ten_dien_thoai }}</h2>
+                    <span class="price">{{ ShowPrice($dt->ToGiaBan->last()->Gia) }} VND</span>
+                </div>
+                <div class="hidden-info">
+                    <h2 class="name">{{ $dt->Ten_dien_thoai }}</h2>
+                    <span class="price">{{ ShowPrice($dt->ToGiaBan->last()->Gia) }} VND</span>
+                    <span class="list-info">Màn hình: {{ $dt->Kich_thuoc_man_hinh }} {{ $dt->Do_phan_giai_man_hinh }}</span>
+                    <span class="list-info">Chipset: {{ $dt->Chipset }}</span>
+                    <span class="list-info">Ram: {{ $dt->RAM }}GB</span>
+                    <span class="list-info">Rom: {{ $dt->ROM }}GB</span>
+                    <span class="list-info">Khe sim: {{ $dt->Khe_sim }}</span>
+                    <span class="list-info">Pin: {{ $dt->Pin }}mah</span>
+                    <span class="list-info">OS: {{ $dt->OS }} {{ $dt->Phien_ban_OS }}</span>
+                </div>
+            </div>
+        @endforeach
 
-     </div>
-     <div class="see-more">
-         <button class="prm-btn">Xem Thêm</button>
-     </div>
-      <!-- XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-->
-      <h2   class="title">GIẢM GIÁ MẠNH</h2>
-      <div class="top-sale row">
-          <div class="col-2s">
-              <div class="mobile-phone">
-                  <img src="DiDongZin/imagePhone/galaxy-a70-xanh.png" alt="galaxya70">
-                  <h2 class="name">Samsung Galaxy A70 Mới Chính Hãng</h2>
-                  <span class="price">8.190.000 VND</span>
-              </div>
-              <div class="hidden-info">
-                  <h2 class="name">Samsung Galaxy A70 Mới Chính Hãng</h2>
-                  <span class="price">8.190.000 VND</span>
-                  <span class="list-info">Màn hình: 6.5 inch 1231x555</span>
-                  <span class="list-info">Chipset: Apple A11</span>
-                  <span class="list-info">Ram: 3Gb</span>
-                  <span class="list-info">Rom: 64Gb</span>
-                  <span class="list-info">Khe sim: 1</span>
-                  <span class="list-info">Pin: 2500mah</span>
-                  <span class="list-info">OS: IOS 13</span>
-              </div>
-          </div>
+    </div>
+    <div class="see-more">
+        <button class="prm-btn">Xem Thêm</button>
+    </div>
+    <!-- XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-->
+    <h2   class="title">GIẢM GIÁ MẠNH</h2>
+    <div class="top-sale row">
+        @foreach($dsMaGiamGia as $maDT)
+            <?php
+                $dt = App\DienThoaiDiDong::find($maDT);
+            ?>
+            <div class="col-2s ">
+                <div class="mobile-phone">
+                    <img src="DiDongZin/imagePhone/{{ $dt->Hinh_anh }}" style="height: 215px" alt="{{ $dt->Ten_dien_thoai }}">
+                    <h2 class="name">{{ $dt->Ten_dien_thoai }}</h2>
+                    <span class="price">{{ ShowPrice($dt->ToGiaBan->last()->Gia) }} VND</span>
+                </div>
+                <div class="hidden-info">
+                    <h2 class="name">{{ $dt->Ten_dien_thoai }}</h2>
+                    <span class="price">{{ ShowPrice($dt->ToGiaBan->last()->Gia) }} VND</span>
+                    <span class="list-info">Màn hình: {{ $dt->Kich_thuoc_man_hinh }} {{ $dt->Do_phan_giai_man_hinh }}</span>
+                    <span class="list-info">Chipset: {{ $dt->Chipset }}</span>
+                    <span class="list-info">Ram: {{ $dt->RAM }}GB</span>
+                    <span class="list-info">Rom: {{ $dt->ROM }}GB</span>
+                    <span class="list-info">Khe sim: {{ $dt->Khe_sim }}</span>
+                    <span class="list-info">Pin: {{ $dt->Pin }}mah</span>
+                    <span class="list-info">OS: {{ $dt->OS }} {{ $dt->Phien_ban_OS }}</span>
+                </div>
+            </div>
+        @endforeach
           
-          <div class="col-2s">
-              <div class="mobile-phone">
-                  <img src="DiDongZin/imagePhone/iphoneX-space-gray-300x400.png" alt="iphoneX">
-                  <h2 class="name">iPhoneX 64Gb Mới Chính Hãng</h2>
-                  <span class="price">11.190.000 VND</span>
-              </div>
-              <div class="hidden-info">
-                  <h2 class="name">iPhoneX 64Gb Mới Chính Hãng</h2>
-                  <span class="price">11.190.000 VND</span>
-                  <span class="list-info">Màn hình: 6.5 inch 1231x555</span>
-                  <span class="list-info">Chipset: Apple A11</span>
-                  <span class="list-info">Ram: 3Gb</span>
-                  <span class="list-info">Rom: 64Gb</span>
-                  <span class="list-info">Khe sim: 1</span>
-                  <span class="list-info">Pin: 2500mah</span>
-                  <span class="list-info">OS: IOS 13</span>
-              </div>
-          </div>
-          <div class="col-2s">
-              <div class="mobile-phone">
-                  <img src="DiDongZin/imagePhone/s20-hong.png" alt="galaxys20">
-                  <h2 class="name">Samsung Galaxy S20 8Gb/256Gb Mới Chính Hãng</h2>
-                  <span class="price">19.490.000 VND</span>
-              </div>
-              <div class="hidden-info">
-                  <h2 class="name">Samsung Galaxy S20 8Gb/256Gb Mới Chính Hãng</h2>
-                  <span class="price">19.490.000 VND</span>
-                  <span class="list-info">Màn hình: 6.5 inch 1231x555</span>
-                  <span class="list-info">Chipset: Apple A11</span>
-                  <span class="list-info">Ram: 3Gb</span>
-                  <span class="list-info">Rom: 64Gb</span>
-                  <span class="list-info">Khe sim: 1</span>
-                  <span class="list-info">Pin: 2500mah</span>
-                  <span class="list-info">OS: IOS 13</span>
-              </div>
-          </div>
-          <div class="col-2s">
-              <div class="mobile-phone">
-                  <img src="DiDongZin/imagePhone/iphone11-black-1.png" alt="iphone11">
-                  <h2 class="name">iPhone 11 64GB Mới Chính Hãng</h2>
-                  <span class="price">19.190.000 VND</span>
-              </div>
-              <div class="hidden-info">
-                  <h2 class="name">iPhone 11 64GB Mới Chính Hãng</h2>
-                  <span class="price">19.190.000 VND</span>
-                  <span class="list-info">Màn hình: 6.5 inch 1231x555</span>
-                  <span class="list-info">Chipset: Apple A11</span>
-                  <span class="list-info">Ram: 3Gb</span>
-                  <span class="list-info">Rom: 64Gb</span>
-                  <span class="list-info">Khe sim: 1</span>
-                  <span class="list-info">Pin: 2500mah</span>
-                  <span class="list-info">OS: IOS 13</span>
-              </div>
-          </div>
-          <div class="col-2s">
-              <div class="mobile-phone">
-                  <img src="DiDongZin/imagePhone/SAMSUNG-GALAXY-S10-300x400.png" alt="galaxys10">
-                  <h2 class="name">Samsung Galaxy S10 128Gb Chính Hãng</h2>
-                  <span class="price">13.990.000 VND</span>
-              </div>
-              <div class="hidden-info">
-                  <h2 class="name">Samsung Galaxy S10 128Gb Chính Hãng</h2>
-                  <span class="price">13.990.000 VND</span>
-                  <span class="list-info">Màn hình: 6.5 inch 1231x555</span>
-                  <span class="list-info">Chipset: Apple A11</span>
-                  <span class="list-info">Ram: 3Gb</span>
-                  <span class="list-info">Rom: 64Gb</span>
-                  <span class="list-info">Khe sim: 1</span>
-                  <span class="list-info">Pin: 2500mah</span>
-                  <span class="list-info">OS: IOS 13</span>
-              </div>
-          </div>
-          <div class="col-2s">
-              <div class="mobile-phone">
-                  <img src="DiDongZin/imagePhone/note-10-lite-trang.png" alt="note10lite">
-                  <h2 class="name">Samsung Note 10 Lite 8Gb/128Gb Chính Hãng</h2>
-                  <span class="price">10.190.000 VND</span>
-              </div>
-              <div class="hidden-info">
-                  <h2 class="name">Samsung Note 10 Lite 8Gb/128Gb Chính Hãng</h2>
-                  <span class="price">10.190.000 VND</span>
-                  <span class="list-info">Màn hình: 6.5 inch 1231x555</span>
-                  <span class="list-info">Chipset: Apple A11</span>
-                  <span class="list-info">Ram: 3Gb</span>
-                  <span class="list-info">Rom: 64Gb</span>
-                  <span class="list-info">Khe sim: 1</span>
-                  <span class="list-info">Pin: 2500mah</span>
-                  <span class="list-info">OS: IOS 13</span>
-              </div>
-          </div>
-          
-      </div>
-      <div class="see-more">
-          <button class="prm-btn">Xem Thêm</button>
-      </div>
+    </div>
+    <div class="see-more">
+        <button class="prm-btn">Xem Thêm</button>
+    </div>
 </div>
+
+<?php
+    //Hiển thị giá theo 1 định dạng khác
+    function ShowPrice($price)
+    {
+        $price = $price."";
+        $strPrice = "";
+        while(strlen($price) >= 3)
+        {
+            $temp = substr($price, strlen($price)-3, strlen($price));
+            if($strPrice == "") {
+                $strPrice .= $temp;
+            }else {
+                $strPrice = $temp .'.'. $strPrice;    
+            }
+            $price = substr($price, 0, strlen($price)-3);
+        }
+        if(strlen($price) != 0)
+        {
+            $strPrice = $price .'.'. $strPrice;
+        }
+
+        return $strPrice;
+    }
+?>
 
 @endsection
