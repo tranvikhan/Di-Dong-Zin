@@ -8,7 +8,7 @@
             <h2>QUẢN LÝ TRANG</h2>
             <img src="DiDongZin/assets/img/undraw_tabs_jf82.svg">
             <div class="row">
-                <div class="col-4 col-4s cart-thanhvien" onclick="loadPage('index-login-success.html')">
+                <div class="col-4 col-4s cart-thanhvien" onclick="loadPage('TrangChu')">
                     <div class="row">
                         <img src="DiDongZin/assets/img/logo-min.png" alt="avatar" class="col-5">
                         <div class="col-7">

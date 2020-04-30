@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\HoaDon;
+use App\GioHang;
 
 class DonHangController extends Controller
 {
@@ -31,6 +32,8 @@ class DonHangController extends Controller
         DB::table('Chi_tiet_gio_hang')->where('Ma_gio_hang', '=', $Ma_gio_hang)->delete();
 
         $hoaDon->delete();
+
+        $gioHang = GioHang::find($Ma_gio_hang)->delete();
 
         return redirect('admin/donhang/danhsach')->with('thongbao', 'Hủy bỏ đơn hàng thành công');
     }

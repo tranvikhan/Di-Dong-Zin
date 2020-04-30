@@ -13,7 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['prefix'=>'admin', 'middleware'=>'MyMiddleware'], function(){
+// ==============================================================================================
+// -------- ROUTE ADMIN -------------------------------------------------------------------------
+// ==============================================================================================
+Route::group(['prefix'=>'admin', 'middleware'=>'AdminMiddleware'], function(){
     
     Route::get('thongke', function(){
         $sodonhang = App\HoaDon::where('Trang_thai', '=', 0)->count();
@@ -84,24 +87,50 @@ Route::group(['prefix'=>'admin', 'middleware'=>'MyMiddleware'], function(){
     });
 });
 
+
+// ==============================================================================================
+// -------- ROUTE USER --------------------------------------------------------------------------
+// ==============================================================================================
+    //TRANG CHỦ
 Route::get('TrangChu', 'UserController@getTrangChu');
 
+    //ĐĂNG XUẤT
 Route::get('logout', 'UserController@getDangXuat');
 
+    //NHẬN THÔNG TIN ĐĂNG NHẬP
 Route::post('dangnhap', 'UserController@postDangNhap');
 
-Route::group(['prefix'=>'taikhoan'], function(){
+Route::post('dangky', 'UserController@postDangKy');
+
+    //HIỆN CHI TIẾT ĐIỆN THOẠI
+Route::get('DienThoai/{id}.html', 'UserController@ShowPhone');
+    //TẠO SESSION CHO VÀO GIỎ HÀNG
+Route::get('ThemVaoGioHang/{id}', 'UserController@getThemVaoGioHang');
+
+Route::get('ThanhToanGioHang', 'UserController@getThanhToanGioHang');
+
+Route::get('TangGiamSoLuongCHECKED_AJAX/{loai}/{maDT}/{maGioHang}/{soLuong}', 'UserController@getTangGiamSoLuongCHECKED_AJAX');
+
+Route::get('TangGiamSoLuongUNCHECK_AJAX/{loai}/{maDT}/{soLuong}', 'UserController@getTangGiamSoLuongUNCHECK_AJAX');
+
+Route::group(['prefix'=>'taikhoan', 'middleware'=>'UserMiddleware'], function(){
+        //THÔNG TIN THÀNH VIÊN
     Route::get('ThongTinCaNhan', 'UserController@getThongTinCaNhan');
 
-    Route::get('CapNhatTaiKhoan', 'UserController@getCapNhatTaiKhoan');
+    Route::post('CapNhatThongTin', 'UserController@postCapNhatThongTin');
 
+        // TÀI KHOẢN
+    Route::get('CapNhatTaiKhoan', 'UserController@getCapNhatTaiKhoan');
+        
+    // ĐƠN HÀNG
     Route::get('DonHang', 'UserController@getDonHang');
 
-    Route::get('ThongTinThanhToan', 'UserController@getThongTinThanhToan');
-
+        // CÀI ĐẶT
     Route::get('CaiDat', 'UserController@getCaiDat');
 });
 
+
+//-------- NHÁP -------------------------------------------------------
 Route::get('temp', function(){
     date_default_timezone_set('Asia/Ho_Chi_Minh');
    
@@ -109,4 +138,43 @@ Route::get('temp', function(){
     echo $time;
 });
 
-route::get('taouser', 'UserController@taoUser');
+route::get('SuaUser', 'UserController@suaPassUser');
+
+Route::group(['middleware'=>'web'], function(){
+    Route::get('taoSessionCount', function(){
+        Session::put('count', 0);
+    });
+    Route::get('goiCount', function(){
+        echo Session('count');
+    });
+    Route::get('taoNEW', function(){
+        $count = Session('count');
+        Session::put('a'.$count, $count+10);
+        $count++;
+        Session::put('count', $count);
+    });
+    Route::get('dsSession', function(){
+        $count = Session('count');
+        for ($i=0; $i < $count; $i++) { 
+            echo Session('a'.$i).' ';
+        }
+    });
+    Route::get('ShowDT', function(){
+        $soLuongDT = session()->get('count');
+        $dsMaDienThoai = array();
+        $dsSoLuongTheoMa = array();
+        // Đưa các điện thoại trong giỏ hàng vào dsMaDienThoai để hienj ra màn hình
+        for ($i=0; $i < $soLuongDT; $i++) { 
+            $maDT = session()->get('dt'.$i);
+
+            $count = count($dsMaDienThoai);
+            $dsMaDienThoai[$count] = $maDT;
+            $dsSoLuongTheoMa[$count] = 1;
+
+            echo $dsMaDienThoai[$i].' '.$dsSoLuongTheoMa[$i].'<br>';
+        }
+    });
+    Route::get('xoaSession', function(){
+        session()->flush();
+    });
+});

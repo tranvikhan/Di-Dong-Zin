@@ -12,7 +12,13 @@
             <div class="row user-thongtin">
                 <form method="POST" action="#" >
                     <div class="col-4">
-                        <img src="DiDongZin/avatar/plus_150px.png" id="img_avatar">
+                        <img 
+                            @if (Auth::user()->URL_Avatar == null)
+                                src="DiDongZin/avatar/plus_150px.png"
+                            @else
+                                src="DiDongZin/avatar/{{ Auth::user()->URL_Avatar }}"    
+                            @endif
+                        id="img_avatar">
                         <input type="file" name="avatar" id="input_avatar">
                         <p>Ảnh đại diện</p>
                     </div>
@@ -23,7 +29,7 @@
                                     Họ và tên
                                 </th>
                                 <td>
-                                    <input type="text" name="fullname" value="Trần Vi Khan">
+                                    <input type="text" name="fullname" value="{{ Auth::user()->Ho_va_ten_lot }} {{ Auth::user()->Ten }}">
                                 </td>
                             </tr>
                             <tr>
@@ -36,7 +42,11 @@
                                         <span class="checkmark"></span>
                                     </label>
                                     <label class="myRadio">Nữ
-                                        <input type="radio" name="sex" value="Nữ">
+                                        <input type="radio" name="sex" value="Nữ" 
+                                            @if (Auth::user()->Gioi_tinh == 0)
+                                                checked
+                                            @endif
+                                        >
                                         <span class="checkmark"></span>
                                     </label>
                                 </td>
@@ -46,7 +56,7 @@
                                     Ngày sinh
                                 </th>
                                 <td>
-                                    <input type="date" name="dateOfBirth" value="1999-06-06">
+                                    <input type="date" name="dateOfBirth" value="{{ Auth::user()->Ngay_sinh }}">
                                 </td>
                             </tr>
                             <tr>
@@ -54,7 +64,7 @@
                                     Số điện thoại
                                 </th>
                                 <td>
-                                    <input type="tel" name="phonenumber" value="0974184717">
+                                    <input type="tel" name="phonenumber" value="{{ Auth::user()->So_dien_thoai }}">
                                 </td>
                             </tr>
                             <tr>
@@ -62,7 +72,7 @@
                                     Địa chỉ
                                 </th>
                                 <td>
-                                    <input type="text" name="address" value="Ấp 8 xã Lương Nghĩa, huyện Long Mỹ, tỉnh Hậu Giang ">
+                                    <input type="text" name="address" value="{{ Auth::user()->Dia_chi }}">
                                 </td>
                             </tr>
                             <tr>

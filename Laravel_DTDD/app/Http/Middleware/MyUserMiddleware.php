@@ -2,10 +2,10 @@
 
 namespace App\Http\Middleware;
 
-use Illuminate\Support\Facades\Auth;
 use Closure;
+use Illuminate\Support\Facades\Auth;
 
-class MyMiddleware
+class MyUserMiddleware
 {
     /**
      * Handle an incoming request.
@@ -16,16 +16,13 @@ class MyMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if( Auth::check() )
+        if(Auth::check())
         {
-            if( Auth::user()->Tai_khoan_admin == 1)
-                return $next($request);    
-            else
-                return redirect('trangchu');
+            return $next($request);
         }
         else
         {
-            return redirect('trangchu');
+            return redirect('TrangChu');
         }
     }
 }

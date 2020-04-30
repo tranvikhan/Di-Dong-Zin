@@ -42,7 +42,7 @@
     </div>
     <div class="list-phone row">
         @foreach($dsDienThoai as $dt)
-            <div class="col-2s ">
+            <div class="col-2s" onclick="GoToPhone({{ $dt->Ma_dien_thoai }})">
                 <div class="mobile-phone">
                     <img src="DiDongZin/imagePhone/{{ $dt->Hinh_anh }}" style="height: 215px" alt="{{ $dt->Ten_dien_thoai }}">
                     <h2 class="name">{{ $dt->Ten_dien_thoai }}</h2>
@@ -73,7 +73,7 @@
             <?php
                 $dt = App\DienThoaiDiDong::find($maDT);
             ?>
-            <div class="col-2s ">
+            <div class="col-2s"  onclick="GoToPhone({{ $dt->Ma_dien_thoai }})">
                 <div class="mobile-phone">
                     <img src="DiDongZin/imagePhone/{{ $dt->Hinh_anh }}" style="height: 215px" alt="{{ $dt->Ten_dien_thoai }}">
                     <h2 class="name">{{ $dt->Ten_dien_thoai }}</h2>
@@ -104,7 +104,7 @@
             <?php
                 $dt = App\DienThoaiDiDong::find($maDT);
             ?>
-            <div class="col-2s ">
+            <div class="col-2s "  onclick="GoToPhone({{ $dt->Ma_dien_thoai }})">
                 <div class="mobile-phone">
                     <img src="DiDongZin/imagePhone/{{ $dt->Hinh_anh }}" style="height: 215px" alt="{{ $dt->Ten_dien_thoai }}">
                     <h2 class="name">{{ $dt->Ten_dien_thoai }}</h2>
@@ -155,4 +155,13 @@
     }
 ?>
 
+@endsection
+
+@section('script')
+    <script>
+        function GoToPhone(ma)
+        {
+            window.location.href = 'DienThoai/'+ma+'.html';
+        }
+    </script>
 @endsection

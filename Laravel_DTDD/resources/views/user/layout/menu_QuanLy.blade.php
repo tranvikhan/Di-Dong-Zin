@@ -12,10 +12,6 @@
             <img src="DiDongZin/assets/img/purchase_order_50px.png">
             <span>Đơn hàng</span>
         </a>
-        <a href="taikhoan/ThongTinThanhToan" class="" id="thanhToanMenu">
-            <img src="DiDongZin/assets/img/mastercard_credit_card_50px.png">
-            <span>Thanh Toán</span>
-        </a>
         <a href="taikhoan/CaiDat" class="" id="caiDatMenu">
             <img src="DiDongZin/assets/img/settings_50px.png">
             <span>Cài đặt</span>
@@ -26,3 +22,28 @@
         </a>
     </div>  
 </div>
+
+<?php
+    //Hiển thị giá theo 1 định dạng khác
+    function ShowPrice($price)
+    {
+        $price = $price."";
+        $strPrice = "";
+        while(strlen($price) >= 3)
+        {
+            $temp = substr($price, strlen($price)-3, strlen($price));
+            if($strPrice == "") {
+                $strPrice .= $temp;
+            }else {
+                $strPrice = $temp .'.'. $strPrice;    
+            }
+            $price = substr($price, 0, strlen($price)-3);
+        }
+        if(strlen($price) != 0)
+        {
+            $strPrice = $price .'.'. $strPrice;
+        }
+
+        return $strPrice;
+    }
+?>
