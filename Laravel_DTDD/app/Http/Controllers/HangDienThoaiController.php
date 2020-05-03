@@ -27,6 +27,7 @@ class HangDienThoaiController extends Controller
                 'quocGiaThem.max'=>'Tên quốc gia có chiều dài tối đa là 40 ký tự'
             ]);
         $hangDT = new HangDienThoaiDiDong;
+        $hangDT->Ma_hang_dien_thoai = HangDienThoaiDiDong::all()->max('Ma_hang_dien_thoai') + 1;
         $hangDT->Ten_hang = $request->tenThem;
         $hangDT->Quoc_gia = $request->quocGiaThem;
 

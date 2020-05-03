@@ -27,7 +27,16 @@
             @if ($fileCSS == 'taiKhoan')
                 {{-- CSS - quản lý tài khoản ------------------------}}
                 <link rel="stylesheet" type="text/css" href="DiDongZin/assets/css/user_manage.css">
+             @endif
+            
+            @if ($fileCSS == 'taiKhoan_donHang')
+                {{-- CSS - Thanh toán giỏ hàng -----------------------}}
+                <link rel="stylesheet" type="text/css" href="DiDongZin/assets/css/checkout.css">
+
+                {{-- CSS - quản lý tài khoản ------------------------}}
+                <link rel="stylesheet" type="text/css" href="DiDongZin/assets/css/user_manage.css">   
             @endif
+
         @endif
         
         {{-- CSS - khi đang nhập thành công ------}}
@@ -56,7 +65,10 @@
         </div>
         <img src="DiDongZin/assets/img/slide_up_50px.png" onclick="scroll_top()" id="up-btn" alt="...">
         
-        @include('user.layout.modal_index')
+        @if ( !Auth::check() )
+            @include('user.layout.modal_index')    
+        @endif
+        
 
         @yield('script')
 

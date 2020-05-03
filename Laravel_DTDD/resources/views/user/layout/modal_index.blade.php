@@ -1,8 +1,4 @@
-<div id="myModal" class="modal sign_in_up"
-    @if ( session('loiDangKy') || (count($errors) > 0))
-        style="display:block"
-    @endif
->
+<div id="myModal" class="modal sign_in_up">
     <!-- Modal content -->
     <div class="modal-content">
         <span class="close">&times;</span>

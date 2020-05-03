@@ -27,23 +27,29 @@
     //Hiển thị giá theo 1 định dạng khác
     function ShowPrice($price)
     {
-        $price = $price."";
-        $strPrice = "";
-        while(strlen($price) >= 3)
+        if(strlen($price.'') >= 3)
         {
-            $temp = substr($price, strlen($price)-3, strlen($price));
-            if($strPrice == "") {
-                $strPrice .= $temp;
-            }else {
-                $strPrice = $temp .'.'. $strPrice;    
+            $price = $price."";
+            $strPrice = "";
+            while(strlen($price) >= 3)
+            {
+                $temp = substr($price, strlen($price)-3, strlen($price));
+                if($strPrice == "") {
+                    $strPrice .= $temp;
+                }else {
+                    $strPrice = $temp .'.'. $strPrice;    
+                }
+                $price = substr($price, 0, strlen($price)-3);
             }
-            $price = substr($price, 0, strlen($price)-3);
+            if(strlen($price) != 0)
+            {
+                $strPrice = $price .'.'. $strPrice;
+            }
+            return $strPrice;
         }
-        if(strlen($price) != 0)
+        else 
         {
-            $strPrice = $price .'.'. $strPrice;
-        }
-
-        return $strPrice;
+            return $price;
+        }        
     }
 ?>

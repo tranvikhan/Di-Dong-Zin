@@ -6,30 +6,40 @@
     //Hiển thị giá theo 1 định dạng khác
     function ShowPrice($price)
     {
-        $price = $price."";
-        $strPrice = "";
-        while(strlen($price) >= 3)
+        if(strlen($price.'') >= 3)
         {
-            $temp = substr($price, strlen($price)-3, strlen($price));
-            if($strPrice == "") {
-                $strPrice .= $temp;
-            }else {
-                $strPrice = $temp .'.'. $strPrice;    
-            }
-            $price = substr($price, 0, strlen($price)-3);
-        }
-        if(strlen($price) != 0)
-        {
-            $strPrice = $price .'.'. $strPrice;
-        }
+            //Ép kiểu $price thành chuỗi
+            $price = $price."";
 
-        return $strPrice;
+            $strPrice = "";
+            while(strlen($price) >= 3)
+            {
+                // Cắt 3 ký tự cuối cùng
+                $temp = substr($price, strlen($price)-3, strlen($price));
+                if($strPrice == "") {
+                    $strPrice .= $temp;
+                }else {
+                    $strPrice = $temp .'.'. $strPrice;    
+                }
+                // Tạo chuỗi $price mới (bỏ 3 ký tự vừa được cắt)
+                $price = substr($price, 0, strlen($price)-3);
+            }
+            if(strlen($price) != 0)
+            {
+                $strPrice = $price .'.'. $strPrice;
+            }
+            return $strPrice;
+        }
+        else 
+        {
+            return $price;
+        }        
     }
 ?>
 
 <div class="container page-body">
     <div class="row">
-        <form action="dathang.php" method="POST">
+        
         <div class="col-12">
             <h2 class="title">Giỏ Hàng</h2>
             <table class="table table-bordered table-customize table-responsive">
@@ -138,107 +148,142 @@
                 </table>            
         </div>
         <div class="col-6 thongtindathang thongtinthanhtoan">
-            <h2 class="title">Thông tin thanh toán</h2>
-            <table>
-                <tr>
-                    <th>Họ tên*</th>
-                    <td>
-                        <input type="text" placeholder="Điền tên của bạn..." name="tenKhachHang"
+            <form action="TaoDonHang" method="POST">
+                {{ csrf_field() }}
+
+                <h2 class="title">Thông tin thanh toán</h2>
+                <table>
+                    <tr>
+                        <th>Họ tên*</th>
+                        <td>
+                            <input type="text" placeholder="Điền tên của bạn..." name="tenKhachHang"
+                                @if (Auth::check())
+                                    value="{{ Auth::user()->Ho_va_ten_lot }} {{ Auth::user()->Ten }}"
+                                @endif
+                            >
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Số điện thoại*</th>
+                        <td>
+                            <input type="text" placeholder="097414717..." name="soDT"
                             @if (Auth::check())
-                                value="{{ Auth::user()->Ho_va_ten_lot }} {{ Auth::user()->Ten }}"
+                                value="{{ Auth::user()->So_dien_thoai }}"
                             @endif
-                        >
-                    </td>
-                </tr>
-                <tr>
-                    <th>Số điện thoại*</th>
-                    <td>
-                        <input type="text" placeholder="097414717..." name="soDT"
-                        @if (Auth::check())
-                            value="{{ Auth::user()->So_dien_thoai }}"
-                        @endif
-                        >
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                       Địa chỉ giao hàng*
-                    </th>
-                    <td> 
-                        <input type="text" placeholder="Điền địa chỉ..." name="diaChi"
-                            @if (Auth::check())
-                                value="{{ Auth::user()->Dia_chi }}"
-                            @endif
-                        >
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        Hình thức thanh toán
-                    </th>
-                    <td>
-                        <select name="hinhthuc">
-                            <option>Thanh toán Online</option>
-                            <option>Thanh toán khi nhận hàng</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr class="hint-thanhtoan">
-                    <th>
-                        Tên tài khoản ngân hàng
-                    </th>
-                    <td>
-                        <input type="text" placeholder="Điền tên tài khoản ngân hàng..." name="tenChuThe">
-                    </td>
-                </tr>
-                <tr class="hint-thanhtoan">
-                    <th>
-                        Số thẻ
-                    </th>
-                    <td>
-                        <input type="text" placeholder="000-000-000-000" name="soThe">
-                    </td>
-                </tr>
-                <tr class="hint-thanhtoan">
-                    <th>
-                        CVV/CVV2
-                    </th>
-                    <td>
-                        <input type="text" placeholder="" name="CVV">
-                    </td>
-                </tr>
-                <tr class="hint-thanhtoan">
-                    <th>
-                        Ngày hết hạn
-                    </th>
-                    <td>
-                        <select name="thangHetHan">
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
-                            <option>6</option>
-                            <option>7</option>
-                            <option>8</option>
-                            <option>9</option>
-                            <option>10</option>
-                            <option>11</option>
-                            <option>12</option>
-                        </select>
-                        <select name="namHetHan">
-                            <option>2020</option>
-                            <option>2021</option>
-                            <option>2022</option>
-                            <option>2023</option>
-                            <option>2024</option>
-                        </select>
-                    </td>
-                </tr>
-                
-            </table>
-            <input type="submit" value="Đặt Hàng">
+                            >
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                        Địa chỉ giao hàng*
+                        </th>
+                        <td> 
+                            <input type="text" placeholder="Điền địa chỉ..." name="diaChi"
+                                @if (Auth::check())
+                                    value="{{ Auth::user()->Dia_chi }}"
+                                @endif
+                            >
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Hình thức thanh toán
+                        </th>
+                        <td>
+                            <select name="hinhthuc">
+                                <option value="Thanh toán Online">Thanh toán Online</option>
+                                <option value="Thanh toán khi nhận hàng">Thanh toán khi nhận hàng</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr class="hint-thanhtoan">
+                        <th>
+                            Tên tài khoản ngân hàng
+                        </th>
+                        <td>
+                            <input type="text" placeholder="Điền tên tài khoản ngân hàng..." name="tenChuThe">
+                        </td>
+                    </tr>
+                    <tr class="hint-thanhtoan">
+                        <th>
+                            Số thẻ
+                        </th>
+                        <td>
+                            <input type="text" placeholder="000-000-000-000" name="soThe">
+                        </td>
+                    </tr>
+                    <tr class="hint-thanhtoan">
+                        <th>
+                            CVV/CVV2
+                        </th>
+                        <td>
+                            <input type="text" placeholder="" name="CVV">
+                        </td>
+                    </tr>
+                    <tr class="hint-thanhtoan">
+                        <th>
+                            Ngày hết hạn
+                        </th>
+                        <td>
+                            <select name="thangHetHan">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12">12</option>
+                            </select>
+                            <select name="namHetHan">
+                                <option value="2020">2020</option>
+                                <option value="2021">2021</option>
+                                <option value="2022">2022</option>
+                                <option value="2023">2023</option>
+                                <option value="2024">2024</option>
+                            </select>
+                        </td>
+                    </tr>
+                    
+                </table>
+                <input type="submit" onclick="return DatHang()" value="Đặt Hàng">
+            </form>
         </div>
+
+        <input type="hidden" id="xacNhanDangNhap"
+            @if (Auth::check())
+                value="checked"
+            @else
+                value="uncheck"
+            @endif
+        >
+
+        {{-- Nhận errors gửi về của quá trình tạo đơn hàng, quá trình này chỉ xảy ra khi đã đăng nhập --}}
+        @if (Auth::check())
+            <?php $loi = ""; ?>
+            @if (count($errors) > 0)
+                <?php
+                    foreach ($errors->all() as $err) {
+                        if($loi == ""){
+                            $loi .= $err;
+                        }else{
+                            $loi .= '\\n'. $err;
+                        }
+                    }
+                    echo '<script>alert("'. $loi .'");</script>'
+                ?>
+            @endif    
+        @endif        
+
+        @if(session('thongBaoTaoDonHang'))
+            <?php
+                echo '<script>alert("'. session('thongBaoTaoDonHang') .'")</script>';
+            ?>
+        @endif
         </form>
     </div>
 </div>
@@ -259,74 +304,77 @@
             }
             else if(loai == 'giam')
             {
-                document.getElementById('sl'+idDT).innerHTML = soLuong*1 - 1;   
-                ThayDoiGiaTongCong('giam', idDT);
+                soLuongHienTai = document.getElementById('sl'+idDT).innerHTML;
+                // Nếu số lượng hiện tại = 1, đồng ý giảm lần nữa sẽ tiến hành xóa
+                if(soLuongHienTai == 1)
+                {
+                    if(confirm('Bạn sẽ xóa điện thoại này ra khỏi giỏ hàng?'))
+                    {
+                        document.getElementById('sl'+idDT).innerHTML = soLuong*1 - 1;   
+                        ThayDoiGiaTongCong('giam', idDT);
+                    }
+                    // Ngược lại, thì không thay đổi gì
+                }
+                else
+                {
+                    document.getElementById('sl'+idDT).innerHTML = soLuong*1 - 1;   
+                    ThayDoiGiaTongCong('giam', idDT);
+                }
             }
             soLuong = document.getElementById('sl'+idDT).innerHTML;
             
             document.getElementById('soLuongIconGioHang'+idDT).innerHTML = 'X '+soLuong;
-            if( checked )
-                //ĐÃ ĐĂNG NHẬP
+            
+            if( soLuong == 0)
             {
-                if( soLuong == 0)
+                // XÓA ĐIỆN THOẠI AJAX
+                
+                if( checked )
+                    //ĐÃ ĐĂNG NHẬP
                 {
-                    if(confirm('Bạn sẽ xóa điện thoại này ra khỏi giỏ hàng?'))
-                    {
-                        $.get('TangGiamSoLuongCHECKED_AJAX/xoa/'+idDT+'/'+maGioHang+'/'+soLuong, function(data){
-                            //Cập nhật số lượng điện thoại, không cần sử dụng biến data
-                        });
-                        //Ẩn đi dòng bị xóa
-                        document.getElementById('rowDT'+idDT).hidden = true;
-                        
-                        // Ẩn đi điện thoại bị xóa trên icon giỏ hảng phía trên góc phải
-                        document.getElementById('rowIconGioHang'+idDT).hidden = true;
-                        
-                        // Giảm tổng số lượng điện thoại trong 2 icon giỏ hàng
-                        count = document.getElementById('iconGioHangTren').innerHTML;
-                            // Icon xuất hiện ở giao diện rộng (desktop)
-                        document.getElementById('iconGioHangTren').innerHTML = count*1 - 1;
-                            // Icon xuất hiện ở giao diện hẹp (smart phone)
-                        document.getElementById('iconGioHangDuoi').innerHTML = count*1 - 1;
-                    }
+                    $.get('TangGiamSoLuongCHECKED_AJAX/xoa/'+idDT+'/'+maGioHang+'/'+soLuong, function(data){
+                        //Cập nhật số lượng điện thoại, không cần sử dụng biến data
+                    });
                 }
                 else
+                    //CHƯA ĐĂNG NHẬP
+                {
+                    $.get('TangGiamSoLuongUNCHECK_AJAX/xoa/'+idDT+'/'+soLuong, function(data){
+                        //Cập nhật số lượng điện thoại, không cần sử dụng biến data
+                    });
+                }
+
+                //Ẩn đi dòng bị xóa
+                document.getElementById('rowDT'+idDT).hidden = true;
+                
+                // Ẩn đi điện thoại bị xóa trên icon giỏ hảng phía trên góc phải
+                document.getElementById('rowIconGioHang'+idDT).hidden = true;
+                
+                // Giảm tổng số lượng điện thoại trong 2 icon giỏ hàng
+                count = document.getElementById('iconGioHangTren').innerHTML;
+                    // Icon xuất hiện ở giao diện rộng (desktop)
+                document.getElementById('iconGioHangTren').innerHTML = count*1 - 1;
+                    // Icon xuất hiện ở giao diện hẹp (smart phone)
+                document.getElementById('iconGioHangDuoi').innerHTML = count*1 - 1;
+            }
+            else
+            {
+                // SỬA ĐIỆN THOẠI AJAX
+                if( checked )
+                    //ĐÃ ĐĂNG NHẬP
                 {
                     $.get('TangGiamSoLuongCHECKED_AJAX/sua/'+idDT+'/'+maGioHang+'/'+soLuong, function(data){
                         //Cập nhật số lượng điện thoại, không cần sử dụng biến data
                     });
-                }                
-            }
-            else
-                //CHƯA ĐĂNG NHẬP
-            {
-                if( soLuong == 0)
-                {
-                    if(confirm('Bạn sẽ xóa điện thoại này ra khỏi giỏ hàng?'))
-                    {
-                        $.get('TangGiamSoLuongUNCHECK_AJAX/xoa/'+idDT+'/'+soLuong, function(data){
-                            //Cập nhật số lượng điện thoại, không cần sử dụng biến data
-                        });
-                        //Ẩn đi dòng bị xóa
-                        document.getElementById('rowDT'+idDT).hidden = true;
-                        
-                        // Ẩn đi điện thoại bị xóa trên icon giỏ hảng phía trên góc phải
-                        document.getElementById('rowIconGioHang'+idDT).hidden = true;
-                        
-                        // Giảm tổng số lượng điện thoại trong 2 icon giỏ hàng
-                        count = document.getElementById('iconGioHangTren').innerHTML;
-                            // Icon xuất hiện ở giao diện rộng (desktop)
-                        document.getElementById('iconGioHangTren').innerHTML = count*1 - 1;
-                            // Icon xuất hiện ở giao diện hẹp (smart phone)
-                        document.getElementById('iconGioHangDuoi').innerHTML = count*1 - 1;
-                    }
                 }
                 else
+                    //CHƯA ĐĂNG NHẬP
                 {
                     $.get('TangGiamSoLuongUNCHECK_AJAX/sua/'+idDT+'/'+soLuong, function(data){
                         //Cập nhật số lượng điện thoại, không cần sử dụng biến data
                     });
-                }
-            }
+                }                    
+            }              
         }
         
         function ThayDoiGiaTongCong(loai, maDT)
@@ -360,7 +408,7 @@
         //Hiển thị giá theo 1 định dạng khác (Phiên bản js ^^)
         function ShowPrice(price)
         {
-            if(price != 0)
+            if( ((price+'').length) >= 3)
             {
                 // Ép price thành chuỗi
                 price = price+'';
@@ -387,10 +435,26 @@
                 return strPrice;
             } 
             else
-                // price = 0: Phòng trường hợp không có điện thoại nào trong giỏ hàng 
+                // price nhỏ hơn 3 ký tự thì không cần xử lý chuỗi 
             {
-                return 0;
+                return price;
             }                           
+        }
+
+        function DatHang()
+        {
+            daDangNhap = document.getElementById('xacNhanDangNhap').value;
+            if(daDangNhap == 'checked')
+            {
+                return true;
+            }
+            else if(daDangNhap == 'uncheck')
+            {
+                alert('Bạn cần đăng nhập để đặt hàng');
+                document.getElementById('myModal').style.display = 'block';
+                
+                return false;
+            }
         }
     </script>    
 @endsection

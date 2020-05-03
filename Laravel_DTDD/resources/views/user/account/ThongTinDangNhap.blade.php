@@ -10,7 +10,27 @@
         <div class="col-10 user-tab-content">
             <h3 class="title">Tài khoản</h3>
             <div class="row user-thongtin">
-                <form method="POST" action="#" >
+                <form method="POST" action="taikhoan/CapNhatThongTinDangNhap" >
+                    {{ csrf_field() }}
+                    
+                    @if (count($errors) > 0)
+                        <?php $loi = "" ?>
+                        @foreach ($errors->all() as $err)
+                            <?php
+                                if($loi == ""){
+                                    $loi .= $err;
+                                }else{
+                                    $loi .= '\\n'. $err;
+                                }
+                            ?>
+                        @endforeach
+                        <?php echo '<script>alert("'. $loi .'")</script>' ?>
+                    @endif
+
+                    @if (session('thongBaoCapNhat'))
+                        <?php echo '<script>alert("'. session('thongBaoCapNhat') .'")</script>' ?>
+                    @endif
+                    
                     <div class="col-12">
                         <table>
                             <tr>
@@ -18,7 +38,7 @@
                                     Mã tài khoản
                                 </th>
                                 <td>
-                                    <input type="text" disabled="true" value="001" name="id">
+                                    <input type="text" readonly value="{{ Auth::user()->Ma_tai_khoan }}" name="id">
                                 </td>
                             </tr>
                             <tr>
@@ -26,7 +46,7 @@
                                     Tên đăng nhập
                                 </th>
                                 <td>
-                                    <input type="text" disabled value="tranvikhan" name="username">
+                                    <input type="text" readonly value="{{ Auth::user()->Username }}" name="username">
                                 </td>
                             </tr>
                             <tr>
@@ -34,7 +54,7 @@
                                     Mật khẩu hiện tại
                                 </th>
                                 <td>
-                                    <input type="password" name="Password">
+                                    <input type="password" name="password">
                                 </td>
                             </tr>
                             <tr>
@@ -50,7 +70,7 @@
                                     Nhập lại mật khẩu mới
                                 </th>
                                 <td>
-                                    <input type="password" name="newRePassword">
+                                    <input type="password" name="reNewPassword">
                                 </td>
                             </tr>
                             <tr>

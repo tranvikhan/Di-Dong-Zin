@@ -6,12 +6,14 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;;
 
 use App\TaiKhoan;
 use App\DienThoaiDiDong;
 use App\BinhLuan;
 use App\GioHang;
 use App\ChiTietGioHang;
+use App\HoaDon;
 
 class UserController extends Controller
 {
@@ -155,6 +157,7 @@ class UserController extends Controller
                 if( !$hasGioHang )
                 {
                     $gioHang = new GioHang;
+                    $gioHang->Ma_gio_hang = GioHang::all()->max('Ma_gio_hang') + 1;
                     $gioHang->Da_thanh_toan = 0;
                     $gioHang->Ma_tai_khoan = $maTK;
 
@@ -194,7 +197,7 @@ class UserController extends Controller
                 }
                 session()->forget('count');
             }          
-            return redirect('TrangChu')->with('thongBaoDangNhap', 'Đăng nhập thành công');
+            return redirect('TrangChu');
         }
         else
         {
@@ -232,9 +235,8 @@ class UserController extends Controller
                 'password2.required'=>'Mật khẩu bắt buộc phải nhập',
                 're_password2.same'=>'Mật khẩu nhập lại không chính xác'
             ]);
-        $ma = TaiKhoan::all()->max('Ma_tai_khoan');
         $user = new TaiKhoan;
-        $user->Ma_tai_khoan = $ma + 1;
+        $user->Ma_tai_khoan = TaiKhoan::all()->max('Ma_tai_khoan') + 1;
         $user->Username = $request->username2;
         $user->password = bcrypt($request->password2);
         $user->Ho_va_ten_lot = $request->hoVaTenLot;
@@ -260,6 +262,7 @@ class UserController extends Controller
     // ===========================================================================================
     // ---------------- CÁC TRANG QUẢN LÝ TÀI KHOẢN ----------------------------------------------
     // ===========================================================================================
+        // THÔNG TIN CÁ NHÂN
     function getThongTinCaNhan()
     {
         return view('user.account.ThongTin', ['fileCSS'=>'taiKhoan']);
@@ -267,24 +270,143 @@ class UserController extends Controller
 
     function postCapNhatThongTin(Request $request)
     {
+        $this->validate($request, 
+            [
+                'fullname'=>'required',
+                'avatar'=>'image|mimes:png,jpg,jpeg'
+            ], 
+            [
+                'fullname.required'=>'Họ và tên không được trống',
+                'avatar.image'=>'Ảnh đại diện phải là hình ảnh',
+                'avatar.mimes'=>'Ảnh đại diện thuộc 1 trong các định dạng png, jpg, jpeg'
+            ]);
+        $hoTen = $request->fullname;
+        $viTri = strrpos($hoTen, ' ');
+        $ten = '';
+        $hoVaTenLot = '';
+            // Họ tên phải bao gồm họ tên lót và tên
+        if($viTri != '')
+        {
+            $ten = substr($hoTen, $viTri + 1, strlen($hoTen));
+            $hoVaTenLot = substr($hoTen, 0, $viTri);
+        }
+        else
+        {
+            return redirect('taikhoan/ThongTinCaNhan')->with('thongBaoCapNhat', 'Họ tên phải bao gồm họ tên lót và tên');
+        }
         
-    }
+        $id = Auth::user()->Ma_tai_khoan;
+        $user = TaiKhoan::find($id);
 
+        // Gán tên mới và di chuyển file ảnh đại diện
+        if($request->avatar != "")
+        {
+            $file = $request->file('avatar');
+            $tenHinh = $file->getClientOriginalName();
+            $tenHinh = Str::random(4) .'_'. $tenHinh;
+            while( file_exists('DiDongZin/avatar/'.$tenHinh))
+            {
+                $tenHinh = Str::random(4) .'_'. $tenHinh;
+            }
+            $file->move('DiDongZin/avatar', $tenHinh);
+
+            $user->URL_Avatar = $tenHinh;
+        }
+        
+        $user->Ho_va_ten_lot = $hoVaTenLot;
+        $user->Ten = $ten;
+        $user->Ngay_sinh = $request->dateOfBirth;
+        $user->Gioi_tinh = $request->sex;
+        $user->Dia_chi = $request->address;
+        $user->So_dien_thoai = $request->phonenumber;
+
+        $user->save();
+        return redirect('taikhoan/ThongTinCaNhan')->with('thongBaoCapNhat', 'Cập nhật thông tin thành công');
+    }
+        // THÔNG TIN ĐĂNG NHẬP
     function getCapNhatTaiKhoan()
     {
-        return view('user.account.TaiKhoan', ['fileCSS'=>'taiKhoan']);
+        return view('user.account.ThongTinDangNhap', ['fileCSS'=>'taiKhoan']);
     }
 
+    function postCapNhatThongTinDangNhap(Request $request)
+    {
+        $this->validate($request, 
+            [
+                'password'=>'required',
+                'newPassword'=>'required',
+                'reNewPassword'=>'same:newPassword'
+            ], 
+            [
+                'password.required'=>'Mật khẩu hiện tại không được trống',
+                'newPassword.required'=>'Mật khẩu mới không được trống',
+                'reNewPassword.same'=>'Nhập lại mật khẩu mới không chính xác'
+            ]);
+        if(Auth::attempt(['Username'=>$request->username, 'password'=>$request->password]))
+        {
+            $ma = Auth::user()->Ma_tai_khoan;
+            $user = TaiKhoan::find($ma);
+            $user->password = bcrypt($request->newPassword);
+
+            $user->save();
+            return redirect('taikhoan/CapNhatTaiKhoan')->with('thongBaoCapNhat', 'Cập nhật mật khẩu thành công');
+        }
+        else
+        {
+            return redirect('taikhoan/CapNhatTaiKhoan')->with('thongBaoCapNhat', 'Mật khẩu hiện tại không đúng');
+        }
+    }
+
+        // THÔNG TIN ĐƠN HÀNG
     function getDonHang()
     {
-        return view('user.account.DonHang', ['fileCSS'=>'taiKhoan']);
+        $user = TaiKhoan::find( Auth::user()->Ma_tai_khoan );
+        $dsGioHang = $user->ToGioHang;
+        $dsMaDaHoanThanh = array();
+        $dsMaChuaHoanThanh = array();
+        
+        foreach ($dsGioHang as $gioHang) {
+            if($gioHang->Da_thanh_toan == 1)
+            {
+                $hoaDon = $gioHang->ToHoaDon;
+                if($hoaDon->Trang_thai == 1)
+                {
+                    $count = count($dsMaDaHoanThanh);
+                    $dsMaDaHoanThanh[$count] = $hoaDon->Ma_hoa_don;
+                }
+                else if($hoaDon->Trang_thai == 0)
+                {
+                    $count = count($dsMaChuaHoanThanh);
+                    $dsMaChuaHoanThanh[$count] = $hoaDon->Ma_hoa_don;
+                }
+            }
+        }
+
+        return view('user.account.DonHang', ['fileCSS'=>'taiKhoan_donHang', 'dsMaDaHoanThanh'=>$dsMaDaHoanThanh, 'dsMaChuaHoanThanh'=>$dsMaChuaHoanThanh]);
     }
 
-    function getThongTinThanhToan()
+    function getHuyDonHang($id)
     {
-        return view('user.account.ThongTinThanhToan', ['fileCSS'=>'taiKhoan']);
+        $hoaDon = HoaDon::find($id);
+        $gioHang = $hoaDon->ToGioHang;
+
+        // Xóa chi tiết giỏ hàng có liên quan
+        DB::table('Chi_tiet_gio_hang')->where('Ma_gio_hang', '=', $gioHang->Ma_gio_hang)->delete();
+
+        // Xóa hóa đơn, và giỏ hàng
+        $hoaDon->delete();
+        $gioHang->delete();
+        
+        return redirect('taikhoan/DonHang')->with('thongBaoHuy', 'Bạn đã hủy đơn hàng thành công');
     }
 
+    function getChiTietDonHang($id)
+    {
+        $hoaDon = HoaDon::find($id);
+        return view('user.account.ChiTietDonHang', ['fileCSS'=>'taiKhoan_donHang', 'hoaDon'=>$hoaDon]);
+    }
+
+        // CÀI ĐẶT
     function getCaiDat()
     {
         return view('user.account.CaiDat', ['fileCSS'=>'taiKhoan']);
@@ -337,12 +459,12 @@ class UserController extends Controller
         else
             // KHI CHƯA ĐĂNG NHẬP
         {
-            //Nếu biến count chưa được tạo
+            //Nếu biến count đã được tạo
             if( session()->has('count') )
             {
                 $soLuongDT = session()->get('count');
 
-                // Đưa các điện thoại trong giỏ hàng vào dsMaDienThoai để hienj ra màn hình
+                // Đưa các điện thoại trong giỏ hàng vào dsMaDienThoai để hiện ra màn hình
                 for ($i=0; $i < $soLuongDT; $i++) { 
                     $maDT = session()->get('dt'.$i);
                     $soLuong = session()->get('sl'.$i);
@@ -375,6 +497,7 @@ class UserController extends Controller
             if( !$hasGioHang )
             {
                 $gioHang = new GioHang;
+                $gioHang->Ma_gio_hang = GioHang::all()->max('Ma_gio_hang') + 1;
                 $gioHang->Da_thanh_toan = 0;
                 $gioHang->Ma_tai_khoan = $maTK;
 
@@ -420,6 +543,96 @@ class UserController extends Controller
             session()->put('count', $count);
         }
         return redirect('DienThoai/'. $ma .'.html');
+    }
+
+    function postTaoDonHang(Request $request)
+    {
+        //Thiết lập giờ tại khu vục
+        date_default_timezone_set('Asia/Ho_Chi_Minh');
+        
+        $this->validate($request, 
+            [
+                'tenKhachHang'=>'required',
+                'soDT'=>'required',
+                'diaChi'=>'required'
+            ], 
+            [
+                'tenKhachHang.required'=>'Tên khách hàng không được trống',
+                'soDT.required'=>'Số điện thoại không được trống',
+                'diaChi.required'=>'Địa chỉ giao hàng không được trống'
+            ]);
+
+        if($request->hinhthuc == 'Thanh toán Online')
+        {
+            $this->validate($request, 
+                [
+                    'tenChuThe'=>'required',
+                    'soThe'=>'required',
+                    'CVV'=>'required',
+                ], 
+                [
+                    'tenChuThe.required'=>'Tên chủ thẻ không được trống',
+                    'soThe.required'=>'Số thẻ không được trống',
+                    'CVV.required'=>'CVV không được trống'
+                ]);
+            $month = date('m');
+            $year  = date('Y');
+            if(($request->namHetHan < $year) || ($request->namHetHan == $year && $request->thangHetHan <= $month))
+            {
+                return redirect('ThanhToanGioHang')->with('thongBaoTaoDonHang', 'Thẻ của bạn phải còn hạn dùng ít nhất một tháng mới có thể thực hiện đặt hàng');
+            }
+        }
+ 
+        // Kiểm tra có giỏ hàng chưa
+        $user = TaiKhoan::find(Auth::user()->Ma_tai_khoan);
+        
+        // Lấy giỏ hàng cuối cùng
+            // Nếu tồn tại giỏ hàng, Da_thanh_toan = 0, số hàng hóa trong giỏ hàng > 0
+                // => Có giỏ hàng hợp lệ
+        $gioHang = $user->ToGioHang->last();
+        $hasBasket = false;
+        if($gioHang != null)
+        {
+            if( ($gioHang->Da_thanh_toan == 0) && (count($gioHang->ToChiTietGioHang) > 0) )
+            {
+                $hasBasket = true;                
+            }
+        }
+
+        if( $hasBasket )
+        {
+            // Lấy ngày giờ hiện tại
+            $now = date('Y-m-d H:i:s');
+
+            $hoaDon = new HoaDon;
+            $hoaDon->Ma_hoa_don = HoaDon::all()->max('Ma_hoa_don') + 1;
+            $hoaDon->Ma_gio_hang = $gioHang->Ma_gio_hang;
+            $hoaDon->Ma_tai_khoan = Auth::user()->Ma_tai_khoan;
+            $hoaDon->Ngay_tao = $now;
+            $hoaDon->Hinh_thuc_thanh_toan = $request->hinhthuc;
+            $hoaDon->Dia_chi_nhan_hang = $request->diaChi;
+            $hoaDon->Thue_VAT = 10;
+            $hoaDon->Trang_thai = 0;
+            $hoaDon->save();
+
+            // Sửa Da_thanh_toan = 1 trong giỏ hàng
+            $gioHang->Da_thanh_toan = 1;
+            $gioHang->save();
+
+            // Lưu địa chỉ và số điện thoại của người dùng, nếu trong thông tin cá nhân còn trống
+            if($user->Dia_chi == '' || $user->So_dien_thoai == '')
+            {
+                $user->Dia_chi = $request->diaChi;
+                $user->So_dien_thoai = $request->soDT;
+                $user->save();
+            }
+
+            return redirect('ThanhToanGioHang')->with('thongBaoTaoDonHang', 'Bạn đã tạo đơn hàng thành công');
+        }
+        else
+        {
+            return redirect('ThanhToanGioHang')->with('thongBaoTaoDonHang', 'Trong giỏ hàng của bạn không có điện thoại nào nên không thể tạo đơn hàng');
+        }
     }
 
     //THỰC HIỆN AJAX VIỆC TĂNG GIẢM SỐ LƯỢNG KHI ĐÃ ĐĂNG NHẬP

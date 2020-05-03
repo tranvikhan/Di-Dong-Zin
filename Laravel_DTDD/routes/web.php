@@ -104,10 +104,13 @@ Route::post('dangky', 'UserController@postDangKy');
 
     //HIỆN CHI TIẾT ĐIỆN THOẠI
 Route::get('DienThoai/{id}.html', 'UserController@ShowPhone');
+
     //TẠO SESSION CHO VÀO GIỎ HÀNG
 Route::get('ThemVaoGioHang/{id}', 'UserController@getThemVaoGioHang');
 
 Route::get('ThanhToanGioHang', 'UserController@getThanhToanGioHang');
+
+Route::post('TaoDonHang', 'UserController@postTaoDonHang');
 
 Route::get('TangGiamSoLuongCHECKED_AJAX/{loai}/{maDT}/{maGioHang}/{soLuong}', 'UserController@getTangGiamSoLuongCHECKED_AJAX');
 
@@ -121,9 +124,15 @@ Route::group(['prefix'=>'taikhoan', 'middleware'=>'UserMiddleware'], function(){
 
         // TÀI KHOẢN
     Route::get('CapNhatTaiKhoan', 'UserController@getCapNhatTaiKhoan');
+
+    Route::post('CapNhatThongTinDangNhap', 'UserController@postCapNhatThongTinDangNhap');
         
     // ĐƠN HÀNG
     Route::get('DonHang', 'UserController@getDonHang');
+
+    Route::get('HuyDonHang/{id}.html', 'UserController@getHuyDonHang');
+
+    Route::get('ChiTietDonHang/{id}.html', 'UserController@getChiTietDonHang');
 
         // CÀI ĐẶT
     Route::get('CaiDat', 'UserController@getCaiDat');
@@ -176,5 +185,14 @@ Route::group(['middleware'=>'web'], function(){
     });
     Route::get('xoaSession', function(){
         session()->flush();
+    });
+
+    Route::get('dangnhapchong', function(){
+        if(Auth::attempt(['Username'=>'abc6', 'password'=>'12345']))
+        {
+            echo 'da dang nhap chong thanh cong';
+        }
+        else
+            echo 'that bai';
     });
 });

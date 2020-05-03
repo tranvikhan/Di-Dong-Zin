@@ -167,6 +167,7 @@ class DienThoaiController extends Controller
         if($request->apDungKM == 'on')
         {
             $khuyenMai = new KhuyenMai;
+            $khuyenMai->Ma_khuyen_mai = KhuyenMai::all()->max('Ma_khuyen_mai') + 1;
             $khuyenMai->Tu_ngay = $request->tuNgay;
             $khuyenMai->Den_ngay = $request->denNgay;
             $khuyenMai->Phan_tram_khuyen_mai = $request->phanTramGiamGia;
@@ -177,6 +178,7 @@ class DienThoaiController extends Controller
 
         //TẠO GIÁ BÁN
         $giaBan = new GiaBan;
+        $giaBan->Ma_gia_ban = GiaBan::all()->max('Ma_gia_ban') + 1;
         $giaBan->Gia = $request->giaBan;
         $giaBan->Ngay_cap_nhat = $today;
         $giaBan->Trang_thai = 1;

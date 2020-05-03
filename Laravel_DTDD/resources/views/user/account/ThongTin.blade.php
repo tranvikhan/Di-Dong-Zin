@@ -10,7 +10,27 @@
         <div class="col-10 user-tab-content">
             <h3 class="title">Thông tin thành viên</h3>
             <div class="row user-thongtin">
-                <form method="POST" action="#" >
+                <form method="POST" action="taikhoan/CapNhatThongTin" enctype="multipart/form-data">
+                    {{ csrf_field() }}
+                    
+                    @if (count($errors) > 0)
+                        <?php $loi = "" ?>
+                        @foreach ($errors->all() as $err)
+                            <?php
+                                if($loi == ""){
+                                    $loi .= $err;
+                                }else{
+                                    $loi .= '\\n'. $err;
+                                }
+                            ?>
+                        @endforeach
+                        <?php echo '<script>alert("'. $loi .'")</script>' ?>
+                    @endif
+
+                    @if (session('thongBaoCapNhat'))
+                        <?php echo '<script>alert("'. session('thongBaoCapNhat') .'")</script>' ?>
+                    @endif
+
                     <div class="col-4">
                         <img 
                             @if (Auth::user()->URL_Avatar == null)
@@ -38,11 +58,11 @@
                                 </th>
                                 <td>
                                     <label class="myRadio">Nam
-                                        <input type="radio" name="sex" value="Nam" checked>
+                                        <input type="radio" name="sex" value="1" checked>
                                         <span class="checkmark"></span>
                                     </label>
                                     <label class="myRadio">Nữ
-                                        <input type="radio" name="sex" value="Nữ" 
+                                        <input type="radio" name="sex" value="0" 
                                             @if (Auth::user()->Gioi_tinh == 0)
                                                 checked
                                             @endif
