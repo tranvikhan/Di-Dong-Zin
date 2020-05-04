@@ -346,6 +346,10 @@ class DienThoaiController extends Controller
             }
             $file->move('DiDongZin/imagePhone', $ten);
 
+            // Xóa ảnh cũ trong hệ thống trước khi cập nhật ảnh mới
+                // unlink($filename): dùng để xóa file trong hệ thống, $filename: đường dẫn tới file 
+            unlink('DiDongZin/imagePhone/'.$dienThoai->Hinh_anh);
+
             //LƯU LẠI TÊN ẢNH ĐIỆN THOẠI
             $dienThoai->Hinh_anh = $ten;
         }
@@ -732,7 +736,11 @@ class DienThoaiController extends Controller
         else //Nếu dữ liệu nhập vào không phải là số
         {
             foreach ($dienThoai as $dt) {
-                if( strpos($dt->Ten_dien_thoai, $noiDung) !== false )
+                // Ta làm cho noiDung và tên điện thoại thành chữ thường (strlower)
+                $tenDT = strtolower($dt->Ten_dien_thoai);
+                $noiDung = strtolower($noiDung);
+                
+                if( strpos($tenDT, $noiDung) !== false )
                 {
                     $count = count($dsMaDienThoai);
                     $dsMaDienThoai[$count] = $dt->Ma_dien_thoai;

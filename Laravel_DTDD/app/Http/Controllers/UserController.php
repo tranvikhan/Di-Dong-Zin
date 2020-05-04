@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;;
+use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Collection;
 
 use App\TaiKhoan;
 use App\DienThoaiDiDong;
@@ -310,6 +311,11 @@ class UserController extends Controller
             }
             $file->move('DiDongZin/avatar', $tenHinh);
 
+            // Xóa ảnh cũ trong hệ thống trước khi cập nhật ảnh mới
+                // unlink($filename): dùng để xóa file trong hệ thống, $filename: đường dẫn tới file 
+            unlink('DiDongZin/avatar/'.$user->URL_Avatar);
+
+                //Cập nhật lại ảnh
             $user->URL_Avatar = $tenHinh;
         }
         
@@ -419,7 +425,8 @@ class UserController extends Controller
     function ShowPhone($id)
     {
         $dienThoai = DienThoaiDiDong::find($id);
-        $dsBinhLuan = $dienThoai->ToBinhLuan;
+        $dsBinhLuan = BinhLuan::paginate(5);
+        // $dsBinhLuan = $dienThoai->ToBinhLuan->paginate(5);
         return view('user.DienThoai', ['fileCSS'=>'dienThoai', 'dienThoai'=>$dienThoai, 'dsBinhLuan'=>$dsBinhLuan]);
     }
 

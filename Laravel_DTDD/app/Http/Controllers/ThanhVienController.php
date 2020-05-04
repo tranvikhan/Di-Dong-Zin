@@ -34,6 +34,7 @@ class ThanhVienController extends Controller
 
         if( is_numeric($noiDung) )
         {
+            //Nếu dữ liệu nhập vào là số
             $max = TaiKhoan::max('Ma_tai_khoan');
             $num = (int)$noiDung;
 
@@ -50,6 +51,10 @@ class ThanhVienController extends Controller
         {
             foreach ($thanhVien as $tv) {
                 $hoTen = $tv->Ho_va_ten_lot .' '. $tv->Ten;
+                
+                // Ta làm cho noiDung và họ và tên thành chữ thường (strlower)
+                $hoTen = strtolower($hoTen);
+                $noiDung = strtolower($noiDung);
 
                 // !==false : nghĩa là tìm thấy vị trí
                 if( strpos($hoTen, $noiDung) !== false )
