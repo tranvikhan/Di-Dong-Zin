@@ -61,19 +61,21 @@
             <h2 class="animated infinite pulse">DIDONGZIN</h2>
         </div>
         <div class="search-bar col-4">
-            <input id ="text_search"type="text" placeholder="Tìm sản phẩm" onkeyup="search_phone(this.value)"/>
+            <input id ="text_search" type="text" placeholder="Tìm sản phẩm" />
             <img src="DiDongZin/assets/img/search_30px.png" alt="icon-search">
             <div id="search-results">
-                <div class="phone-results">
+                {{-- <div class="phone-results">
                     <img src="DiDongZin/imagePhone/iphone11-black-1.png" alt="iphone 11"/>
                     <h2 class="name">iPhone11 64Gb Mới Chính Hãng</h2>
                     <span class="price">19.190.000 VND</span>
-                </div>
-                <div class="phone-results">
+                </div> --}}
+                
+                
+                {{-- <div class="phone-results">
                     <img src="DiDongZin/imagePhone/iphoneX-space-gray-300x400.png" alt="iphone X" />
                     <h2 class="name">iPhoneX 64Gb Mới Chính Hãng</h2>
                     <span class="price">11.190.000 VND</span>
-                </div>
+                </div> --}}
             </div>
         </div>
         <div class="col-4 right-nav-bar">
@@ -175,5 +177,32 @@
     window.onload = function(){
         count = document.getElementById('iconGioHangTren').innerHTML;
         document.getElementById('iconGioHangDuoi').innerHTML = count;
+    }
+
+    document.getElementById('text_search').onkeyup = function(e){
+        noiDung = document.getElementById('text_search').value;
+        // Cắt khoảng trắng thừa ở đầu và cuối chuỗi
+        noiDung = noiDung.trim(noiDung);
+        if(noiDung.length > 0)
+        {
+            document.getElementById('search-results').style.display = 'block';
+        }
+        else
+        {
+            document.getElementById('search-results').style.display = 'none';
+        }
+        if(e.keyCode == 13)
+        {
+            if(noiDung != '')
+            {
+                window.location.href = 'GoiTimKiemDienThoai/'+noiDung;
+            }            
+        }
+        else
+        {
+            $.get('TimDienThoaiAjax/'+noiDung, function(data){
+                document.getElementById('search-results').innerHTML = data;
+            });
+        }
     }
 </script>

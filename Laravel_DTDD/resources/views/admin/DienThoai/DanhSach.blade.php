@@ -1,6 +1,30 @@
 @extends('admin.layout.index')
 
 @section('content')
+<?php
+    //Hiển thị giá theo 1 định dạng khác
+    function ShowPrice($price)
+    {
+        $price = $price."";
+        $strPrice = "";
+        while(strlen($price) >= 3)
+        {
+            $temp = substr($price, strlen($price)-3, strlen($price));
+            if($strPrice == "") {
+                $strPrice .= $temp;
+            }else {
+                $strPrice = $temp .'.'. $strPrice;    
+            }
+            $price = substr($price, 0, strlen($price)-3);
+        }
+        if(strlen($price) != 0)
+        {
+            $strPrice = $price .'.'. $strPrice;
+        }
+
+        return $strPrice;
+    }
+?>
 
 <!-- NOI DUNG CHINH ..................................................................................-->
 <div class="content">
@@ -99,7 +123,7 @@
                                 {{ $dt->Ma_dien_thoai }}
                             </td>
                             <td>
-                                {{ $dt->ToGiaBan->last()->Gia }}
+                                {{ ShowPrice( $dt->ToGiaBan->last()->Gia ).' VND' }}
                             </td>
                             <td>
                                 <?php
@@ -111,6 +135,7 @@
                                     $gia = $dt->ToGiaBan->last()->Gia;
 
                                     //Lấy ra ngày bắt đầu và ngày kết thúc khuyến mãi
+                                    $hasKM = false;
                                     $startDay = 0;
                                     $endDay = 0;    //Ngày khuyến mãi kết thúc
                                     $percent = 0;   //Phần trăm khuyến mãi của chương trình này
@@ -119,11 +144,15 @@
                                     {
                                         $startDay = $khuyenMai->Tu_ngay;
                                         $endDay = $khuyenMai->Den_ngay;
-                                        $percent = $khuyenMai->Phan_tram_khuyen_mai;
+                                        if( $startDay<=$today && $today <= $endDay )
+                                        {
+                                            $hasKM = true;
+                                            $percent = $khuyenMai->Phan_tram_khuyen_mai;
+                                        }                                        
                                     }
                                 ?>
-                                @if ($startDay<=$today && $today <= $endDay)
-                                    {{ $gia*(1-($percent/100)) }}
+                                @if ( $hasKM )
+                                    {{ ShowPrice( $gia*(1-($percent/100)) ).' VND' }}
                                 @else
                                     {{ "--" }}
                                 @endif

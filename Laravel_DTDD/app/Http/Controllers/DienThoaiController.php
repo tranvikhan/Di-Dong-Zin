@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
+use App\PHP_Classes\Price;
 
 use App\DienThoaiDiDong;
 use App\HangDienThoaiDiDong;
@@ -454,7 +455,6 @@ class DienThoaiController extends Controller
         return redirect('admin/dienthoai/danhsach')->with('thongbao', 'Xóa điện thoại thành công');
     }
 
-
     // ------------ AJAX ----------------------------------------------------------------------
     function FilterPhone($hangDT, $mucGia, $sapXep)
     {
@@ -488,66 +488,52 @@ class DienThoaiController extends Controller
         }
         else //Đã chọn một trong các mức giá
         {
-            foreach ($dsMaDienThoaiTheoHang as $maDT) {
-
+            foreach ($dsMaDienThoaiTheoHang as $maDT) 
+            {
+                $gia = DienThoaiDiDong::find($maDT)->ToGiaBan->last();
                 switch ($mucGia) {
                     //DƯỚI 2 TRIỆU
                     case 'duoi2':
-                        $dsGiaBan = DienThoaiDiDong::find($maDT)->ToGiaBan;
-                        foreach ($dsGiaBan as $item) {
-                            if( ($item->Trang_thai==1) && ($item->Gia < 2000000) )
-                            {
-                                $amount = count($dsMaDienThoaiTheoGia);
-                                $dsMaDienThoaiTheoGia[$amount] = $maDT;
-                            }
-                        }
+                        if( $gia->Gia < 2000000 )
+                        {
+                            $amount = count($dsMaDienThoaiTheoGia);
+                            $dsMaDienThoaiTheoGia[$amount] = $maDT;
+                        }                        
                         break;
                     
                     //TỪ 2 TRIỆU ĐẾN 5 TRIỆU
                     case '2Den5':
-                        $dsGiaBan = DienThoaiDiDong::find($maDT)->ToGiaBan;
-                        foreach ($dsGiaBan as $item) {
-                            if( ($item->Trang_thai==1) && (2000000 <= $item->Gia) && ($item->Gia < 5000000) )
-                            {
-                                $amount = count($dsMaDienThoaiTheoGia);
-                                $dsMaDienThoaiTheoGia[$amount] = $maDT;
-                            }
+                        if( (2000000 <= $gia->Gia) && ($gia->Gia < 5000000) )
+                        {
+                            $amount = count($dsMaDienThoaiTheoGia);
+                            $dsMaDienThoaiTheoGia[$amount] = $maDT;
                         }
                         break;
                     
                     //TỪ 5 TRIỆU ĐẾN 10 TRIỆU
                     case '5Den10':
-                        $dsGiaBan = DienThoaiDiDong::find($maDT)->ToGiaBan;
-                        foreach ($dsGiaBan as $item) {
-                            if( ($item->Trang_thai==1) && (5000000 <= $item->Gia) && ($item->Gia < 10000000) )
-                            {
-                                $amount = count($dsMaDienThoaiTheoGia);
-                                $dsMaDienThoaiTheoGia[$amount] = $maDT;
-                            }
+                        if( (5000000 <= $gia->Gia) && ($gia->Gia < 10000000) )
+                        {
+                            $amount = count($dsMaDienThoaiTheoGia);
+                            $dsMaDienThoaiTheoGia[$amount] = $maDT;
                         }
                         break;
         
                     //TỪ 10 TRIỆU ĐẾN 15 TRIỆU
                     case '10Den15':
-                        $dsGiaBan = DienThoaiDiDong::find($maDT)->ToGiaBan;
-                        foreach ($dsGiaBan as $item) {
-                            if( ($item->Trang_thai==1) && (10000000 <= $item->Gia) && ($item->Gia < 15000000) )
-                            {
-                                $amount = count($dsMaDienThoaiTheoGia);
-                                $dsMaDienThoaiTheoGia[$amount] = $maDT;
-                            }
+                        if( (10000000 <= $gia->Gia) && ($gia->Gia < 15000000) )
+                        {
+                            $amount = count($dsMaDienThoaiTheoGia);
+                            $dsMaDienThoaiTheoGia[$amount] = $maDT;
                         }
                         break;
         
                     //TRÊN 15 TRIỆU
                     case 'tren15':
-                        $dsGiaBan = DienThoaiDiDong::find($maDT)->ToGiaBan;
-                        foreach ($dsGiaBan as $item) {
-                            if( ($item->Trang_thai==1) && (15000000 <= $item->Gia) )
-                            {
-                                $amount = count($dsMaDienThoaiTheoGia);
-                                $dsMaDienThoaiTheoGia[$amount] = $maDT;
-                            }
+                        if( 15000000 <= $gia->Gia )
+                        {
+                            $amount = count($dsMaDienThoaiTheoGia);
+                            $dsMaDienThoaiTheoGia[$amount] = $maDT;
                         }
                         break;
                 }
@@ -562,19 +548,12 @@ class DienThoaiController extends Controller
         //LIỆT KÊ RA DANH SÁCH CÁC GIÁ CỦA CÁC ĐIỆN THOẠI (DANH SÁCH NÀY CHỈ CHỨA GIÁ CỦA CÁC ĐIỆN THOẠI)
         $dsGia = array();
         foreach ($dsMaDienThoaiTheoGia as $maDT) {
-            
-            //Xuất ra 1 danh sách các đối tượng
-            $dsGiaBan = DienThoaiDiDong::find($maDT)->ToGiaBan;
-            foreach ($dsGiaBan as $item) {
-                
-                //Tìm đối tượng thỏa điều kiện (Trang_thai = 1: giá này đang được sử dụng)
-                if( $item->Trang_thai == 1 )
-                {
-                    //Thêm vào mảng chứa danh sách các giá $dsGia
-                    $amount = count($dsGia);
-                    $dsGia[$amount] = $item->Gia;
-                }
-            }
+            // Không cần kiểm tra Trang_thai: vì giá nào cùng chắc chắn có một item cuối cùng có Trang_thai=1
+            $gia = DienThoaiDiDong::find($maDT)->ToGiaBan->last();
+
+            //Thêm vào mảng chứa danh sách các giá $dsGia
+            $amount = count($dsGia);
+            $dsGia[$amount] = $gia->Gia;
         }
 
         //SẮP XẾP THEO GIÁ CAO ĐẾN THẤP
@@ -648,6 +627,7 @@ class DienThoaiController extends Controller
                     echo '</th>';
                     
                 echo '</tr>';
+                $price = new Price();
                 foreach ($dsMaDienThoaiTheoSapXep as $maDT) 
                 {
                     $dt = DienThoaiDiDong::find($maDT);
@@ -675,7 +655,7 @@ class DienThoaiController extends Controller
                                 echo $dt->Ma_dien_thoai;
                             echo '</td>';
                             echo '<td>';
-                                echo $dt->ToGiaBan->last()->Gia;
+                                echo $price->ShowPrice($dt->ToGiaBan->last()->Gia).' VND';
                             echo '</td>';
                             echo '<td>';
                                 //Lấy ngày hiện tại
@@ -699,7 +679,7 @@ class DienThoaiController extends Controller
                                 
                                 if($startDay<=$today && $today <= $endDay)
                                 {
-                                    echo $gia*(1-($percent/100));
+                                    echo $price->ShowPrice( $gia*(1-($percent/100)) ).' VND';
                                 }
                                 else
                                 {
@@ -776,6 +756,7 @@ class DienThoaiController extends Controller
                     echo '</th>';
                     
                 echo '</tr>';
+                $price = new Price();
                 foreach ($dsMaDienThoai as $maDT) 
                 {
                     $dt = DienThoaiDiDong::find($maDT);
@@ -803,7 +784,7 @@ class DienThoaiController extends Controller
                                 echo $dt->Ma_dien_thoai;
                             echo '</td>';
                             echo '<td>';
-                                echo $dt->ToGiaBan->last()->Gia;
+                                echo $price->ShowPrice( $dt->ToGiaBan->last()->Gia ).' VND';
                             echo '</td>';
                             echo '<td>';
                                 //Lấy ngày hiện tại
@@ -827,7 +808,7 @@ class DienThoaiController extends Controller
                                 
                                 if($startDay<=$today && $today <= $endDay)
                                 {
-                                    echo $gia*(1-($percent/100));
+                                    echo $price->ShowPrice( $gia*(1-($percent/100)) ).' VND';
                                 }
                                 else
                                 {

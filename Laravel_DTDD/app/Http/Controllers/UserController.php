@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\PHP_Classes\Price;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
@@ -131,6 +133,262 @@ class UserController extends Controller
         }
 
         return view('user.content', ['dsDienThoai'=>$dsDienThoai, 'dsMaBanChay'=>$dsMaBanChay, 'dsMaGiamGia'=>$dsMaGiamGia]);
+    }
+        
+    function TimDienThoaiAjax($noiDung)
+    {
+        $dienThoai = DienThoaiDiDong::where('Dang_ban', '=', 1)->get();
+        $dsMaDienThoai = array();
+        $price = new Price();
+
+        foreach ($dienThoai as $dt) {
+            // Ta làm cho noiDung và tên điện thoại thành chữ thường (strlower)
+            $tenDT = strtolower($dt->Ten_dien_thoai);
+            $noiDung = strtolower($noiDung);
+            
+            if( strpos($tenDT, $noiDung) !== false )
+            {
+                $count = count($dsMaDienThoai);
+                $dsMaDienThoai[$count] = $dt->Ma_dien_thoai;
+            }
+        }
+        
+        //Hiển thị tối đa 4 điện thoại
+        $max = 0;
+        if(count($dsMaDienThoai) > 4)
+        {
+            $max =  4;
+        }
+        else
+        {
+            $max = count($dsMaDienThoai);
+        }
+        $price = new Price();
+        for($i = 0; $i < $max; $i++)
+        {
+            $dt = DienThoaiDiDong::find($dsMaDienThoai[$i]);
+            
+            echo '<div class="phone-results" onclick="window.location.href=\'DienThoai/'. $dt->Ma_dien_thoai .'.html\'">';
+                echo '<img src="DiDongZin/imagePhone/'. $dt->Hinh_anh .'" alt="'. $dt->Ten_dien_thoai .'"/>';
+                echo '<h2 class="name">'. $dt->Ten_dien_thoai .'</h2>';
+        
+                //Lấy ngày hiện tại
+                date_default_timezone_set('Asia/Ho_Chi_Minh');
+                $today = date('Y-m-d');
+
+                //Lấy giá điện thoại
+                $gia = $dt->ToGiaBan->last()->Gia;
+
+                //Lấy ra ngày bắt đầu và ngày kết thúc khuyến mãi
+                $hasKM = false;
+                $startDay = 0;
+                $endDay = 0;    //Ngày khuyến mãi kết thúc
+                $percent = 0;   //Phần trăm khuyến mãi của chương trình này
+                $khuyenMai = $dt->ToKhuyenMai->last();
+                if($khuyenMai !== null)
+                {
+                    $startDay = $khuyenMai->Tu_ngay;
+                    $endDay = $khuyenMai->Den_ngay;
+                    if( $startDay<=$today && $today <= $endDay )
+                    {
+                        $hasKM = true;
+                        $percent = $khuyenMai->Phan_tram_khuyen_mai;
+                    }                                        
+                }
+                if ( $hasKM )
+                {
+                    echo '<span class="price">'. $price->ShowPrice( $gia*(1-($percent/100)) ) .' VND</span>';
+                }
+                else
+                {
+                    echo '<span class="price">'. $price->ShowPrice( $dt->ToGiaBan->last()->Gia ).' VND</span>';
+                }
+            echo '</div>';
+        }
+    }
+
+    function SapXepDienThoaiAjax($noiDung, $mucGia, $sapXep)
+    {
+        $dsDienThoai;               
+        $dsMaDienThoaiTheoNoiDung = array();  //danh sách mã điện thoại đã lọc theo nội dung tìm kiếm
+        $dsMaDienThoaiTheoGia = array();      //danh sách mã điện thoại đã lọc theo mức giá
+        $dsMaDienThoaiTheoSapXep = array();   //danh sách mã điện thoại đã lọc theo sắp xếp
+
+        //------------- LỌC ĐIỆN THOẠI THEO HÃNG ---------------------------------------------
+        $dsDienThoai = DienThoaiDiDong::where('Dang_ban', '=', 1)->get();
+        
+        if($noiDung != "khongChon")
+        {
+            foreach ($dsDienThoai as $dt) {
+                // Ta làm cho noiDung và tên điện thoại thành chữ thường (strtolower)
+                $tenDT = strtolower($dt->Ten_dien_thoai);
+                $noiDung = strtolower($noiDung);
+                
+                if( strpos($tenDT, $noiDung) !== false )
+                {
+                    $count = count($dsMaDienThoaiTheoNoiDung);
+                    $dsMaDienThoaiTheoNoiDung[$count] = $dt->Ma_dien_thoai;
+                }
+            }
+        }
+        else if($noiDung == "khongChon")
+        {
+            // Nội dung không được chọn sẽ đổ toàn bộ mã vào dsMaDienThoaiTheoNoiDung
+            foreach ($dsDienThoai as $dt) {
+                $count = count($dsMaDienThoaiTheoNoiDung);
+                $dsMaDienThoaiTheoNoiDung[$count] = $dt->Ma_dien_thoai;
+            }
+        }
+        
+        //--------------- LỌC THEO MỨC GIÁ ---------------------------------------------
+        if($mucGia == 'khongChon')
+        {
+            $dsMaDienThoaiTheoGia = $dsMaDienThoaiTheoNoiDung;
+        }
+        else //Đã chọn một trong các mức giá
+        {
+            foreach ($dsMaDienThoaiTheoNoiDung as $maDT) 
+            {
+                $gia = DienThoaiDiDong::find($maDT)->ToGiaBan->last();
+                switch ($mucGia) {
+                    //DƯỚI 2 TRIỆU
+                    case 'duoi2':
+                        if( $gia->Gia < 2000000 )
+                        {
+                            $amount = count($dsMaDienThoaiTheoGia);
+                            $dsMaDienThoaiTheoGia[$amount] = $maDT;
+                        }
+                        break;
+                    
+                    //TỪ 2 TRIỆU ĐẾN 5 TRIỆU
+                    case '2Den5':
+                        if( (2000000 <= $gia->Gia) && ($gia->Gia < 5000000) )
+                        {
+                            $amount = count($dsMaDienThoaiTheoGia);
+                            $dsMaDienThoaiTheoGia[$amount] = $maDT;
+                        }
+                        break;
+                    
+                    //TỪ 5 TRIỆU ĐẾN 10 TRIỆU
+                    case '5Den10':
+                        if( (5000000 <= $gia->Gia) && ($gia->Gia < 10000000) )
+                        {
+                            $amount = count($dsMaDienThoaiTheoGia);
+                            $dsMaDienThoaiTheoGia[$amount] = $maDT;
+                        }
+                        break;
+        
+                    //TỪ 10 TRIỆU ĐẾN 15 TRIỆU
+                    case '10Den15':
+                        if( (10000000 <= $gia->Gia) && ($gia->Gia < 15000000) )
+                        {
+                            $amount = count($dsMaDienThoaiTheoGia);
+                            $dsMaDienThoaiTheoGia[$amount] = $maDT;
+                        }
+                        break;
+        
+                    //TRÊN 15 TRIỆU
+                    case 'tren15':
+                        if( 15000000 <= $gia->Gia )
+                        {
+                            $amount = count($dsMaDienThoaiTheoGia);
+                            $dsMaDienThoaiTheoGia[$amount] = $maDT;
+                        }
+                        break;
+                }
+            }
+        }
+
+        //------------ SẮP XẾP ĐIỆN THOẠI THEO GIÁ BÁN -----------------------------
+            
+            //TẠO DANH SÁCH MÃ ĐIỆN THOẠI DÙNG ĐỂ SẮP XẾP LẠI
+        $dsMaDienThoaiTheoSapXep = $dsMaDienThoaiTheoGia;
+
+        //LIỆT KÊ RA DANH SÁCH CÁC GIÁ CỦA CÁC ĐIỆN THOẠI (DANH SÁCH NÀY CHỈ CHỨA GIÁ CỦA CÁC ĐIỆN THOẠI)
+        $dsGia = array();
+        foreach ($dsMaDienThoaiTheoGia as $maDT) {
+            // Không cần kiểm tra Trang_thai: vì giá nào cùng chắc chắn có một item cuối cùng có Trang_thai=1
+            $gia = DienThoaiDiDong::find($maDT)->ToGiaBan->last();
+
+            //Thêm vào mảng chứa danh sách các giá $dsGia
+            $amount = count($dsGia);
+            $dsGia[$amount] = $gia->Gia;
+        }
+
+        //SẮP XẾP THEO GIÁ CAO ĐẾN THẤP
+        if($sapXep == 'giaCao')
+        {
+            for ($i=0; $i < count($dsGia)-1; $i++) { 
+                for ($j=$i+1; $j < count($dsGia); $j++) { 
+                    if($dsGia[$i] < $dsGia[$j])
+                    {
+                        //SWAP dsGia
+                        $temp = $dsGia[$i];
+                        $dsGia[$i] = $dsGia[$j];
+                        $dsGia[$j] = $temp;
+
+                        //SWAP dsDienThoaiTheoSapXep
+                        $temp = $dsMaDienThoaiTheoSapXep[$i];
+                        $dsMaDienThoaiTheoSapXep[$i] = $dsMaDienThoaiTheoSapXep[$j];
+                        $dsMaDienThoaiTheoSapXep[$j] = $temp;
+                    }
+                }
+            }
+        }
+
+        //SẮP XẾP THEO GIÁ THẤP ĐẾN CAO
+        else if($sapXep == 'giaThap')
+        {
+            for ($i=0; $i < count($dsGia)-1; $i++) { 
+                for ($j=$i+1; $j < count($dsGia); $j++) { 
+                    if($dsGia[$i] > $dsGia[$j])
+                    {
+                        //SWAP dsGia
+                        $temp = $dsGia[$i];
+                        $dsGia[$i] = $dsGia[$j];
+                        $dsGia[$j] = $temp;
+
+                        //SWAP dsDienThoaiTheoSapXep
+                        $temp = $dsMaDienThoaiTheoSapXep[$i];
+                        $dsMaDienThoaiTheoSapXep[$i] = $dsMaDienThoaiTheoSapXep[$j];
+                        $dsMaDienThoaiTheoSapXep[$j] = $temp;
+                    }
+                }
+            }
+        }
+        //GHI CHÚ: Ta không cần xét trường hợp 'khongChon', do ban đầu ta đã có $dsDienThoaiTheoSapXep = $dsDienThoaiTheoGia;       
+
+        //Tạo biến $price để dùng ShowPrice của class Price
+        $price = new Price();
+
+        foreach($dsMaDienThoaiTheoSapXep as $maDT)
+        {
+            $dt = DienThoaiDiDong::find($maDT);
+            
+            echo '<div class="col-2s" onclick="GoToPhone('. $dt->Ma_dien_thoai .')">';
+                echo '<div class="mobile-phone">';
+                    echo '<img src="DiDongZin/imagePhone/'. $dt->Hinh_anh .'" style="height: 215px" alt="'. $dt->Ten_dien_thoai .'">';
+                    echo '<h2 class="name">'. $dt->Ten_dien_thoai .'</h2>';
+                    echo '<span class="price">'. $price->ShowPrice($dt->ToGiaBan->last()->Gia) .' VND</span>';
+                echo '</div>';
+                echo '<div class="hidden-info">';
+                    echo '<h2 class="name">'. $dt->Ten_dien_thoai .'</h2>';
+                    echo '<span class="price">'. $price->ShowPrice($dt->ToGiaBan->last()->Gia) .' VND</span>';
+                    echo '<span class="list-info">Màn hình: '. $dt->Kich_thuoc_man_hinh .' '. $dt->Do_phan_giai_man_hinh .'</span>';
+                    echo '<span class="list-info">Chipset: '. $dt->Chipset .'</span>';
+                    echo '<span class="list-info">Ram: '. $dt->RAM .'GB</span>';
+                    echo '<span class="list-info">Rom: '. $dt->ROM .'GB</span>';
+                    echo '<span class="list-info">Khe sim: '. $dt->Khe_sim .'</span>';
+                    echo '<span class="list-info">Pin: '. $dt->Pin .'mah</span>';
+                    echo '<span class="list-info">OS: '. $dt->OS .' '. $dt->Phien_ban_OS .'</span>';
+                echo '</div>';
+            echo '</div>';
+        }
+    }
+
+    function GoiTimKiemDienThoai($noiDung)
+    {
+        return redirect('TrangChu')->with('noiDungCanTimKiem', $noiDung);
     }
     
     function postDangNhap(Request $request)
@@ -425,7 +683,7 @@ class UserController extends Controller
     function ShowPhone($id)
     {
         $dienThoai = DienThoaiDiDong::find($id);
-        $dsBinhLuan = BinhLuan::paginate(5);
+        $dsBinhLuan = BinhLuan::where('Ma_dien_thoai', '=', $dienThoai->Ma_dien_thoai)->paginate(5);
         // $dsBinhLuan = $dienThoai->ToBinhLuan->paginate(5);
         return view('user.DienThoai', ['fileCSS'=>'dienThoai', 'dienThoai'=>$dienThoai, 'dsBinhLuan'=>$dsBinhLuan]);
     }

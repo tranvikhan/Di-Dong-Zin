@@ -83,7 +83,7 @@ Route::group(['prefix'=>'admin', 'middleware'=>'AdminMiddleware'], function(){
 
     Route::get('dangxuat', function(){
         Auth::logout();
-        return redirect('trangchu')->with('dangXuat', 'Đăng xuất thành công');
+        return redirect('TrangChu')->with('dangXuat', 'Đăng xuất thành công');
     });
 });
 
@@ -93,6 +93,14 @@ Route::group(['prefix'=>'admin', 'middleware'=>'AdminMiddleware'], function(){
 // ==============================================================================================
     //TRANG CHỦ
 Route::get('TrangChu', 'UserController@getTrangChu');
+
+Route::get('TimDienThoaiAjax/{noiDung}', 'UserController@TimDienThoaiAjax');
+
+    // GKhi người dùng nhập nội dung tìm kiếm rồi nhấn Enter
+        //Nhưng do đang ở trong khác (không hpair trang chủ) nên nội dung được gởi về để gọi ra trang chủ
+Route::get('GoiTimKiemDienThoai/{noiDung}', 'UserController@GoiTimKiemDienThoai');
+
+Route::get('SapXepDienThoaiAjax/{noiDung}/{mucGia}/{thuTu}', 'UserController@SapXepDienThoaiAjax');
 
     //ĐĂNG XUẤT
 Route::get('logout', 'UserController@getDangXuat');
