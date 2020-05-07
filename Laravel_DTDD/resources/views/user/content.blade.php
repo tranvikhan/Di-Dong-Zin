@@ -201,6 +201,52 @@
             window.location.href = 'DienThoai/'+ma+'.html';
         }
 
+        // document.getElementById('text_search').onkeydown = function(e){
+        //     if(e.keyCode == 13)
+        //     {
+        //         noiDung = document.getElementById('text_search').value;
+        //         // Cắt khoảng trắng thừa ở đầu và cuối chuỗi
+        //         noiDung = noiDung.trim(noiDung);
+                
+        //         // Nếu là lần tìm kiếm đầu tiên
+        //         if( document.getElementById('btnXemThem_tatCa').innerHTML != '')
+        //         {
+        //             document.getElementById('btnXemThem_tatCa').innerHTML = '';
+        //             document.getElementById('banChay').innerHTML = '';
+        //             document.getElementById('giamGiaManh').innerHTML = '';
+        //         }
+
+        //         // Lấy giá trị của mức giá và kiểu sắp xếp
+        //         mucGia = document.getElementById('giaDangChon').value;
+        //         thuTu = document.getElementById('sapXepDangChon').value;
+        //         if(mucGia == '')
+        //         {
+        //             mucGia = 'khongChon';
+        //         }
+        //         if(thuTu == '')
+        //         {
+        //             thuTu = 'khongChon';
+        //         }
+        //         // Kiểm tra nội dung nhập khi nhân Enter có rỗng không
+        //         if(noiDung == '')
+        //         {
+        //             noiDung = 'khongChon';
+        //             document.getElementById('title_allPhone').innerHTML = 'TẤT CẢ SẢN PHẨM';
+        //         }
+        //         else
+        //         {
+        //             document.getElementById('title_allPhone').innerHTML = 'Kết quả tìm kiếm \''+noiDung+'\'';
+        //         }
+
+        //         // Gọi Ajax
+        //         $.get('SapXepDienThoaiAjax/'+noiDung+'/'+mucGia+'/'+thuTu, function(data){
+        //             document.getElementById('phoneFound').innerHTML = data;
+        //         });
+        //         document.getElementById('text_search').value = '';
+        //         document.getElementById('noiDungTimKiem').value = noiDung;
+        //     }
+        // }
+
         function ChonGia(mucGia)
         {
             switch(mucGia)
@@ -255,6 +301,10 @@
             if(thuTu == '')
             {
                 thuTu = 'khongChon';
+            }
+            if(mucGia == '')
+            {
+                mucGia = 'khongChon';
             }
 
             // Gọi Ajax
