@@ -441,8 +441,17 @@ input:checked+.slider:before {
 .mobile-phone {
     text-align: center;
     transition: 0.4s;
+    position: relative;
 }
-.mobile-phone img{
+/* SALE*/
+.img-sale {
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    top:0;
+    right: 0;
+}
+.mobile-phone img:not(:last-child){
     position: relative;
     width: 100%;
 }
@@ -469,6 +478,19 @@ input:checked+.slider:before {
     position: relative;
     bottom: 0px;
     left: 0px;
+}
+.mobile-phone .price-old {
+    display: block;
+    color: var(--font-color4);
+    font-size: 16px;
+    font-weight: 400;
+    text-decoration: line-through;
+    position: relative;
+    bottom: 0px;
+    left: 0px;
+}
+.mobile-phone .giaca{
+    min-height: 40px;
 }
 .hidden-info{
     width: 100%;

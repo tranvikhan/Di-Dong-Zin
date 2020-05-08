@@ -247,30 +247,35 @@
     margin-top: 5px;
     color: var(--font-color1);
 }
-
+/* CSS Phan Trang -------------------------------------------------------------------------------- */
 .pagination {
-    position: relative;
-    margin-top: 30px;
-    padding-left: 25%;
-}
-.pagination a {
-    display: block;
-    color: var(--font-color1);
-    float: left;
-    border-radius: 50%;
-    padding: 8px 13px;
-    text-decoration: none;
-    transition: background-color .3s;
+    padding: 20px 0;
+    padding-left: 0;
+    text-align: center;
 }
 
-.pagination a.active {
+.page-item {
+    display: inline-block;
+    background-color: var(--border-item);
+    padding: 4px 9px;
+    border-radius: 20px;
+}
+
+.page-link {
+    text-decoration: none;
+    color: var(--font-color4);
+
+}
+
+.pagination .active {
     background-color: var(--primary-color);
+}
+
+.pagination .active .page-link {
     color: var(--font-color-light);
 }
 
-.pagination a:hover:not(.active) {
-    background-color: var(--border-item);
-}
+/* ----------------------------------------------------------------------------------------------------- */
 .mota{
     color: var(--font-color4);
     line-height: 150%;
