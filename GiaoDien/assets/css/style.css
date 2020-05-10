@@ -443,13 +443,33 @@ input:checked+.slider:before {
     transition: 0.4s;
     position: relative;
 }
-/* SALE*/
-.img-sale {
-    width: 50px;
-    height: 50px;
+
+.sale-giam-gia::before{
+    content: "";
     position: absolute;
-    top:0;
-    right: 0;
+    top: 0;
+    left: 0;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    background-image: url(../img/flash_on_50px.png);
+    background-size: 60% 60%;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-color: transparent;
+}
+/*SALE ------------------------- */
+.sale-giam-gia{
+    position: absolute;
+    top: 185px;
+    left: 0;
+    display: block;
+    background-color: var(--primary-color);
+    background: linear-gradient(to right, var(--primary-color), #f16311 );
+    font-size: 12px;
+    color: var(--font-color-light);
+    padding: 5px 15px 5px 25px;
+    border-radius: 20px 20px 20px 20px;
 }
 .mobile-phone img:not(:last-child){
     position: relative;
