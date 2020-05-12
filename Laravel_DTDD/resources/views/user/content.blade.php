@@ -24,6 +24,96 @@
         </div>
     </div>
     
+    <!-- XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-->
+    <div id="giamGiaManh">
+        <h2   class="title">GIẢM GIÁ MẠNH</h2>
+        <div class="top-sale row">
+            @foreach($dsMaGiamGia as $maDT)
+                <?php
+                    $dt = App\DienThoaiDiDong::find($maDT);
+                ?>
+                <div class="col-2s "  onclick="GoToPhone({{ $dt->Ma_dien_thoai }})">
+                    <div class="mobile-phone">
+                        <img src="DiDongZin/imagePhone/{{ $dt->Hinh_anh }}" style="height: 215px" alt="{{ $dt->Ten_dien_thoai }}">
+                        <h2 class="name">{{ $dt->Ten_dien_thoai }}</h2>
+                        
+                        <div class="giaca">
+                            <?php
+                                $phanTramKM = $dt->ToKhuyenMai->last()->Phan_tram_khuyen_mai;   
+                                $gia = $dt->ToGiaBan->last()->Gia; 
+                            ?>
+                            <span class="price">{{ ShowPrice($gia * (1-($phanTramKM/100))) }} VND</span>
+                            <span class="price-old">{{ ShowPrice($gia) }} VND</span>
+                        </div>
+
+                        <span class="sale-giam-gia">Giảm {{ $phanTramKM }}%</span>
+                        {{-- <span class="price">{{ ShowPrice($dt->ToGiaBan->last()->Gia) }} VND</span> --}}
+                    </div>
+
+                    {{-- <div class="mobile-phone">
+                        <img src="imagePhone/iphoneX-space-gray-300x400.png" alt="iphoneX">
+                        <h2 class="name">iPhoneX 64Gb Mới Chính Hãng</h2>
+                        <div class="giaca">
+                            <span class="price">11.190.000 VND</span>
+                            <span class="price-old">11.290.000 VND</span>
+                        </div>
+
+                        <span class="sale-giam-gia">Giảm 20%</span>
+                    </div> --}}
+                    <div class="hidden-info">
+                        <h2 class="name">{{ $dt->Ten_dien_thoai }}</h2>
+                        <span class="price">{{ ShowPrice($dt->ToGiaBan->last()->Gia) }} VND</span>
+                        <span class="list-info">Màn hình: {{ $dt->Kich_thuoc_man_hinh }} {{ $dt->Do_phan_giai_man_hinh }}</span>
+                        <span class="list-info">Chipset: {{ $dt->Chipset }}</span>
+                        <span class="list-info">Ram: {{ $dt->RAM }}GB</span>
+                        <span class="list-info">Rom: {{ $dt->ROM }}GB</span>
+                        <span class="list-info">Khe sim: {{ $dt->Khe_sim }}</span>
+                        <span class="list-info">Pin: {{ $dt->Pin }}mah</span>
+                        <span class="list-info">OS: {{ $dt->OS }} {{ $dt->Phien_ban_OS }}</span>
+                    </div>
+                </div>
+            @endforeach
+            
+        </div>
+        <div class="see-more">
+            <button class="prm-btn">Xem Thêm</button>
+        </div>
+    </div>
+
+    <!-- XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-->
+    <div id="banChay">
+        <h2 class="title">BÁN CHẠY</h2>
+        <div class="top-sale row">
+            @foreach($dsMaBanChay as $maDT)
+                <?php
+                    $dt = App\DienThoaiDiDong::find($maDT);
+                ?>
+                <div class="col-2s"  onclick="GoToPhone({{ $dt->Ma_dien_thoai }})">
+                    <div class="mobile-phone">
+                        <img src="DiDongZin/imagePhone/{{ $dt->Hinh_anh }}" style="height: 215px" alt="{{ $dt->Ten_dien_thoai }}">
+                        <h2 class="name">{{ $dt->Ten_dien_thoai }}</h2>
+                        <span class="price">{{ ShowPrice($dt->ToGiaBan->last()->Gia) }} VND</span>
+                    </div>
+                    <div class="hidden-info">
+                        <h2 class="name">{{ $dt->Ten_dien_thoai }}</h2>
+                        <span class="price">{{ ShowPrice($dt->ToGiaBan->last()->Gia) }} VND</span>
+                        <span class="list-info">Màn hình: {{ $dt->Kich_thuoc_man_hinh }} {{ $dt->Do_phan_giai_man_hinh }}</span>
+                        <span class="list-info">Chipset: {{ $dt->Chipset }}</span>
+                        <span class="list-info">Ram: {{ $dt->RAM }}GB</span>
+                        <span class="list-info">Rom: {{ $dt->ROM }}GB</span>
+                        <span class="list-info">Khe sim: {{ $dt->Khe_sim }}</span>
+                        <span class="list-info">Pin: {{ $dt->Pin }}mah</span>
+                        <span class="list-info">OS: {{ $dt->OS }} {{ $dt->Phien_ban_OS }}</span>
+                    </div>
+                </div>
+            @endforeach
+
+        </div>
+        <div class="see-more">
+            <button class="prm-btn">Xem Thêm</button>
+        </div>
+    </div>
+    
     <!-- XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-->
     <h2  class="title " id="title_allPhone">TẤT CẢ SẢN PHẨM</h2>
     <div class="sort-bar">
@@ -75,74 +165,6 @@
 
     <div class="see-more" id="btnXemThem_tatCa">
         <button class="prm-btn">Xem Thêm</button>
-    </div>
-
-    <!-- XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-->
-    <div id="banChay">
-        <h2 class="title">BÁN CHẠY</h2>
-        <div class="top-sale row">
-            @foreach($dsMaBanChay as $maDT)
-                <?php
-                    $dt = App\DienThoaiDiDong::find($maDT);
-                ?>
-                <div class="col-2s"  onclick="GoToPhone({{ $dt->Ma_dien_thoai }})">
-                    <div class="mobile-phone">
-                        <img src="DiDongZin/imagePhone/{{ $dt->Hinh_anh }}" style="height: 215px" alt="{{ $dt->Ten_dien_thoai }}">
-                        <h2 class="name">{{ $dt->Ten_dien_thoai }}</h2>
-                        <span class="price">{{ ShowPrice($dt->ToGiaBan->last()->Gia) }} VND</span>
-                    </div>
-                    <div class="hidden-info">
-                        <h2 class="name">{{ $dt->Ten_dien_thoai }}</h2>
-                        <span class="price">{{ ShowPrice($dt->ToGiaBan->last()->Gia) }} VND</span>
-                        <span class="list-info">Màn hình: {{ $dt->Kich_thuoc_man_hinh }} {{ $dt->Do_phan_giai_man_hinh }}</span>
-                        <span class="list-info">Chipset: {{ $dt->Chipset }}</span>
-                        <span class="list-info">Ram: {{ $dt->RAM }}GB</span>
-                        <span class="list-info">Rom: {{ $dt->ROM }}GB</span>
-                        <span class="list-info">Khe sim: {{ $dt->Khe_sim }}</span>
-                        <span class="list-info">Pin: {{ $dt->Pin }}mah</span>
-                        <span class="list-info">OS: {{ $dt->OS }} {{ $dt->Phien_ban_OS }}</span>
-                    </div>
-                </div>
-            @endforeach
-
-        </div>
-        <div class="see-more">
-            <button class="prm-btn">Xem Thêm</button>
-        </div>
-    </div>
-    
-    <!-- XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-->
-    <div id="giamGiaManh">
-        <h2   class="title">GIẢM GIÁ MẠNH</h2>
-        <div class="top-sale row">
-            @foreach($dsMaGiamGia as $maDT)
-                <?php
-                    $dt = App\DienThoaiDiDong::find($maDT);
-                ?>
-                <div class="col-2s "  onclick="GoToPhone({{ $dt->Ma_dien_thoai }})">
-                    <div class="mobile-phone">
-                        <img src="DiDongZin/imagePhone/{{ $dt->Hinh_anh }}" style="height: 215px" alt="{{ $dt->Ten_dien_thoai }}">
-                        <h2 class="name">{{ $dt->Ten_dien_thoai }}</h2>
-                        <span class="price">{{ ShowPrice($dt->ToGiaBan->last()->Gia) }} VND</span>
-                    </div>
-                    <div class="hidden-info">
-                        <h2 class="name">{{ $dt->Ten_dien_thoai }}</h2>
-                        <span class="price">{{ ShowPrice($dt->ToGiaBan->last()->Gia) }} VND</span>
-                        <span class="list-info">Màn hình: {{ $dt->Kich_thuoc_man_hinh }} {{ $dt->Do_phan_giai_man_hinh }}</span>
-                        <span class="list-info">Chipset: {{ $dt->Chipset }}</span>
-                        <span class="list-info">Ram: {{ $dt->RAM }}GB</span>
-                        <span class="list-info">Rom: {{ $dt->ROM }}GB</span>
-                        <span class="list-info">Khe sim: {{ $dt->Khe_sim }}</span>
-                        <span class="list-info">Pin: {{ $dt->Pin }}mah</span>
-                        <span class="list-info">OS: {{ $dt->OS }} {{ $dt->Phien_ban_OS }}</span>
-                    </div>
-                </div>
-            @endforeach
-            
-        </div>
-        <div class="see-more">
-            <button class="prm-btn">Xem Thêm</button>
-        </div>
     </div>
 
     @if (session('noiDungCanTimKiem'))

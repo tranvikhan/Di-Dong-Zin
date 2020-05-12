@@ -89,6 +89,9 @@
                         Mã
                     </th>
                     <th>
+                        Số lượng
+                    </th>
+                    <th>
                         Giá
                     </th>
                     <th>
@@ -121,6 +124,9 @@
                             </td>
                             <td>
                                 {{ $dt->Ma_dien_thoai }}
+                            </td>
+                            <td>
+                                {{ $dt->So_luong }}
                             </td>
                             <td>
                                 {{ ShowPrice( $dt->ToGiaBan->last()->Gia ).' VND' }}

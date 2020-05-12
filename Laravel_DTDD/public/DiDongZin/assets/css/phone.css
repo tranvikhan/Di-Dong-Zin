@@ -248,30 +248,34 @@
     color: var(--font-color1);
 }
 /* CSS Phan Trang -------------------------------------------------------------------------------- */
-.pagination{
+.pagination {
     padding: 20px 0;
     padding-left: 0;
     text-align: center;
 }
-.page-item{
+
+.page-item {
     display: inline-block;
     background-color: var(--border-item);
     padding: 4px 9px;
-    border-radius: 20px;    
+    border-radius: 20px;
 }
-.page-link{
+
+.page-link {
     text-decoration: none;
     color: var(--font-color4);
-    
+
 }
-.pagination .active{
+
+.pagination .active {
     background-color: var(--primary-color);
 }
-.pagination .active .page-link{
+
+.pagination .active .page-link {
     color: var(--font-color-light);
 }
-/* ----------------------------------------------------------------------------------------------------- */
 
+/* ----------------------------------------------------------------------------------------------------- */
 .mota{
     color: var(--font-color4);
     line-height: 150%;

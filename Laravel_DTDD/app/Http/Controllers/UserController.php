@@ -398,6 +398,13 @@ class UserController extends Controller
 
         if(Auth::attempt(['Username'=>$uid, 'password'=>$pass]))
         {
+            // NẾU LÀ ADMIN ĐĂNG NHẬP THÌ ĐƯA QUA TRANG QUẢN LÝ CỦA ADMIN
+            if(Auth::user()->Tai_khoan_admin == 1)
+            {
+                return redirect('admin/dienthoai/danhsach');
+            }    
+
+            // ĐƯA CÁC ĐIỆN THOẠI VÀO GIỎ HÀNG
             //Nếu biến count đã tồn tại rồi (đã chọn thêm vào giỏ hàng trước khi đăng nhập)
             if( session()->has('count') )
             {
