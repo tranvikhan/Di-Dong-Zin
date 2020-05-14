@@ -643,7 +643,17 @@
                                 <label for="password"><img src="assets/img/secure_30px.png"></label>
                                 <input type="password" id="password" placeholder="Mật khẩu">
                                 <input class="thr-btn" type="submit" value="Đăng Nhập">
-                                <a href="#">Quên mật khẩu ?</a>
+                                <a href="#" onclick="openTab(event, 'quenmatkhau')">Quên mật khẩu ?</a>
+                            </form>
+                        </div>
+                        <div id="quenmatkhau" class="tabcontent">
+                            <form action="#" method="POST">
+
+                                <label for="usernameKhoiPhuc"><img src="assets/img/male_user_30px.png"></label>
+                                <input type="text" id="usernameKhoiPhuc" placeholder="Nhập tên đăng nhập">
+                                <label for="emailKhoiPhuc"><img src="assets/img/email.png"></label>
+                                <input type="text" id="emailKhoiPhuc" placeholder="Nhập email">
+                                <input class="thr-btn" type="submit" value="Yêu cầu đổi mật khẩu">
                             </form>
                         </div>
                         <div id="register" class="tabcontent">

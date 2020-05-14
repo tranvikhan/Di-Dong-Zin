@@ -93,12 +93,17 @@ function openTab(evt, tabName) {
     tabcontent = document.getElementsByClassName("tabcontent");
     title_sign_form = document.getElementById("title_sign_form");
     content_sign = document.getElementById("content_sign");
-    if (title_sign_form.innerHTML=="ĐĂNG NHẬP"){
+    if (tabName =='register'){
         title_sign_form.innerHTML="ĐĂNG KÍ";
         content_sign.innerHTML ="Trở thành thành viên và nhận nhiều ưu đãi hấp dẫn !";
-    }else{
+    }
+    if (tabName=='login'){
         title_sign_form.innerHTML = "ĐĂNG NHẬP";
         content_sign.innerHTML = "Đăng nhập để lưu lại giỏ hàng, mua sản phẩm, bình luận và nhiều hơn thế,...";
+    }
+    if (tabName== 'quenmatkhau') {
+        title_sign_form.innerHTML = "ĐỔI MẬT KHẨU";
+        content_sign.innerHTML = "Mật khẩu mới sẽ được gửi về email của bạn. Vui lòng kiễm tra mail và đăng nhập với mật khẩu mới!";
     }
     for (i = 0; i < tabcontent.length; i++) {
         tabcontent[i].style.display = "none";

@@ -814,8 +814,11 @@ footer a:hover{
     background-color: var(--backgroud-color4);
     color: var(--font-color3);
 }
-#login{
+#login,#quenmatkhau{
     padding: 120px 20%;
+}
+#quenmatkhau{
+    display: none;
 }
 #register{
     padding: 50px 20%;
@@ -911,7 +914,7 @@ footer a:hover{
     .sign_in_up .col-5{
         display: none;
     }
-    #login {
+    #login,#quenmatkhau {
         padding: 107px 5%;
     }
 
