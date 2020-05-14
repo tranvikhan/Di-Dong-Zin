@@ -36,7 +36,6 @@
                     <div class="mobile-phone">
                         <img src="DiDongZin/imagePhone/{{ $dt->Hinh_anh }}" style="height: 215px" alt="{{ $dt->Ten_dien_thoai }}">
                         <h2 class="name">{{ $dt->Ten_dien_thoai }}</h2>
-                        
                         <div class="giaca">
                             <?php
                                 $phanTramKM = $dt->ToKhuyenMai->last()->Phan_tram_khuyen_mai;   
@@ -45,21 +44,10 @@
                             <span class="price">{{ ShowPrice($gia * (1-($phanTramKM/100))) }} VND</span>
                             <span class="price-old">{{ ShowPrice($gia) }} VND</span>
                         </div>
-
+                        
                         <span class="sale-giam-gia">Giảm {{ $phanTramKM }}%</span>
-                        {{-- <span class="price">{{ ShowPrice($dt->ToGiaBan->last()->Gia) }} VND</span> --}}
                     </div>
 
-                    {{-- <div class="mobile-phone">
-                        <img src="imagePhone/iphoneX-space-gray-300x400.png" alt="iphoneX">
-                        <h2 class="name">iPhoneX 64Gb Mới Chính Hãng</h2>
-                        <div class="giaca">
-                            <span class="price">11.190.000 VND</span>
-                            <span class="price-old">11.290.000 VND</span>
-                        </div>
-
-                        <span class="sale-giam-gia">Giảm 20%</span>
-                    </div> --}}
                     <div class="hidden-info">
                         <h2 class="name">{{ $dt->Ten_dien_thoai }}</h2>
                         <span class="price">{{ ShowPrice($dt->ToGiaBan->last()->Gia) }} VND</span>

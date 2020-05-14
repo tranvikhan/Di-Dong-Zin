@@ -28,11 +28,17 @@ class UserController extends Controller
         //Danh sách điện thoại ---------------------------------------------------------
         if($soLuongDT >= 12)
         {
-            $dsDienThoai = DienThoaiDiDong::where('Dang_ban', '=', 1)->orderBy('Ma_dien_thoai', 'desc')->take(12)->get();
+            $dsDienThoai = DienThoaiDiDong::where([
+                    ['Dang_ban', '=', 1],
+                    ['So_luong', '>', 0]
+                ])->orderBy('Ma_dien_thoai', 'desc')->take(12)->get();
         }
         else
         {
-            $dsDienThoai = DienThoaiDiDong::where('Dang_ban', '=', 1)->orderBy('Ma_dien_thoai', 'desc')->get();
+            $dsDienThoai = DienThoaiDiDong::where([
+                    ['Dang_ban', '=', 1],
+                    ['So_luong', '>', 0]
+                ])->orderBy('Ma_dien_thoai', 'desc')->get();
         }       
         
         //Danh sách điện thoại bán chạy --------------------------------------------------
@@ -40,12 +46,19 @@ class UserController extends Controller
         $dsSoLuongBan = array();
         $count = 0;
 
-        $dienThoai = DienThoaiDiDong::where('Dang_ban', '=', 1)->get();
+        $dienThoai = DienThoaiDiDong::where([
+                ['Dang_ban', '=', 1],
+                ['So_luong', '>', 0]
+            ])->get();
+
+        // Tạo danh sách chứa mã điện thoại và số lượng bán được của điện thoại đó
         foreach ($dienThoai as $dt) {
             $dsMaDT[$count] = $dt->Ma_dien_thoai;
             $dsSoLuongBan[$count] = $dt->ToChiTietGioHang->count();
             $count++;
         }
+
+        // Sắp xếp lại theo thứ tự giảm dần
         for ($i=0; $i < count($dsMaDT)-1; $i++) { 
             for ($j=$i+1; $j < count($dsMaDT); $j++) { 
                 if($dsSoLuongBan[$i] < $dsSoLuongBan[$j])
@@ -84,7 +97,12 @@ class UserController extends Controller
         date_default_timezone_set('Asia/Ho_Chi_Minh');
         $today = date('Y-m-d');
 
-        $dienThoai = DienThoaiDiDong::where('Dang_ban', '=', 1)->get();
+        $dienThoai = DienThoaiDiDong::where([
+                ['Dang_ban', '=', 1],
+                ['So_luong', '>', 0]
+            ])->get();
+
+        // Tạo danh sách mã điện thoại và danh sách chứa phần trăm khuyến mãi
         foreach ($dienThoai as $dt) {
             $hasKM = false;
             $km =$dt->ToKhuyenMai->last();
@@ -103,6 +121,8 @@ class UserController extends Controller
                 $count++;
             }
         }
+
+        // Sắp xếp lại 2 danh sách này dựa vào phần trăm khuyến mãi
         for ($i=0; $i < count($dsMaDT)-1; $i++) { 
             for ($j=$i+1; $j < count($dsMaDT); $j++) { 
                 if($dsSoLuongKM[$i] < $dsSoLuongKM[$j])
@@ -137,7 +157,10 @@ class UserController extends Controller
         
     function TimDienThoaiAjax($noiDung)
     {
-        $dienThoai = DienThoaiDiDong::where('Dang_ban', '=', 1)->get();
+        $dienThoai = DienThoaiDiDong::where([
+                ['Dang_ban', '=', 1],
+                ['So_luong', '>', 0]
+            ])->get();
         $dsMaDienThoai = array();
         $price = new Price();
 
@@ -215,7 +238,10 @@ class UserController extends Controller
         $dsMaDienThoaiTheoSapXep = array();   //danh sách mã điện thoại đã lọc theo sắp xếp
 
         //------------- LỌC ĐIỆN THOẠI THEO HÃNG ---------------------------------------------
-        $dsDienThoai = DienThoaiDiDong::where('Dang_ban', '=', 1)->get();
+        $dsDienThoai = DienThoaiDiDong::where([
+                ['Dang_ban', '=', 1],
+                ['So_luong', '>', 0]
+            ])->get();
         
         if($noiDung != "khongChon")
         {
@@ -661,6 +687,14 @@ class UserController extends Controller
         $hoaDon = HoaDon::find($id);
         $gioHang = $hoaDon->ToGioHang;
 
+        // Tăng số lượng điện thoại trong lên do hủy đơn hàng
+        $dsChiTiet = $gioHang->ToChiTietGioHang;
+        foreach ($dsChiTiet as $chiTiet) {
+            $dt = $chiTiet->ToDienThoaiDiDong;
+            $dt->So_luong = $dt->So_luong + $chiTiet->So_luong;
+            $dt->save();
+        } 
+
         // Xóa chi tiết giỏ hàng có liên quan
         DB::table('Chi_tiet_gio_hang')->where('Ma_gio_hang', '=', $gioHang->Ma_gio_hang)->delete();
 
@@ -899,6 +933,14 @@ class UserController extends Controller
                 $user->save();
             }
 
+            //Cập nhật lại số lượng điện thoại trong kho
+            $dsChiTiet = $gioHang->ToChiTietGioHang;
+            foreach ($dsChiTiet as $chiTiet) {
+                $dt = $chiTiet->ToDienThoaiDiDong;
+                $dt->So_luong = $dt->So_luong - $chiTiet->So_luong;
+                $dt->save();
+            }
+
             return redirect('ThanhToanGioHang')->with('thongBaoTaoDonHang', 'Bạn đã tạo đơn hàng thành công');
         }
         else
@@ -963,23 +1005,55 @@ class UserController extends Controller
         }
     }
 
+    //THỰC HIỆN AJAX VIỆC KIỂM TRA SỐ LƯỢNG ĐIỆN THOẠI TRONG KHO
+    function getKiemTraKhoAjax()
+    {
+        // Do người dùng đã đăng nhập mới thể nhấn đặt hàng
+        $idGioHang = Auth::user()->ToGioHang->last()->Ma_gio_hang;
 
-    
-    // function suaPassUser()
-    // {
-    //     $taiKhoan = TaiKhoan::find(4);
-    //     // $taiKhoan->Username = 'abc6';
-    //     $taiKhoan->Password = bcrypt('123456');
-    //     // $taiKhoan->Ho_va_ten_lot = 'Le Minh';
-    //     // $taiKhoan->Ten = 'Hai';
-    //     // $taiKhoan->Ngay_sinh = '1999-02-26';
-    //     // $taiKhoan->Gioi_tinh = 1;
-    //     // $taiKhoan->Dia_chi = 'Kien giang';
-    //     // $taiKhoan->So_dien_thoai = '0235632569';
-    //     // $taiKhoan->URL_Avatar = 'acsac.png';
-    //     // $taiKhoan->Tai_khoan_admin = 1;
+        $dsChiTiet = GioHang::find($idGioHang)->ToChiTietGioHang;
+        // str: Chứa các các lời đề nghị khi điện thoại trong kho bị thiếu 
+        $str = '';
+        foreach ($dsChiTiet as $chiTiet) {
+            $soLuongDT = $chiTiet->So_luong;
 
-    //     $taiKhoan->save();
-    //     echo 'Sua tai khoan thanh cong';
-    // }
+            $dt = $chiTiet->ToDienThoaiDiDong;
+            $soLuongTrongKho = $dt->So_luong;
+            if($soLuongTrongKho == 0)
+            {
+                $str .=  'Điện thoại '.$dt->Ten_dien_thoai.' vừa được mua hết. ';
+            }
+            else if($soLuongDT > $soLuongTrongKho)
+            {
+                $str .=  'Điện thoại '.$dt->Ten_dien_thoai.' chỉ còn '.$dt->So_luong.' chiếc. ';
+            }
+        }
+        echo $str;
+    }
+
+    //THỰC HIỆN AJAX VIỆC CẬP NHẬT SỐ LƯỢNG ĐIỆN THOẠI TRONG GIỎ HÀNG
+    function getCapNhatGioHangAjax()
+    {
+        // Do người dùng đã đăng nhập mới thể nhấn đặt hàng
+        $idGioHang = Auth::user()->ToGioHang->last()->Ma_gio_hang;
+
+        $dsChiTiet = GioHang::find($idGioHang)->ToChiTietGioHang;
+        foreach ($dsChiTiet as $chiTiet) {
+            $dt = $chiTiet->ToDienThoaiDiDong;
+            if($dt->So_luong == 0)
+            {
+                DB::table('Chi_tiet_gio_hang')->where([
+                    ['Ma_dien_thoai', '=', $dt->Ma_dien_thoai],
+                    ['Ma_gio_hang', '=', $idGioHang]
+                ])->delete();
+            }
+            else if($dt->So_luong < $chiTiet->So_luong)
+            {
+                DB::table('Chi_tiet_gio_hang')->where([
+                    ['Ma_dien_thoai', '=', $dt->Ma_dien_thoai],
+                    ['Ma_gio_hang', '=', $idGioHang]
+                ])->update(['So_luong'=>$dt->So_luong]);
+            }
+        }
+    }
 }

@@ -11,7 +11,7 @@ class DonHangController extends Controller
 {
     function ShowView()
     {
-        $hoaDon = HoaDon::where('Trang_thai', '=', 0)->get();
+        $hoaDon = HoaDon::where('Trang_thai', '=', 0)->orderBy('Ma_hoa_don', 'DESC')->get();
         return view('admin.DonHang', ['hoaDon'=>$hoaDon]);
     }
 
@@ -29,6 +29,14 @@ class DonHangController extends Controller
         $hoaDon = HoaDon::find($id);
         $Ma_gio_hang = $hoaDon->Ma_gio_hang;
         
+        // Tăng số lượng điện thoại trong lên do hủy đơn hàng
+        $dsChiTiet = $hoaDon->ToGioHang->ToChiTietGioHang;
+        foreach ($dsChiTiet as $chiTiet) {
+            $dt = $chiTiet->ToDienThoaiDiDong;
+            $dt->So_luong = $dt->So_luong + $chiTiet->So_luong;
+            $dt->save();
+        }
+
         DB::table('Chi_tiet_gio_hang')->where('Ma_gio_hang', '=', $Ma_gio_hang)->delete();
 
         $hoaDon->delete();
