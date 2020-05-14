@@ -818,7 +818,7 @@ footer a:hover{
     padding: 120px 20%;
 }
 #register{
-    padding: 100px 20%;
+    padding: 50px 20%;
     display: none;
 }
 /* repoinsive layout------------------------------------------------------------ */
@@ -916,7 +916,7 @@ footer a:hover{
     }
 
     #register {
-        padding: 100px 5%;
+        padding: 50px 5%;
     }
     .col-2s,.col-3s,.col-4s{
         width: 50%;
