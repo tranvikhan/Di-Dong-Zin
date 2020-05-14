@@ -96,11 +96,15 @@ Route::get('TrangChu', 'UserController@getTrangChu');
 
 Route::get('TimDienThoaiAjax/{noiDung}', 'UserController@TimDienThoaiAjax');
 
-    // GKhi người dùng nhập nội dung tìm kiếm rồi nhấn Enter
-        //Nhưng do đang ở trong khác (không hpair trang chủ) nên nội dung được gởi về để gọi ra trang chủ
+    // Khi người dùng nhập nội dung tìm kiếm rồi nhấn Enter
+        //Nhưng do đang ở trong khác (không phải trang chủ) nên nội dung được gởi về để gọi ra trang chủ
 Route::get('GoiTimKiemDienThoai/{noiDung}', 'UserController@GoiTimKiemDienThoai');
 
 Route::get('SapXepDienThoaiAjax/{noiDung}/{mucGia}/{thuTu}', 'UserController@SapXepDienThoaiAjax');
+
+Route::get('KiemTraKhoAjax', 'UserController@getKiemTraKhoAjax');
+
+Route::get('CapNhatGioHangAjax', 'UserController@getCapNhatGioHangAjax');
 
     //ĐĂNG XUẤT
 Route::get('logout', 'UserController@getDangXuat');

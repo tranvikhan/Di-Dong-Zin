@@ -56,6 +56,7 @@ class DienThoaiController extends Controller
                 'tenDienThoai'=>'required|max:100',
                 'hangDienThoai'=>'required',
                 'moTa'=>'max:2000',
+                'soLuong'=>'required',
                 'giaBan'=>'required',
                 'anhSanPham'=>'required|mimes:png,jpg,jpeg'
             ], 
@@ -95,6 +96,8 @@ class DienThoaiController extends Controller
                 
                 'moTa.max'=>'Mô tả chỉ được tối đa 2000 ký tự',
                 
+                'soLuong.required'=>'Số lượng điện thoại không được trống',
+
                 'giaBan.required'=>'Giá bán không được trống',
                 
                 'anhSanPham.required'=>'Hình ảnh phải được chọn',
@@ -141,6 +144,7 @@ class DienThoaiController extends Controller
         $dienThoai->Ten_dien_thoai = $request->tenDienThoai;
         $dienThoai->Hinh_anh = $ten;
         $dienThoai->Mo_ta = $request->moTa;
+        $dienThoai->So_luong = $request->soLuong;
         $dienThoai->Kich_thuoc = $request->kichThuoc;
         $dienThoai->Trong_luong = $request->trongLuong;
         $dienThoai->RAM = $request->ram;
@@ -359,6 +363,11 @@ class DienThoaiController extends Controller
         $dienThoai->Dang_ban = 1;
         $dienThoai->Ten_dien_thoai = $request->tenDienThoai;
         $dienThoai->Mo_ta = $request->moTa;
+        if($request->soLuong != '')
+        {   
+            // Nếu có nhập số lượng, cập nhật lại số lượng (cộng dồn số lượng)
+            $dienThoai->So_luong = $dienThoai->So_luong + $request->soLuong;    
+        }
         $dienThoai->Kich_thuoc = $request->kichThuoc;
         $dienThoai->Trong_luong = $request->trongLuong;
         $dienThoai->RAM = $request->ram;

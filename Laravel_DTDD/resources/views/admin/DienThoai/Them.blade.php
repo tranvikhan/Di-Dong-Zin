@@ -155,6 +155,14 @@
                             </td>
                         </tr>
                         <tr>
+                            <th colspan="2">Số lượng điện thoại thêm vào kho:</th>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <input type="number" min="1" placeholder="" name="soLuong">
+                            </td>
+                        </tr>
+                        <tr>
                             <th colspan="2">Giá điện thoại:</th>
                         </tr>
                         <tr>

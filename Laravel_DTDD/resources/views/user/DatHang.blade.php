@@ -446,7 +446,25 @@
             daDangNhap = document.getElementById('xacNhanDangNhap').value;
             if(daDangNhap == 'checked')
             {
-                return true;
+                $.get('KiemTraKhoAjax', function(data){
+                    if(data != '') 
+                    {
+                        if(confirm(data+' Bạn có muốn mua số còn lại luôn không?')) {
+                            // Cập nhật số lượng điện thoại giỏ hàng
+                            $.get('CapNhatGioHangAjax', function(data){
+                                // Cập nhật, không trả về data       
+                            });
+
+                            alert('Mời bạn điền và xem lại thông tin trước khi đặt hàng');
+                            window.location.href = 'ThanhToanGioHang';
+                        }
+                    }
+                    else
+                        //data = '': không có lỗi khi kiểm tra số lượng điện thoại trong kho
+                    {
+                        return true;
+                    }                    
+                });
             }
             else if(daDangNhap == 'uncheck')
             {
@@ -454,7 +472,7 @@
                 document.getElementById('myModal').style.display = 'block';
                 
                 return false;
-            }
+            }            
         }
     </script>    
 @endsection
