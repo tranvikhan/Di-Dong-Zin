@@ -1,14 +1,18 @@
 <?php
     $dsMaTrongGioHang = array();
     $dsSoLuongTheoMa = array();
+    $soLuongTrongGioHang = 0;
     $hasGioHang = false;
     if(Auth::check())
         // KHI ĐÃ ĐĂNG NHẬP
     {
         $maTK = Auth::user()->Ma_tai_khoan;
         $gioHang = App\TaiKhoan::find($maTK)->ToGioHang->last();
+
+        // Nếu giỏ hàng tồn tại
         if($gioHang !== null)
         {
+            // Kiểm tra giỏ hàng đã thanh toán chưa
             if($gioHang->Da_thanh_toan == 0)
             {
                 $hasGioHang = true;
@@ -23,6 +27,9 @@
                 $count = count($dsMaTrongGioHang);
                 $dsMaTrongGioHang[$count] = $chiTiet->Ma_dien_thoai;
                 $dsSoLuongTheoMa[$count] = $chiTiet->So_luong;
+
+                // Số lượng điện thoại trong giỏ hàng
+                $soLuongTrongGioHang += $chiTiet->So_luong;
             }
         }
     }
@@ -42,6 +49,9 @@
                 $count = count($dsMaTrongGioHang);
                 $dsMaTrongGioHang[$count] = $maDT;
                 $dsSoLuongTheoMa[$count] = $soLuong;
+
+                // Số lượng điện thoại trong giỏ hàng
+                $soLuongTrongGioHang += $soLuong;
             }
         }            
     }
@@ -64,24 +74,19 @@
             <input id ="text_search" type="text" placeholder="Tìm sản phẩm" />
             <img src="DiDongZin/assets/img/search_30px.png" alt="icon-search">
             <div id="search-results">
+                
                 {{-- <div class="phone-results">
                     <img src="DiDongZin/imagePhone/iphone11-black-1.png" alt="iphone 11"/>
                     <h2 class="name">iPhone11 64Gb Mới Chính Hãng</h2>
                     <span class="price">19.190.000 VND</span>
                 </div> --}}
                 
-                
-                {{-- <div class="phone-results">
-                    <img src="DiDongZin/imagePhone/iphoneX-space-gray-300x400.png" alt="iphone X" />
-                    <h2 class="name">iPhoneX 64Gb Mới Chính Hãng</h2>
-                    <span class="price">11.190.000 VND</span>
-                </div> --}}
             </div>
         </div>
         <div class="col-4 right-nav-bar">
             <a id="cart-btn" href="ThanhToanGioHang" style="text-decoration: none;">
                 <img src="DiDongZin/assets/img/shopping_cart_100px.png" alt="cart" />
-                <span class="badge" id="iconGioHangTren">{{ count($dsMaTrongGioHang) }}</span>
+                <span class="badge" id="iconGioHangTren">{{ $soLuongTrongGioHang }}</span>
                 <p>Giỏ hàng</p>
                 <div id="cart">
                     @for ($i = 0; $i < count($dsMaTrongGioHang); $i++)

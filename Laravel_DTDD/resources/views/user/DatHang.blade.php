@@ -325,6 +325,23 @@
             
             document.getElementById('soLuongIconGioHang'+idDT).innerHTML = 'X '+soLuong;
             
+            // Giảm tổng số lượng điện thoại trong 2 icon giỏ hàng
+            count = document.getElementById('iconGioHangTren').innerHTML;
+            if( loai == 'tang' )
+            {
+                // Icon xuất hiện ở giao diện rộng (desktop)
+                document.getElementById('iconGioHangTren').innerHTML = count*1 + 1;
+                // Icon xuất hiện ở giao diện hẹp (smart phone)
+                document.getElementById('iconGioHangDuoi').innerHTML = count*1 + 1;
+            }
+            else if( loai ==  'giam' )
+            {
+                // Icon xuất hiện ở giao diện rộng (desktop)
+                document.getElementById('iconGioHangTren').innerHTML = count*1 - 1;
+                // Icon xuất hiện ở giao diện hẹp (smart phone)
+                document.getElementById('iconGioHangDuoi').innerHTML = count*1 - 1;
+            }
+
             if( soLuong == 0)
             {
                 // XÓA ĐIỆN THOẠI AJAX
@@ -349,13 +366,6 @@
                 
                 // Ẩn đi điện thoại bị xóa trên icon giỏ hảng phía trên góc phải
                 document.getElementById('rowIconGioHang'+idDT).hidden = true;
-                
-                // Giảm tổng số lượng điện thoại trong 2 icon giỏ hàng
-                count = document.getElementById('iconGioHangTren').innerHTML;
-                    // Icon xuất hiện ở giao diện rộng (desktop)
-                document.getElementById('iconGioHangTren').innerHTML = count*1 - 1;
-                    // Icon xuất hiện ở giao diện hẹp (smart phone)
-                document.getElementById('iconGioHangDuoi').innerHTML = count*1 - 1;
             }
             else
             {
