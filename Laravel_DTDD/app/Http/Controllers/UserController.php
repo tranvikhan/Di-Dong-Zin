@@ -724,9 +724,80 @@ class UserController extends Controller
     function ShowPhone($id)
     {
         $dienThoai = DienThoaiDiDong::find($id);
-        $dsBinhLuan = BinhLuan::where('Ma_dien_thoai', '=', $dienThoai->Ma_dien_thoai)->paginate(5);
-        // $dsBinhLuan = $dienThoai->ToBinhLuan->paginate(5);
-        return view('user.DienThoai', ['fileCSS'=>'dienThoai', 'dienThoai'=>$dienThoai, 'dsBinhLuan'=>$dsBinhLuan]);
+        $dsBinhLuanCha = BinhLuan::where([
+                ['Ma_dien_thoai', '=', $dienThoai->Ma_dien_thoai],
+                ['Ma_binh_luan_cha', '=', null]
+            ])->orderBy('Ma_binh_luan', 'DESC')->paginate(4);
+
+        $dsBinhLuanCon = BinhLuan::where([
+                ['Ma_dien_thoai', '=', $dienThoai->Ma_dien_thoai],
+                ['Ma_binh_luan_cha', '<>', null]
+            ])->get();
+
+        return view('user.DienThoai', ['fileCSS'=>'dienThoai', 'dienThoai'=>$dienThoai, 'dsBinhLuanCha'=>$dsBinhLuanCha, 'dsBinhLuanCon'=>$dsBinhLuanCon]);
+    }
+
+    // THAO TÁC VỚI BÌNH LUẬN
+    function getThemBinhLuan($maBinhLuanCha, $noiDung, $maDienThoai)
+    {
+        // Lấy ngày giờ hiện tại
+        date_default_timezone_set('Asia/Ho_Chi_Minh');
+        $now = date('Y-m-d H:i:s');
+
+        // Lấy Mã tài khoản đang đăng nhập
+        $maTaiKhoan = Auth::user()->Ma_tai_khoan;
+
+        $bl = new BinhLuan;
+        $bl->Ma_binh_luan = BinhLuan::all()->max('Ma_binh_luan') + 1;
+        if($maBinhLuanCha == '0')
+        {
+            $bl->Ma_binh_luan_cha = null;
+        }
+        else
+        {
+            $bl->Ma_binh_luan_cha = $maBinhLuanCha;
+        }        
+        $bl->Noi_dung = $noiDung;
+        $bl->Thoi_gian_binh_luan = $now;
+        $bl->Ma_tai_khoan = $maTaiKhoan;
+        $bl->Ma_dien_thoai = $maDienThoai;
+
+        $bl->save();
+    }
+
+    function getCapNhatBinhLuan($loai, $maBinhLuan, $noiDung)
+    {
+        if($loai == 'sua')
+        {
+            // Lấy ngày giờ hiện tại
+            date_default_timezone_set('Asia/Ho_Chi_Minh');
+            $now = date('Y-m-d H:i:s');
+
+            $bl = BinhLuan::find($maBinhLuan);
+            $bl->Noi_dung = $noiDung;
+            $bl->Thoi_gian_binh_luan = $now;
+
+            $bl->save();
+        }
+        else if($loai == 'xoa')
+        {
+            // Khi xóa có 2 trường hợp: 
+            $bl = BinhLuan::find($maBinhLuan);
+
+            if($bl->Ma_binh_luan_cha == null)
+            {
+                // Nếu là bình luận cha: xóa binh luận cha và các bình luận con (nếu có)
+                DB::table('Binh_luan')->where('Ma_binh_luan_cha', '=', $maBinhLuan)->delete();
+
+                $bl->delete();
+            }
+            else
+            {
+                // Nếu là bình luận con: chỉ cần xóa bình luận đó
+                $bl->delete();
+            }
+            
+        }
     }
 
 

@@ -117,6 +117,11 @@ Route::post('dangky', 'UserController@postDangKy');
     //HIỆN CHI TIẾT ĐIỆN THOẠI
 Route::get('DienThoai/{id}.html', 'UserController@ShowPhone');
 
+        // AJAX THÊM VÀ CẬP NHẬT BÌNH LUẬN
+Route::get('ThemBinhLuan/{Ma_binh_luan_cha}/{Noi_dung}/{Ma_dien_thoai}', 'UserController@getThemBinhLuan');
+
+Route::get('CapNhatBinhLuan/{loai}/{Ma_binh_luan}/{Noi_dung}','UserController@getCapNhatBinhLuan');
+
     //TẠO SESSION CHO VÀO GIỎ HÀNG
 Route::get('ThemVaoGioHang/{id}', 'UserController@getThemVaoGioHang');
 
