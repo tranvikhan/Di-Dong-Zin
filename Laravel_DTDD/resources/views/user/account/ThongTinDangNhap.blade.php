@@ -51,6 +51,14 @@
                             </tr>
                             <tr>
                                 <th>
+                                    Email
+                                </th>
+                                <td>
+                                    <input type="text"  value="{{ Auth::user()->Email }}" name="email">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
                                     Mật khẩu hiện tại
                                 </th>
                                 <td>

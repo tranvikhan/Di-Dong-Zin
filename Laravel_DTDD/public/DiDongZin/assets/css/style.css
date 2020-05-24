@@ -814,11 +814,14 @@ footer a:hover{
     background-color: var(--backgroud-color4);
     color: var(--font-color3);
 }
-#login{
+#login,#quenmatkhau{
     padding: 120px 20%;
 }
+#quenmatkhau{
+    display: none;
+}
 #register{
-    padding: 100px 20%;
+    padding: 50px 20%;
     display: none;
 }
 /* repoinsive layout------------------------------------------------------------ */
@@ -911,12 +914,12 @@ footer a:hover{
     .sign_in_up .col-5{
         display: none;
     }
-    #login {
+    #login,#quenmatkhau {
         padding: 107px 5%;
     }
 
     #register {
-        padding: 100px 5%;
+        padding: 50px 5%;
     }
     .col-2s,.col-3s,.col-4s{
         width: 50%;

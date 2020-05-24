@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\PHP_Classes\Price;
+//use App\PHP_Classes\Mail;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -10,6 +11,8 @@ use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Collection;
+use Mail;
+use App\Mail\MailDoiMatKhau;
 
 use App\TaiKhoan;
 use App\DienThoaiDiDong;
@@ -513,6 +516,7 @@ class UserController extends Controller
             [
                 'hoVaTenLot'=>'required|max:50',
                 'ten'=>'required|max:20',
+                'email'=>'required|email',
                 'username2'=>'required|unique:Tai_khoan,Username',
                 'password2'=>'required',
                 're_password2'=>'same:password2'
@@ -522,6 +526,8 @@ class UserController extends Controller
                 'hoVaTenLot.max'=>'Họ và tên lót tối đa 50 ký tự',
                 'ten.required'=>'Tên bắt buộc phải nhập',
                 'ten.max'=>'Tên tối đa 50 ký tự',
+                'email.required'=>'Email bắt buộc phải nhập',
+                'email.email'=>'Địa chỉ email không hợp lệ',
                 'username2.required'=>'Tên đăng nhập bắt buộc phải nhập',
                 'username2.unique'=>'Tên đăng nhập đã bị trùng',
                 'password2.required'=>'Mật khẩu bắt buộc phải nhập',
@@ -533,6 +539,7 @@ class UserController extends Controller
         $user->password = bcrypt($request->password2);
         $user->Ho_va_ten_lot = $request->hoVaTenLot;
         $user->Ten = $request->ten;
+        $user->Email = $request->email;
         $user->Tai_khoan_admin = 0;
         
         $user->save();
@@ -550,6 +557,44 @@ class UserController extends Controller
             return redirect('TrangChu');
     }
 
+        // ĐỔI MẬT KHẨU
+    function postKiemTraDieuKienDoiMatKhau(Request $request)
+    {
+        //$user = TaiKhoan::find(2);
+        $user = TaiKhoan::where([
+                ['Username', '=', $request->username],
+                ['Email', '=', $request->email],
+            ])->get();
+        $isUser = false;
+
+        // Tìm thấy user
+        if(count($user) == 1)
+        {
+            $isUser = true;
+        }
+
+        if( $isUser )
+        {
+            // Tạo mật khẩu mới
+            $newPass = Str::random(10);
+            
+            // Lưu mật khẩu
+            $account = TaiKhoan::find($user[0]['Ma_tai_khoan']);
+            $account->password = bcrypt($newPass);
+            $account->save();
+
+            // Gửi Mail
+            $hoTen = $user[0]['Ho_va_ten_lot'].' '.$user[0]['Ten'];
+            $valArr = ['hoTen'=>$hoTen, 'matKhau'=>$newPass];
+            Mail::to($account->Email)->send(new MailDoiMatKhau($valArr));
+
+            return redirect('TrangChu')->with('DoiMatKhauThanhCong', 'DiDongZin đã gửi mật khẩu mới về email của bạn. Bây giờ bạn có thể sử dụng mật khẩu đó để đăng nhập vào hệ thống');
+        }
+        else
+        {
+            return redirect('TrangChu')->with('DoiMatKhauThatBai', 'Tên đăng nhập hoặc email không đúng');
+        }
+    }
 
     // ===========================================================================================
     // ---------------- CÁC TRANG QUẢN LÝ TÀI KHOẢN ----------------------------------------------
@@ -630,27 +675,60 @@ class UserController extends Controller
     {
         $this->validate($request, 
             [
-                'password'=>'required',
-                'newPassword'=>'required',
-                'reNewPassword'=>'same:newPassword'
+                'email'=>'required|email',
             ], 
             [
-                'password.required'=>'Mật khẩu hiện tại không được trống',
-                'newPassword.required'=>'Mật khẩu mới không được trống',
-                'reNewPassword.same'=>'Nhập lại mật khẩu mới không chính xác'
+                'email.required'=>'Email không được trống',
+                'email.email'=>'Địa chỉ email không hợp lệ',
             ]);
-        if(Auth::attempt(['Username'=>$request->username, 'password'=>$request->password]))
+        
+        $hasChanged = false;
+        // Cập nhật email nếu email có sự thay đổi
+        if($request->email != Auth::user()->Email)
         {
             $ma = Auth::user()->Ma_tai_khoan;
             $user = TaiKhoan::find($ma);
-            $user->password = bcrypt($request->newPassword);
+            $user->Email = $request->email;
 
             $user->save();
-            return redirect('taikhoan/CapNhatTaiKhoan')->with('thongBaoCapNhat', 'Cập nhật mật khẩu thành công');
+            $hasChanged = true;
+        }    
+
+        // Nếu password khác rỗng là có hành động thay đổi mật khẩu
+        if($request->password != '')
+        {
+            if(Auth::attempt(['Username'=>$request->username, 'password'=>$request->password]))
+            {
+                $this->validate($request, 
+                    [
+                        'newPassword'=>'required',
+                        'reNewPassword'=>'same:newPassword'
+                    ], 
+                    [
+                        'newPassword.required'=>'Mật khẩu mới không được trống',
+                        'reNewPassword.same'=>'Nhập lại mật khẩu mới không chính xác'
+                    ]);
+
+                $ma = Auth::user()->Ma_tai_khoan;
+                $user = TaiKhoan::find($ma);
+                $user->password = bcrypt($request->newPassword);
+
+                $user->save();
+                $hasChanged = true;
+            }
+            else
+            {
+                return redirect('taikhoan/CapNhatTaiKhoan')->with('thongBaoCapNhat', 'Mật khẩu hiện tại không đúng');
+            }
+        }
+
+        if( $hasChanged )
+        {            
+            return redirect('taikhoan/CapNhatTaiKhoan')->with('thongBaoCapNhat', 'Cập nhật thông tin đăng nhập thành công');
         }
         else
-        {
-            return redirect('taikhoan/CapNhatTaiKhoan')->with('thongBaoCapNhat', 'Mật khẩu hiện tại không đúng');
+        {            
+            return redirect('taikhoan/CapNhatTaiKhoan');
         }
     }
 
@@ -1088,6 +1166,7 @@ class UserController extends Controller
         foreach ($dsChiTiet as $chiTiet) {
             $soLuongDT = $chiTiet->So_luong;
 
+
             $dt = $chiTiet->ToDienThoaiDiDong;
             $soLuongTrongKho = $dt->So_luong;
             if($soLuongTrongKho == 0)
@@ -1111,6 +1190,8 @@ class UserController extends Controller
         $dsChiTiet = GioHang::find($idGioHang)->ToChiTietGioHang;
         foreach ($dsChiTiet as $chiTiet) {
             $dt = $chiTiet->ToDienThoaiDiDong;
+
+                // Số lượng điện thoại trong kho = 0
             if($dt->So_luong == 0)
             {
                 DB::table('Chi_tiet_gio_hang')->where([
@@ -1118,6 +1199,7 @@ class UserController extends Controller
                     ['Ma_gio_hang', '=', $idGioHang]
                 ])->delete();
             }
+                // Số lượng điện thoại trong kho < số lượng điện thoại trong giỏ hàng
             else if($dt->So_luong < $chiTiet->So_luong)
             {
                 DB::table('Chi_tiet_gio_hang')->where([
@@ -1126,5 +1208,5 @@ class UserController extends Controller
                 ])->update(['So_luong'=>$dt->So_luong]);
             }
         }
-    }
+    }  
 }

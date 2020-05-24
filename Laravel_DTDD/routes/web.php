@@ -91,30 +91,33 @@ Route::group(['prefix'=>'admin', 'middleware'=>'AdminMiddleware'], function(){
 // ==============================================================================================
 // -------- ROUTE USER --------------------------------------------------------------------------
 // ==============================================================================================
-    //TRANG CHỦ
+    //TRANG CHỦ ==================================================================================
 Route::get('TrangChu', 'UserController@getTrangChu');
-
+        
+        // Tìm kiếm điện thoại tại Trang chủ
 Route::get('TimDienThoaiAjax/{noiDung}', 'UserController@TimDienThoaiAjax');
 
     // Khi người dùng nhập nội dung tìm kiếm rồi nhấn Enter
         //Nhưng do đang ở trong khác (không phải trang chủ) nên nội dung được gởi về để gọi ra trang chủ
 Route::get('GoiTimKiemDienThoai/{noiDung}', 'UserController@GoiTimKiemDienThoai');
 
+        //Sắp xếp điện thoại tại Trang chủ
 Route::get('SapXepDienThoaiAjax/{noiDung}/{mucGia}/{thuTu}', 'UserController@SapXepDienThoaiAjax');
 
-Route::get('KiemTraKhoAjax', 'UserController@getKiemTraKhoAjax');
 
-Route::get('CapNhatGioHangAjax', 'UserController@getCapNhatGioHangAjax');
-
-    //ĐĂNG XUẤT
+    //ĐĂNG XUẤT ===================================================================================
 Route::get('logout', 'UserController@getDangXuat');
 
-    //NHẬN THÔNG TIN ĐĂNG NHẬP
+
+    //NHẬN THÔNG TIN ĐĂNG NHẬP =====================================================================
 Route::post('dangnhap', 'UserController@postDangNhap');
 
 Route::post('dangky', 'UserController@postDangKy');
+        
+        // THAO TÁC ĐỔI MẬT KHẨU
+        Route::post('KiemTraDieuKienDoiMatKhau', 'UserController@postKiemTraDieuKienDoiMatKhau');
 
-    //HIỆN CHI TIẾT ĐIỆN THOẠI
+    //HIỆN CHI TIẾT ĐIỆN THOẠI ====================================================================
 Route::get('DienThoai/{id}.html', 'UserController@ShowPhone');
 
         // AJAX THÊM VÀ CẬP NHẬT BÌNH LUẬN
@@ -122,17 +125,27 @@ Route::get('ThemBinhLuan/{Ma_binh_luan_cha}/{Noi_dung}/{Ma_dien_thoai}', 'UserCo
 
 Route::get('CapNhatBinhLuan/{loai}/{Ma_binh_luan}/{Noi_dung}','UserController@getCapNhatBinhLuan');
 
-    //TẠO SESSION CHO VÀO GIỎ HÀNG
-Route::get('ThemVaoGioHang/{id}', 'UserController@getThemVaoGioHang');
 
+    //THANH TOÁN GIỎ HÀNG ===========================================================================
 Route::get('ThanhToanGioHang', 'UserController@getThanhToanGioHang');
 
 Route::post('TaoDonHang', 'UserController@postTaoDonHang');
+
+        // AJAX KIỂM TRA KHO VÀ ĐƯA RA THÔNG BÁO NẾU KHI THIẾU HOẶC KHÔNG CÓ ĐIỆN THOẠI
+Route::get('KiemTraKhoAjax', 'UserController@getKiemTraKhoAjax');
+
+        // AJAX LÚC NÀO CŨNG CHẠY: CHỈ CẬP NHẬT KHI THIẾU HOẶC KHÔNG CÓ ĐIỆN THOẠI
+Route::get('CapNhatGioHangAjax', 'UserController@getCapNhatGioHangAjax');
+
+        //TẠO SESSION ĐIỆN THOẠI CHO VÀO GIỎ HÀNG
+Route::get('ThemVaoGioHang/{id}', 'UserController@getThemVaoGioHang');
 
 Route::get('TangGiamSoLuongCHECKED_AJAX/{loai}/{maDT}/{maGioHang}/{soLuong}', 'UserController@getTangGiamSoLuongCHECKED_AJAX');
 
 Route::get('TangGiamSoLuongUNCHECK_AJAX/{loai}/{maDT}/{soLuong}', 'UserController@getTangGiamSoLuongUNCHECK_AJAX');
 
+
+    //QUẢN LÝ THÔNG TIN THÀNH VIÊN ================================================================
 Route::group(['prefix'=>'taikhoan', 'middleware'=>'UserMiddleware'], function(){
         //THÔNG TIN THÀNH VIÊN
     Route::get('ThongTinCaNhan', 'UserController@getThongTinCaNhan');
@@ -163,8 +176,6 @@ Route::get('temp', function(){
     $time = date('Y-m-d H:i:s');
     echo $time;
 });
-
-route::get('SuaUser', 'UserController@suaPassUser');
 
 Route::group(['middleware'=>'web'], function(){
     Route::get('taoSessionCount', function(){
@@ -211,5 +222,8 @@ Route::group(['middleware'=>'web'], function(){
         }
         else
             echo 'that bai';
+    });
+    Route::get('getView', function(){
+        return view('user.Email_DoiMatKhau');
     });
 });

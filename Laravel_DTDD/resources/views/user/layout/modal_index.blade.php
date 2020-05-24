@@ -30,8 +30,34 @@
                         <label for="password"><img src="DiDongZin/assets/img/secure_30px.png"></label>
                         <input type="password" id="password" name="password" placeholder="Mật khẩu">
                         <input class="thr-btn" type="submit" value="Đăng Nhập">
-                        <a href="#">Quên mật khẩu ?</a>
+                        <a onclick="openTab(event, 'quenmatkhau')">Quên mật khẩu ?</a>
                     </form>
+                </div>
+                <div id="quenmatkhau" class="tabcontent">
+                    <form action="KiemTraDieuKienDoiMatKhau" method="POST">
+                        {{ csrf_field() }}
+
+                        <label for="usernameKhoiPhuc"><img src="DiDongZin/assets/img/male_user_30px.png"></label>
+                        <input type="text" name="username" id="usernameKhoiPhuc" placeholder="Nhập tên đăng nhập">
+                        
+                        <label for="emailKhoiPhuc"><img src="DiDongZin/assets/img/email.png"></label>
+                        <input type="text" name="email" id="emailKhoiPhuc" placeholder="Nhập email">
+                        
+                        <input class="thr-btn" type="submit" value="Yêu cầu đổi mật khẩu">
+                    </form>
+
+                    @if (session('DoiMatKhauThanhCong'))
+                        <?php echo '<script>alert("'. session('DoiMatKhauThanhCong') .'")</script>'; ?>
+                    @endif
+
+                    @if (session('DoiMatKhauThatBai'))
+                        <?php 
+                            echo '<script>
+                                    alert("'. session('DoiMatKhauThatBai') .'");
+                                    document.getElementById("myModal").style.display = "block";
+                                </script>'; 
+                        ?>
+                    @endif
                 </div>
 
                 {{----- ĐĂNG KÝ ------------------------------------------------------}}
@@ -65,11 +91,14 @@
                             ?>
                         @endif
 
-                        <label for="hoVaTenLot"><img src="DiDongZin/assets/img/male_user_30px.png"></label>
-                        <input type="text" name="hoVaTenLot" id="hoVaTenLot" placeholder="Điền họ và tên lót...">
+                        <label for="hoVaTenLot"><img src="DiDongZin/assets/img/name_50px.png"></label>
+                        <input type="text" name="hoVaTenLot" id="hoVaTenLot" placeholder="Họ và tên lót">
 
-                        <label for="ten"><img src="DiDongZin/assets/img/male_user_30px.png"></label>
-                        <input type="text" name="ten" id="ten" placeholder="Điền tên của bạn...">
+                        <label for="ten"><img src="DiDongZin/assets/img/name_50px.png"></label>
+                        <input type="text" name="ten" id="ten" placeholder="Tên">
+
+                        <label for="email"><img src="DiDongZin/assets/img/email.png"></label>
+                        <input type="text" name="email" id="email" placeholder="Email">
 
                         <label for="username2"><img src="DiDongZin/assets/img/male_user_30px.png"></label>
                         <input type="text" name="username2" id="username2" placeholder="Tên đăng nhập">
