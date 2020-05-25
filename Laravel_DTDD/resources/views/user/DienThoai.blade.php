@@ -305,9 +305,9 @@
                                 
                                 +'<div class="action-g" id="action-cmt'+ id_maxCmt +'">'
                                     +'<button class="reply-cmt" onclick="reply_cmt('+ id_maxCmt +')"><img '
-                                        +'src="DiDongZin/assets/img/left_2_30px.png">Trả lời</button>'
+                                        +' src="DiDongZin/assets/img/left_2_30px.png">Trả lời</button>'
                                     +'<button class="edit-cmt" onclick="edit_cmt('+ id_maxCmt +')"><img '
-                                        +'src="DiDongZin/assets/img/design_30px.png">Chỉnh sửa</button>'
+                                        +' src="DiDongZin/assets/img/design_30px.png">Chỉnh sửa</button>'
                                     +'<button class="del-cmt" onclick="delete_cmt('+ id_maxCmt +')"><img src="DiDongZin/assets/img/trash_can_30px.png">Xóa</button>'
                                 +'</div>'
                             +'</div>'
@@ -379,9 +379,9 @@
                             +'<p class="content-cmt" id="content-childCmt'+ id_maxCmt +'">'+ noiDung +'</p>'
                             +'<div class="action-g" id="action-childCmt'+ id_maxCmt +'">'
                                 +'<button class="edit-cmt" onclick="edit_childCmt('+ id_maxCmt +')"><img '
-                                    +'src="DiDongZin/assets/img/design_30px.png">Chỉnh sửa</button>'
+                                    +' src="DiDongZin/assets/img/design_30px.png">Chỉnh sửa</button>'
                                 +'<button class="del-cmt" onclick="delete_childCmt('+ id_maxCmt +')"><img '
-                                    +'src="DiDongZin/assets/img/trash_can_30px.png">Xóa</button>'
+                                    +' src="DiDongZin/assets/img/trash_can_30px.png">Xóa</button>'
                             +'</div>'
                         +'</div>'
                     +'</div>'
@@ -425,11 +425,11 @@
 
         // Hiện thị lại các action đối với bình luận
         str = '<button class="reply-cmt" onclick="reply_cmt('+ idCmt +')"><img'
-                    +'src="DiDongZin/assets/img/left_2_30px.png">Trả lời</button>'
+                    +' src="DiDongZin/assets/img/left_2_30px.png">Trả lời</button>'
                 +'<button class="edit-cmt" onclick="edit_cmt('+ idCmt +')"><img'
-                    +'src="DiDongZin/assets/img/design_30px.png">Chỉnh sửa</button>'
+                    +' src="DiDongZin/assets/img/design_30px.png">Chỉnh sửa</button>'
                 +'<button class="del-cmt" onclick="delete_cmt('+ idCmt +')"><img'
-                    +'src="DiDongZin/assets/img/trash_can_30px.png">Xóa</button>';
+                    +' src="DiDongZin/assets/img/trash_can_30px.png">Xóa</button>';
         document.getElementById("action-cmt"+idCmt).innerHTML = str;
 
         // Cập nhật bình luận cha
@@ -444,11 +444,11 @@
 
         // Hiện thị lại các action đối với bình luận
         str = '<button class="reply-cmt" onclick="reply_cmt('+ idCmt +')"><img'
-                    +'src="DiDongZin/assets/img/left_2_30px.png">Trả lời</button>'
+                    +' src="DiDongZin/assets/img/left_2_30px.png">Trả lời</button>'
                 +'<button class="edit-cmt" onclick="edit_cmt('+ idCmt +')"><img'
-                    +'src="DiDongZin/assets/img/design_30px.png">Chỉnh sửa</button>'
+                    +' src="DiDongZin/assets/img/design_30px.png">Chỉnh sửa</button>'
                 +'<button class="del-cmt" onclick="delete_cmt('+ idCmt +')"><img'
-                    +'src="DiDongZin/assets/img/trash_can_30px.png">Xóa</button>';
+                    +' src="DiDongZin/assets/img/trash_can_30px.png">Xóa</button>';
         document.getElementById("action-cmt"+idCmt).innerHTML = str;
     }
 
@@ -487,9 +487,9 @@
 
         //Hiển thị lại các action cho bình luận con
         str =   '<button class="edit-cmt" onclick="edit_childCmt('+ idChildCmt +')"><img'
-                    +'src="DiDongZin/assets/img/design_30px.png">Chỉnh sửa</button>'
+                    +' src="DiDongZin/assets/img/design_30px.png">Chỉnh sửa</button>'
                 +'<button class="del-cmt" onclick="delete_childCmt('+ idChildCmt +')"><img'
-                    +'src="DiDongZin/assets/img/trash_can_30px.png">Xóa</button>';
+                    +' src="DiDongZin/assets/img/trash_can_30px.png">Xóa</button>';
         document.getElementById('action-childCmt'+idChildCmt).innerHTML = str;
 
         // Cập nhật bình luận con
@@ -503,9 +503,9 @@
 
         //Hiển thị lại các action cho bình luận con
         str =   '<button class="edit-cmt" onclick="edit_childCmt('+ idChildCmt +')"><img'
-                    +'src="DiDongZin/assets/img/design_30px.png">Chỉnh sửa</button>'
+                    +' src="DiDongZin/assets/img/design_30px.png">Chỉnh sửa</button>'
                 +'<button class="del-cmt" onclick="delete_childCmt('+ idChildCmt +')"><img'
-                    +'src="DiDongZin/assets/img/trash_can_30px.png">Xóa</button>';
+                    +' src="DiDongZin/assets/img/trash_can_30px.png">Xóa</button>';
         document.getElementById('action-childCmt'+idChildCmt).innerHTML = str;
     }
 
