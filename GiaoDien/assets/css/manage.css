@@ -625,6 +625,7 @@ textarea:focus{
     padding: 30px;
     border-radius: 15px;
     transition: 0.3s;
+    cursor: pointer;
     position: relative;
 }
 .cart-thanhvien>div>img{
@@ -800,4 +801,16 @@ textarea:focus{
 #themdienthoai .mycheckbox,
 #suadienthoai .mycheckbox{
     margin-left: 0;
+}
+.dropdown-btn {
+    display: block;
+    width: 100%;
+    text-align: center;
+    cursor: pointer;
+}
+.dropdown-btn img {
+    width: 30px;
+}
+.dropdown-cnt{
+    display: none;
 }
