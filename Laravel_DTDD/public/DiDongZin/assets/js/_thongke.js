@@ -32,3 +32,47 @@ var myChart = new Chart(ctx, {
         }
     }
 });
+
+function doiLoaiBaoCao(){
+    var s = document.getElementById("LoaiBaoCao");
+    var i = document.getElementById("ThoiGianBaoCao");
+    var n = document.getElementById("NamBaoCao");
+    switch(s.value){
+        case "1": 
+            i.style.display = "inline-block";
+            n.style.display = "none";
+            i.type ="date";
+            //ajax now
+            break;
+        case "2":
+            i.style.display = "inline-block";
+            n.style.display = "none";
+            i.type ="week";
+            //ajax now
+        break;
+        case "3":
+            i.style.display = "inline-block";
+            n.style.display = "none";
+            i.type = "month";
+            //ajax now
+        break;
+        case "4":
+            i.style.display = "none";
+            n.style.display = "inline-block";
+            //ajax now
+        break;
+    }
+}
+
+function doiKieuBC(){
+    var s = document.getElementById("kieubaocao");
+    var tb1 = document.getElementById("bangBaoCao");
+    var tb2 = document.getElementById("bangSanPham");
+    if(s.value=="1"){
+        tb1.style.display="block";
+        tb2.style.display = "none";
+    }else{
+        tb2.style.display = "block";
+        tb1.style.display = "none";
+    }
+}

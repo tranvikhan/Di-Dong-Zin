@@ -34,85 +34,89 @@
 
                     </tr>
                 </table>
-                <table class="tb2">
-                    <tr>
-                        <th>
-                            STT
-                        </th>
-                        <th>
-                            Điện thoại
-                        </th>
-                        <th>
-                            Số lượng
-                        </th>
-                        <th>
-                            Đơn giá
-                        </th>
-                        <th>
-                            Thành tiền
-                        </th>
-                    </tr>
-                    <?php  
-                        $count = 1;
-                        $tongCong = 0;
-                    ?>
-                    @foreach ($hd->ToGioHang->ToChiTietGioHang as $chiTiet)
+                <div class="dropdown-btn">
+                    <img src="DiDongZin/assets/img/xemthem.png">
+                </div>
+                <div class="dropdown-cnt">
+                    <table class="tb2">
                         <tr>
+                            <th>
+                                STT
+                            </th>
+                            <th>
+                                Điện thoại
+                            </th>
+                            <th>
+                                Số lượng
+                            </th>
+                            <th>
+                                Đơn giá
+                            </th>
+                            <th>
+                                Thành tiền
+                            </th>
+                        </tr>
+                        <?php  
+                            $count = 1;
+                            $tongCong = 0;
+                        ?>
+                        @foreach ($hd->ToGioHang->ToChiTietGioHang as $chiTiet)
+                            <tr>
+                                <td>
+                                    {{ $count }}
+                                    <?php
+                                        $count++;
+                                    ?>
+                                </td>
+                                <td>
+                                <img src="DiDongZin/imagePhone/{{ $chiTiet->ToDienThoaiDiDong->Hinh_anh }}" width="50px">
+                                    <span>{{ $chiTiet->ToDienThoaiDiDong->Ten_dien_thoai }}</span>
+                                </td>
+                                <td>
+                                    {{ $chiTiet->So_luong }}
+                                </td>
+                                <td>
+                                    {{ $chiTiet->ToGiaBan->Gia }}
+                                </td>
+                                <td>
+                                    {{ $chiTiet->So_luong *  $chiTiet->ToGiaBan->Gia}}
+                                    <?php  
+                                        $tongCong +=  $chiTiet->So_luong *  $chiTiet->ToGiaBan->Gia; 
+                                    ?>
+                                </td>
+                            </tr>
+                        @endforeach
+                        
+                        <tr>
+                            <th colspan="4">
+                                Tổng cộng:
+                            </th>
                             <td>
-                                {{ $count }}
-                                <?php
-                                    $count++;
-                                ?>
-                            </td>
-                            <td>
-                            <img src="DiDongZin/imagePhone/{{ $chiTiet->ToDienThoaiDiDong->Hinh_anh }}" width="50px">
-                                <span>{{ $chiTiet->ToDienThoaiDiDong->Ten_dien_thoai }}</span>
-                            </td>
-                            <td>
-                                {{ $chiTiet->So_luong }}
-                            </td>
-                            <td>
-                                {{ $chiTiet->ToGiaBan->Gia }}
-                            </td>
-                            <td>
-                                {{ $chiTiet->So_luong *  $chiTiet->ToGiaBan->Gia}}
-                                <?php  
-                                    $tongCong +=  $chiTiet->So_luong *  $chiTiet->ToGiaBan->Gia; 
-                                ?>
+                                {{ $tongCong }}
                             </td>
                         </tr>
-                    @endforeach
-                    
-                    <tr>
-                        <th colspan="4">
-                            Tổng cộng:
-                        </th>
-                        <td>
-                            {{ $tongCong }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th colspan="4">
-                            Thuế VAT:
-                        </th>
-                        <td>
-                            {{ ($hd->Thue_VAT / 100) * $tongCong }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th colspan="4">
-                            Tổng thanh toán:
-                        </th>
-                        <td>
-                            {{ $tongCong + ($hd->Thue_VAT / 100) * $tongCong }}
-                        </td>
-                    </tr>
-                </table>
-                <div class="g-btn-xacnhan">
-                    <button class="btnThemdienthoai" onclick="HuyBo({{ $hd->Ma_hoa_don }})"><img src="DiDongZin/assets/img/cancel_30px.png">Hủy bỏ</button>
-                    <button class="btnThemdienthoai" onclick="XacNhan({{ $hd->Ma_hoa_don }})"><img src="DiDongZin/assets/img/checked_30px.png">Xác nhận</button>
+                        <tr>
+                            <th colspan="4">
+                                Thuế VAT:
+                            </th>
+                            <td>
+                                {{ ($hd->Thue_VAT / 100) * $tongCong }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th colspan="4">
+                                Tổng thanh toán:
+                            </th>
+                            <td>
+                                {{ $tongCong + ($hd->Thue_VAT / 100) * $tongCong }}
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="g-btn-xacnhan">
+                        <button class="btnThemdienthoai" onclick="HuyBo({{ $hd->Ma_hoa_don }})"><img src="DiDongZin/assets/img/cancel_30px.png">Hủy bỏ</button>
+                        <button class="btnThemdienthoai" onclick="XacNhan({{ $hd->Ma_hoa_don }})"><img src="DiDongZin/assets/img/checked_30px.png">Xác nhận</button>
+                    </div>
                 </div>
-                
             </div>
         @endforeach
 

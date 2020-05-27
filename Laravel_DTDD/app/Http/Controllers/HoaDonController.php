@@ -9,7 +9,7 @@ class HoaDonController extends Controller
 {
     function getDanhSach()
     {
-        $hoaDon = HoaDon::where('Trang_thai', '=', 1)->get();
+        $hoaDon = HoaDon::where('Trang_thai', '=', 1)->orderBy('Ma_hoa_don', 'DESC')->paginate(4);
         return view('admin.HoaDon', ['hoaDon'=>$hoaDon]);
     }
 
