@@ -233,10 +233,11 @@ class UserController extends Controller
         }
     }
 
-    function SapXepDienThoaiAjax($noiDung, $mucGia, $sapXep)
+    function SapXepDienThoaiAjax($noiDung, $maHangDT, $mucGia, $sapXep)
     {
         $dsDienThoai;               
         $dsMaDienThoaiTheoNoiDung = array();  //danh sách mã điện thoại đã lọc theo nội dung tìm kiếm
+        $dsMaDienThoaiTheoHangDT = array();   //danh sách mã điện thoại đã lọc theo nội dung hãng điện thoại
         $dsMaDienThoaiTheoGia = array();      //danh sách mã điện thoại đã lọc theo mức giá
         $dsMaDienThoaiTheoSapXep = array();   //danh sách mã điện thoại đã lọc theo sắp xếp
 
@@ -268,15 +269,32 @@ class UserController extends Controller
                 $dsMaDienThoaiTheoNoiDung[$count] = $dt->Ma_dien_thoai;
             }
         }
+
+        //--------------- LỌC THEO HÃNG ĐIỆN THOẠI -------------------------------------
+        if($maHangDT != 'khongChon')
+        {
+            // Do hãng điện thoại và nội dung không kết hợp bộ lọc
+                // Nên ta có thể lọc hãng riêng, không cần dựa vào dsMaDienThoaiTheoNoiDung
+            $dsDienThoai = DienThoaiDiDong::where('Ma_hang_dien_thoai', '=', $maHangDT)->get();
+            foreach ($dsDienThoai as $dt)
+            {
+                $count = count($dsMaDienThoaiTheoHangDT);
+                $dsMaDienThoaiTheoHangDT[$count] = $dt->Ma_dien_thoai;
+            }
+        }
+        else if($maHangDT == 'khongChon')
+        {
+            $dsMaDienThoaiTheoHangDT = $dsMaDienThoaiTheoNoiDung;
+        }
         
         //--------------- LỌC THEO MỨC GIÁ ---------------------------------------------
         if($mucGia == 'khongChon')
         {
-            $dsMaDienThoaiTheoGia = $dsMaDienThoaiTheoNoiDung;
+            $dsMaDienThoaiTheoGia = $dsMaDienThoaiTheoHangDT;
         }
         else //Đã chọn một trong các mức giá
         {
-            foreach ($dsMaDienThoaiTheoNoiDung as $maDT) 
+            foreach ($dsMaDienThoaiTheoHangDT as $maDT) 
             {
                 $gia = DienThoaiDiDong::find($maDT)->ToGiaBan->last();
                 switch ($mucGia) {
@@ -415,11 +433,16 @@ class UserController extends Controller
         }
     }
 
-    function GoiTimKiemDienThoai($noiDung)
+    function getTimKiemTuKhoaDienThoai($noiDung)
     {
         return redirect('TrangChu')->with('noiDungCanTimKiem', $noiDung);
     }
     
+    function getChonHangDienThoai($id_hangDT)
+    {
+        return redirect('TrangChu')->with('hangDienThoaiDuocChon', $id_hangDT);
+    }
+
     function postDangNhap(Request $request)
     {
         $uid = $request->username;
@@ -949,6 +972,8 @@ class UserController extends Controller
                     $hasGioHang = true;
                 }
             }
+
+            // Tạo giỏ hàng mới chưa có
             if( !$hasGioHang )
             {
                 $gioHang = new GioHang;
@@ -979,6 +1004,22 @@ class UserController extends Controller
                 $chiTiet->So_luong = 1;
 
                 $chiTiet->save();
+            }
+            // Đã tồn tại, thì tăng số lượng thêm 1
+            else
+            {
+                $chiTiet = ChiTietGioHang::where([
+                    ['Ma_dien_thoai', '=', $ma],
+                    ['Ma_gio_hang', '=', $gioHang->Ma_gio_hang]
+                ])->get();
+                
+                $soLuong = $chiTiet[0]['So_luong'];
+                $soLuong++;
+                echo $soLuong;
+                DB::table('Chi_tiet_gio_hang')->where([
+                    ['Ma_dien_thoai', '=', $ma],
+                    ['Ma_gio_hang', '=', $gioHang->Ma_gio_hang]
+                ])->update(['So_luong' => $soLuong]);
             }        
         }
         else
@@ -991,11 +1032,32 @@ class UserController extends Controller
             }
 
             $count = session()->get('count');
-            //Tạo session lưu mã, số lượng của điện thoại vừa được chọn
-            session()->put('dt'.$count, $ma);
-            session()->put('sl'.$count, 1);
-            $count++;
-            session()->put('count', $count);
+            
+            // Kiểm tra trong giỏ hàng đã có điện thoại này chưa
+            $found = false;
+            for ($i=0; $i < $count; $i++) { 
+                $maDT = session()->get('dt'.$i);
+                if($maDT == $ma)
+                {
+                    // Tăng số lượng điện thoại thêm 1 nếu tìm thấy
+                    $soLuong = session('sl'.$i);
+                    $soLuong++;
+                    session()->put('sl'.$i, $soLuong);
+
+                    $found = true;
+                    break;
+                }
+            }
+
+            // Nếu chưa có thì thêm vào
+            if( !$found )
+            {
+                //Tạo session lưu mã, số lượng của điện thoại vừa được chọn
+                session()->put('dt'.$count, $ma);
+                session()->put('sl'.$count, 1);
+                $count++;
+                session()->put('count', $count);
+            }            
         }
         return redirect('DienThoai/'. $ma .'.html');
     }

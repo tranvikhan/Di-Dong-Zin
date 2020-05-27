@@ -151,6 +151,9 @@
     {{-- Nhận noiDung tìm kiếm trước đó --}}
     <input type="hidden" id="noiDungTimKiem" value="">
 
+    {{-- Nhận Mã hãng điện thoại được chọn trước đó --}}
+    <input type="hidden" id="maHangDienThoaiDuocChon" value="">
+
     <div class="see-more" id="btnXemThem_tatCa">
         <button class="prm-btn">Xem Thêm</button>
     </div>
@@ -167,11 +170,31 @@
                 echo 'document.getElementById("giamGiaManh").innerHTML = "";';
                 
                 // Gọi Ajax
-                echo '$.get("SapXepDienThoaiAjax/'. $noiDung .'/khongChon/khongChon", function(data){
+                echo '$.get("SapXepDienThoaiAjax/'. $noiDung .'/khongChon/khongChon/khongChon", function(data){
                     document.getElementById("phoneFound").innerHTML = data;
                 });';
                 echo 'document.getElementById("noiDungTimKiem").value = "'. $noiDung .'";';
                 echo 'document.getElementById("title_allPhone").innerHTML = "Kết quả tìm kiếm \''. $noiDung .'\'";';
+            echo '</script>';
+        ?>
+    @endif
+
+    @if (session('hangDienThoaiDuocChon'))
+        <?php
+            echo '<script>';
+                $maHangDT = session()->get('hangDienThoaiDuocChon');
+                $tenHangDT = App\HangDienThoaiDiDong::find($maHangDT)->Ten_hang;
+                
+                echo 'document.getElementById("btnXemThem_tatCa").innerHTML = "";';
+                echo 'document.getElementById("banChay").innerHTML = "";';
+                echo 'document.getElementById("giamGiaManh").innerHTML = "";';
+                
+                // Gọi Ajax
+                echo '$.get("SapXepDienThoaiAjax/khongChon/'. $maHangDT .'/khongChon/khongChon", function(data){
+                    document.getElementById("phoneFound").innerHTML = data;
+                });';
+                echo 'document.getElementById("maHangDienThoaiDuocChon").value = "'. $maHangDT .'";';
+                echo 'document.getElementById("title_allPhone").innerHTML = "Điện thoại hãng: '. $tenHangDT .'";';
             echo '</script>';
         ?>
     @endif
@@ -210,52 +233,6 @@
         {
             window.location.href = 'DienThoai/'+ma+'.html';
         }
-
-        // document.getElementById('text_search').onkeydown = function(e){
-        //     if(e.keyCode == 13)
-        //     {
-        //         noiDung = document.getElementById('text_search').value;
-        //         // Cắt khoảng trắng thừa ở đầu và cuối chuỗi
-        //         noiDung = noiDung.trim(noiDung);
-                
-        //         // Nếu là lần tìm kiếm đầu tiên
-        //         if( document.getElementById('btnXemThem_tatCa').innerHTML != '')
-        //         {
-        //             document.getElementById('btnXemThem_tatCa').innerHTML = '';
-        //             document.getElementById('banChay').innerHTML = '';
-        //             document.getElementById('giamGiaManh').innerHTML = '';
-        //         }
-
-        //         // Lấy giá trị của mức giá và kiểu sắp xếp
-        //         mucGia = document.getElementById('giaDangChon').value;
-        //         thuTu = document.getElementById('sapXepDangChon').value;
-        //         if(mucGia == '')
-        //         {
-        //             mucGia = 'khongChon';
-        //         }
-        //         if(thuTu == '')
-        //         {
-        //             thuTu = 'khongChon';
-        //         }
-        //         // Kiểm tra nội dung nhập khi nhân Enter có rỗng không
-        //         if(noiDung == '')
-        //         {
-        //             noiDung = 'khongChon';
-        //             document.getElementById('title_allPhone').innerHTML = 'TẤT CẢ SẢN PHẨM';
-        //         }
-        //         else
-        //         {
-        //             document.getElementById('title_allPhone').innerHTML = 'Kết quả tìm kiếm \''+noiDung+'\'';
-        //         }
-
-        //         // Gọi Ajax
-        //         $.get('SapXepDienThoaiAjax/'+noiDung+'/'+mucGia+'/'+thuTu, function(data){
-        //             document.getElementById('phoneFound').innerHTML = data;
-        //         });
-        //         document.getElementById('text_search').value = '';
-        //         document.getElementById('noiDungTimKiem').value = noiDung;
-        //     }
-        // }
 
         function ChonGia(mucGia)
         {
@@ -303,22 +280,30 @@
 
             // Lấy giá trị của nội dung tìm kiếm và kiểu sắp xếp
             noiDung = document.getElementById('noiDungTimKiem').value;
+            hangDT = document.getElementById('maHangDienThoaiDuocChon').value;
             thuTu = document.getElementById('sapXepDangChon').value;
             if(noiDung == '')
             {
                 noiDung = 'khongChon';
             }
+
+            if(hangDT == '')
+            {
+                hangDT = 'khongChon';
+            }
+
             if(thuTu == '')
             {
                 thuTu = 'khongChon';
             }
+            
             if(mucGia == '')
             {
                 mucGia = 'khongChon';
             }
 
             // Gọi Ajax
-            $.get('SapXepDienThoaiAjax/'+noiDung+'/'+mucGia+'/'+thuTu, function(data){
+            $.get('SapXepDienThoaiAjax/'+noiDung+'/'+hangDT+'/'+mucGia+'/'+thuTu, function(data){
                 document.getElementById('phoneFound').innerHTML = data;
             });
         }
@@ -331,11 +316,18 @@
             
             // Lấy giá trị của nội dung tìm kiếm và mức giá
             noiDung = document.getElementById('noiDungTimKiem').value;
+            hangDT = document.getElementById('maHangDienThoaiDuocChon').value;
             mucGia = document.getElementById('giaDangChon').value;
             if(noiDung == '')
             {
                 noiDung = 'khongChon';
             }
+
+            if(hangDT == '')
+            {
+                hangDT = 'khongChon';
+            }
+
             if(mucGia == '')
             {
                 mucGia = 'khongChon';
@@ -362,7 +354,7 @@
             }
             
             // Gọi Ajax
-            $.get('SapXepDienThoaiAjax/'+noiDung+'/'+mucGia+'/'+thuTu, function(data){
+            $.get('SapXepDienThoaiAjax/'+noiDung+'/'+hangDT+'/'+mucGia+'/'+thuTu, function(data){
                 document.getElementById('phoneFound').innerHTML = data;
             });
         }

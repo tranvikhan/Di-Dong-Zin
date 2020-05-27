@@ -99,10 +99,12 @@ Route::get('TimDienThoaiAjax/{noiDung}', 'UserController@TimDienThoaiAjax');
 
     // Khi người dùng nhập nội dung tìm kiếm rồi nhấn Enter
         //Nhưng do đang ở trong khác (không phải trang chủ) nên nội dung được gởi về để gọi ra trang chủ
-Route::get('GoiTimKiemDienThoai/{noiDung}', 'UserController@GoiTimKiemDienThoai');
+Route::get('TimKiemTuKhoaDienThoai/{noiDung}', 'UserController@getTimKiemTuKhoaDienThoai');
+
+Route::get('ChonHangDienThoai/{Ma_hang_dien_thoai}', 'UserController@getChonHangDienThoai');
 
         //Sắp xếp điện thoại tại Trang chủ
-Route::get('SapXepDienThoaiAjax/{noiDung}/{mucGia}/{thuTu}', 'UserController@SapXepDienThoaiAjax');
+Route::get('SapXepDienThoaiAjax/{noiDung}/{maHangDT}/{mucGia}/{thuTu}', 'UserController@SapXepDienThoaiAjax');
 
 
     //ĐĂNG XUẤT ===================================================================================

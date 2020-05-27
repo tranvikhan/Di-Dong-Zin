@@ -362,7 +362,7 @@
                 }
 
                 //Ẩn đi dòng bị xóa
-                document.getElementById('rowDT'+idDT).hidden = true;
+                document.getElementById('rowDT'+idDT).innerHTML = '';
                 
                 // Ẩn đi điện thoại bị xóa trên icon giỏ hảng phía trên góc phải
                 document.getElementById('rowIconGioHang'+idDT).hidden = true;

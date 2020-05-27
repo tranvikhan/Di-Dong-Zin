@@ -164,13 +164,27 @@
 </div>
 <div id="company">
     <img src="DiDongZin/assets/img/back_30px.png" alt="back" onclick="hide_company()">
-    <a href="#">APPLE</a>
+    <?php
+        $dsHangDT = App\HangDienThoaiDiDong::all();
+        $count = 0;
+        foreach ($dsHangDT as $hang) { 
+            echo '<a href="ChonHangDienThoai/'. $hang->Ma_hang_dien_thoai .'">'. $hang->Ten_hang .'</a>';
+
+            // Cho phép hiện tối đa 8 cái hãng điện thoại
+            $count++;
+            if( $count == 8 ){
+                break;
+            }         
+        }
+    ?>
+
+    {{-- <a href="#">APPLE</a>
     <a href="#">SAMSUNG</a>
     <a href="#">XIAOMI</a>
     <a href="#">HAWAII</a>
     <a href="#">NOKIA</a>
     <a href="#">REALME</a>
-    <a href="#">VSMART</a>
+    <a href="#">VSMART</a> --}}
 </div>
 
 <script>    
@@ -200,7 +214,7 @@
         {
             if(noiDung != '')
             {
-                window.location.href = 'GoiTimKiemDienThoai/'+noiDung;
+                window.location.href = 'TimKiemTuKhoaDienThoai/'+noiDung;
             }            
         }
         else
