@@ -178,6 +178,12 @@
                             <th colspan="2">Giá điện thoại:</th>
                         </tr>
                         <tr>
+                            <td>Giá vốn:</td>
+                            <td>
+                                <input type="number" min="1" max="9999999999" placeholder="VNĐ" name="giaVon" value="{{ $dienThoai->ToGiaVon->last()->Gia }}">
+                            </td>
+                        </tr>
+                        <tr>
                             <td>Giá bán:</td>
                             <td>
                                 <input type="number" min="1" max="9999999999" placeholder="VNĐ" name="giaBan" value="{{ $dienThoai->ToGiaBan->last()->Gia }}">

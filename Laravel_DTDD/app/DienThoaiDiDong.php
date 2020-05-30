@@ -32,6 +32,11 @@ class DienThoaiDiDong extends Model
         return $this->hasMany('App\GiaBan', 'Ma_dien_thoai', 'Ma_dien_thoai');
     }
 
+    public function ToGiaVon()
+    {
+        return $this->hasMany('App\GiaVon', 'Ma_dien_thoai', 'Ma_dien_thoai');
+    }
+
     public function ToKhuyenMai()
     {
         return $this->hasMany('App\KhuyenMai', 'Ma_dien_thoai', 'Ma_dien_thoai');

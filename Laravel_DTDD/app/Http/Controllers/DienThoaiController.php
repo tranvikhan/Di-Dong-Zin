@@ -13,6 +13,7 @@ use App\KhuyenMai;
 use App\GiaBan;
 use App\ChiTietGioHang;
 use App\GioHang;
+use App\GiaVon;
 
 class DienThoaiController extends Controller
 {
@@ -57,6 +58,7 @@ class DienThoaiController extends Controller
                 'hangDienThoai'=>'required',
                 'moTa'=>'max:2000',
                 'soLuong'=>'required',
+                'giaVon'=>'required',
                 'giaBan'=>'required',
                 'anhSanPham'=>'required|mimes:png,jpg,jpeg'
             ], 
@@ -97,6 +99,8 @@ class DienThoaiController extends Controller
                 'moTa.max'=>'Mô tả chỉ được tối đa 2000 ký tự',
                 
                 'soLuong.required'=>'Số lượng điện thoại không được trống',
+                
+                'giaVon.required'=>'Giá vốn không được trống',
 
                 'giaBan.required'=>'Giá bán không được trống',
                 
@@ -181,12 +185,22 @@ class DienThoaiController extends Controller
             $khuyenMai->save();
         }
 
+        // TẠO GIÁ VỐN
+        $giaVon = new GiaVon;
+        $giaVon->Ma_gia_von = GiaVon::all()->max('Ma_gia_von') + 1;
+        $giaVon->Gia = $request->giaVon;
+        $giaVon->Ngay_cap_nhat = $today;
+        $giaVon->Trang_thai = 1;
+        $giaVon->Ma_dien_thoai = $maDienThoai;
+        $giaVon->save();
+
         //TẠO GIÁ BÁN
         $giaBan = new GiaBan;
         $giaBan->Ma_gia_ban = GiaBan::all()->max('Ma_gia_ban') + 1;
         $giaBan->Gia = $request->giaBan;
         $giaBan->Ngay_cap_nhat = $today;
         $giaBan->Trang_thai = 1;
+        $giaBan->Ma_gia_von = DienThoaiDiDong::find($maDienThoai)->ToGiaVon->last()->Ma_gia_von;
         $giaBan->Ma_dien_thoai = $maDienThoai;
         $giaBan->save();
 
@@ -227,6 +241,7 @@ class DienThoaiController extends Controller
                 'tenDienThoai'=>'required|max:100',
                 'hangDienThoai'=>'required',
                 'moTa'=>'max:2000',
+                'giaVon'=>'required',
                 'giaBan'=>'required',
                 'anhSanPham'=>'mimes:png,jpg,jpeg'
             ], 
@@ -266,6 +281,8 @@ class DienThoaiController extends Controller
                 
                 'moTa.max'=>'Mô tả chỉ được tối đa 2000 ký tự',
                 
+                'giaVon.required'=>'Giá vốn không được trống',
+
                 'giaBan.required'=>'Giá bán không được trống',
                 
                 'anhSanPham.mimes'=>'Hình ảnh sản phẩm phải thuộc định dạng sau: png, jpg, jpeg'
@@ -391,19 +408,40 @@ class DienThoaiController extends Controller
         $dienThoai->Ma_hang_dien_thoai = $request->hangDienThoai;
         $dienThoai->save();
 
-        //TẠO GIÁ BÁN
-        $oldPrice = $dienThoai->ToGiaBan->last();
-        if($oldPrice->Gia !== $request->giaBan)
+        // TẠO GIÁ VỐN: Nếu giá vốn có sự thay đổi
+        $oldPrice = $dienThoai->ToGiaVon->last();
+        if($oldPrice->Gia !== $request->giaVon)
         {
-            //THAY ĐỔI GIÁ CŨ, TRẠNG THÁI = 0
+            //THAY ĐỔI GIÁ VỐN CŨ, TRẠNG THÁI = 0
             $oldPrice->Trang_thai = 0;
             $oldPrice->save();
 
+            //TẠO GIÁ VỐN MỚI
+            $giaVon = new GiaVon;
+            $giaVon->Ma_gia_von = GiaVon::all()->max('Ma_gia_von') + 1;
+            $giaVon->Gia = $request->giaVon;
+            $giaVon->Ngay_cap_nhat = $today;
+            $giaVon->Trang_thai = 1;
+            $giaVon->Ma_dien_thoai = $dienThoai->Ma_dien_thoai;
+            $giaVon->save();
+        }
+
+        //TẠO GIÁ BÁN: Nếu giá bán hoặc giá vốn có sự thay đổi
+        $oldSellPrice = $dienThoai->ToGiaBan->last();
+        $oldCapitalPrice = $dienThoai->ToGiaVon->last();
+        if( ($oldSellPrice->Gia !== $request->giaBan) || ($oldCapitalPrice->Gia !== $request->giaVon) )
+        {
+            //THAY ĐỔI GIÁ CŨ, TRẠNG THÁI = 0
+            $oldSellPrice->Trang_thai = 0;
+            $oldSellPrice->save();
+
             //TẠO GIÁ BÁN MỚI
             $giaBan = new GiaBan;
+            $giaBan->Ma_gia_ban = GiaBan::all()->max('Ma_gia_ban') + 1;
             $giaBan->Gia = $request->giaBan;
             $giaBan->Ngay_cap_nhat = $today;
             $giaBan->Trang_thai = 1;
+            $giaBan->Ma_gia_von = $dienThoai->ToGiaVon->last()->Ma_gia_von;
             $giaBan->Ma_dien_thoai = $dienThoai->Ma_dien_thoai;
             $giaBan->save();
         }
@@ -455,6 +493,12 @@ class DienThoaiController extends Controller
             //XÓA NHỮNG GIÁ BÁN
             $dsGiaBan = $dienThoai->ToGiaBan;
             foreach ($dsGiaBan as $item) {
+                $item->delete();
+            }
+
+            //XÓA NHỮNG GIÁ VỐN
+            $dsGiaVon = $dienThoai->ToGiaVon;
+            foreach ($dsGiaVon as $item) {
                 $item->delete();
             }
 

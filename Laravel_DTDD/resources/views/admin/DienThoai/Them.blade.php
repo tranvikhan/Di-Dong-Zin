@@ -166,6 +166,12 @@
                             <th colspan="2">Giá điện thoại:</th>
                         </tr>
                         <tr>
+                            <td>Giá vốn:</td>
+                            <td>
+                                <input type="number" min="1" max="9999999999" placeholder="VNĐ" name="giaVon">
+                            </td>
+                        </tr>
+                        <tr>
                             <td>Giá bán:</td>
                             <td>
                                 <input type="number" min="1" max="9999999999" placeholder="VNĐ" name="giaBan">
