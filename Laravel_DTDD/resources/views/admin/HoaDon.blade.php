@@ -2,6 +2,31 @@
 
 @section('content')
 
+<?php
+    //Hiển thị giá theo 1 định dạng khác
+    function ShowPrice($price)
+    {
+        $price = $price."";
+        $strPrice = "";
+        while(strlen($price) >= 3)
+        {
+            $temp = substr($price, strlen($price)-3, strlen($price));
+            if($strPrice == "") {
+                $strPrice .= $temp;
+            }else {
+                $strPrice = $temp .'.'. $strPrice;    
+            }
+            $price = substr($price, 0, strlen($price)-3);
+        }
+        if(strlen($price) != 0)
+        {
+            $strPrice = $price .'.'. $strPrice;
+        }
+
+        return $strPrice;
+    }
+?>
+
 <!-- NOI DUNG CHINH ..................................................................................-->
 <div class="content">
     <div id="hoadon" class="tabcontent">
@@ -79,10 +104,10 @@
                                         {{ $chiTiet->So_luong }}
                                     </td>
                                     <td>
-                                        {{ $chiTiet->ToGiaBan->Gia }}
+                                        {{ ShowPrice($chiTiet->ToGiaBan->Gia) }} VND
                                     </td>
                                     <td>
-                                        {{ $chiTiet->So_luong *  $chiTiet->ToGiaBan->Gia}}
+                                        {{ ShowPrice($chiTiet->So_luong *  $chiTiet->ToGiaBan->Gia) }} VND
                                         <?php  
                                             $tongCong +=  $chiTiet->So_luong *  $chiTiet->ToGiaBan->Gia; 
                                         ?>
@@ -95,7 +120,7 @@
                                     Tổng cộng:
                                 </th>
                                 <td>
-                                    {{ $tongCong }}
+                                    {{ ShowPrice($tongCong) }} VND
                                 </td>
                             </tr>
                             <tr>
@@ -103,7 +128,7 @@
                                     Thuế VAT:
                                 </th>
                                 <td>
-                                    {{ ($hd->Thue_VAT / 100) * $tongCong }}
+                                    {{ ShowPrice(($hd->Thue_VAT / 100) * $tongCong) }} VND
                                 </td>
                             </tr>
                             <tr>
@@ -111,7 +136,7 @@
                                     Tổng thanh toán:
                                 </th>
                                 <td>
-                                    {{ $tongCong + ($hd->Thue_VAT / 100) * $tongCong }}
+                                    {{ ShowPrice($tongCong + ($hd->Thue_VAT / 100) * $tongCong) }} VND
                                 </td>
                             </tr>
                         </table>

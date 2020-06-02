@@ -2,6 +2,31 @@
 
 @section('content')
 
+<?php
+    //Hiển thị giá theo 1 định dạng khác
+    function ShowPrice($price)
+    {
+        $price = $price."";
+        $strPrice = "";
+        while(strlen($price) >= 3)
+        {
+            $temp = substr($price, strlen($price)-3, strlen($price));
+            if($strPrice == "") {
+                $strPrice .= $temp;
+            }else {
+                $strPrice = $temp .'.'. $strPrice;    
+            }
+            $price = substr($price, 0, strlen($price)-3);
+        }
+        if(strlen($price) != 0)
+        {
+            $strPrice = $price .'.'. $strPrice;
+        }
+
+        return $strPrice;
+    }
+?>
+
 <!-- NOI DUNG CHINH ..................................................................................-->
 <div class="content">
     <div id="thongke" class="tabcontent">
@@ -76,19 +101,19 @@
                 <span>Thời gian báo cáo</span>
                 <select onchange="doiLoaiBaoCao()" id="LoaiBaoCao" name="loaibaocao">
                     <option value="1">Ngày:</option>
-                    <option value="2">Tuần:</option>
+                    {{-- <option value="2">Tuần:</option> --}}
                     <option value="3">Tháng:</option>
                     <option value="4">Năm:</option>
                 </select>
-                <input type="date" id="ThoiGianBaoCao" name="thoigianbaocao">
-                <select id="NamBaoCao" name="nambaocao">
+                <input type="date" id="ThoiGianBaoCao" name="thoigianbaocao" onchange="LayDuLieuBaoCao()">
+                <select id="NamBaoCao" name="nambaocao" onchange="LayDuLieuBaoCao()">
                     <option value="2020">2020</option>
                     <option value="2021">2021</option>
                     <option value="2022">2022</option>
                     <option value="2023">2023</option>
                 </select>
                 <div id="bangBaoCao">
-                    <table>
+                    <table  id="duLieuBangHoaDon">
                         <thead>
                             <tr>
                                 <th>
@@ -115,69 +140,77 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>
-                                    1
-                                </td>
-                                <td>
-                                    20/10/2020
-                                </td>
-                                <td>
-                                    15.000.000đ
-                                </td>
-                                <td>
-                                    1.500.000
-                                </td>
-                                <td>
-                                    14.000.000
-                                </td>
-                                <td>
-                                    1.000.000
-                                </td>
-                                <td>
-                                    <a href="id=00001">Nguyễn Văn B</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    2
-                                </td>
-                                <td>
-                                    20/10/2020
-                                </td>
-                                <td>
-                                    15.000.000đ
-                                </td>
-                                <td>
-                                    1.500.000
-                                </td>
-                                <td>
-                                    14.000.000
-                                </td>
-                                <td>
-                                    1.000.000
-                                </td>
-                                <td>
-                                    <a href="id=00001">Nguyễn Văn B</a>
-                                </td>
-                            </tr>
+                            <?php
+                                $tongThu = 0;
+                                $tongThue = 0;
+                                $tongVon = 0;
+                                $tongLai = 0;    
+                            ?>
+                            @foreach ($dsHoaDon as $hd)
+                                <tr>
+                                    <td>
+                                        {{ $hd->Ma_hoa_don }}
+                                    </td>
+                                    <td>
+                                        {{ $hd->Ngay_tao }}
+                                    </td>
+                                    <td>
+                                        <?php
+                                            $tongHoaDon = 0;
+                                            foreach ($hd->ToGioHang->ToChiTietGioHang as $chiTiet) {
+                                                $tongHoaDon += $chiTiet->So_luong * $chiTiet->ToGiaBan->Gia;
+                                            }
+                                            $tongThu += $tongHoaDon;    
+                                        ?>
+                                        {{ ShowPrice($tongHoaDon) }} VND
+                                    </td>
+                                    <td>
+                                        <?php
+                                            $tongThue += $tongHoaDon * 0.1;    
+                                        ?>
+                                        {{ ShowPrice($tongHoaDon * 0.1) }} VND
+                                    </td>
+                                    <td>
+                                        <?php
+                                            $tongVonHoaDon = 0;
+                                            foreach ($hd->ToGioHang->ToChiTietGioHang as $chiTiet) {
+                                                $tongVonHoaDon += $chiTiet->So_luong * $chiTiet->ToGiaBan->ToGiaVon->Gia;
+                                            }
+                                            $tongVon += $tongVonHoaDon;    
+                                        ?>
+                                        {{ ShowPrice($tongVonHoaDon) }} VND
+                                    </td>
+                                    <td>
+                                        <?php
+                                            $tongLai += $tongHoaDon - $tongVonHoaDon;    
+                                        ?>
+                                        {{ ShowPrice($tongHoaDon - $tongVonHoaDon) }} VND
+                                    </td>
+                                    <td>
+                                        <?php
+                                            $user = $hd->ToGioHang->ToTaiKhoan;    
+                                        ?>
+                                        <a href="id=00001">{{ $user->Ho_va_ten_lot }} {{ $user->Ten }}</a>
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                         <tfoot>
                             <tr>
                                 <th colspan="6">Tổng thu:</th>
-                                <td>15.000.000</td>
+                                <td>{{ ShowPrice($tongThu) }} VND</td>
                             </tr>
                             <tr>
                                 <th colspan="6">Tổng thuế:</th>
-                                <td>1.500.000</td>
+                                <td>{{ ShowPrice($tongThue) }} VND</td>
                             </tr>
                             <tr>
                                 <th colspan="6">Tổng giá trị vốn:</th>
-                                <td>14.000.000</td>
+                                <td>{{ ShowPrice($tongVon) }} VND</td>
                             </tr>
                             <tr>
                                 <th colspan="6">Tổng lãi gộp:</th>
-                                <td>1.000.000</td>
+                                <td>{{ ShowPrice($tongLai) }} VND</td>
                             </tr>
                         </tfoot>
                     </table>
@@ -209,53 +242,53 @@
                                 </th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    SP0001
-                                </td>
-                                <td>
-                                    Iphone 11 Pro Max
-                                </td>
-                                <td>
-                                    15.000.000đ
-                                </td>
-                                <td>
-                                    1.500.000
-                                </td>
-                                <td>
-                                    14.000.000
-                                </td>
-                                <td>
-                                    1.000.000
-                                </td>
-                                <td>
-                                    1
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    SP0002
-                                </td>
-                                <td>
-                                    Iphone 10
-                                </td>
-                                <td>
-                                    15.000.000đ
-                                </td>
-                                <td>
-                                    1.500.000
-                                </td>
-                                <td>
-                                    14.000.000
-                                </td>
-                                <td>
-                                    1.000.000
-                                </td>
-                                <td>
-                                    1
-                                </td>
-                            </tr>
+                        <tbody id="duLieuBangSanPham">
+                            @foreach ($dsMaDienThoai as $maDT)
+                                <?php
+                                    $tongTienDT = 0;
+                                    $tongVonDT = 0;
+                                    $tongLaiDT = 0;
+                                    $soLuongBanDT = 0;
+
+                                    $dt = App\DienThoaiDiDong::find($maDT);
+                                    $dsChiTiet = $dt->ToChiTietGioHang;
+                                    foreach ($dsChiTiet as $chiTiet) {
+                                        if( $chiTiet->ToGioHang->Da_thanh_toan == 1 )
+                                        {
+                                            if( $chiTiet->ToGioHang->ToHoaDon->Trang_thai == 1 )
+                                            {
+                                                $tongTienDT += $chiTiet->So_luong * $chiTiet->ToGiaBan->Gia;
+                                                $tongVonDT += $chiTiet->So_luong * $chiTiet->ToGiaBan->ToGiaVon->Gia;
+                                                $tongLaiDT += ($chiTiet->So_luong * $chiTiet->ToGiaBan->Gia) - ($chiTiet->So_luong * $chiTiet->ToGiaBan->ToGiaVon->Gia);
+                                                $soLuongBanDT += $chiTiet->So_luong;
+                                            }
+                                        }                                        
+                                    }
+                                ?>
+                                <tr>
+                                    <td>
+                                        {{ $dt->Ma_dien_thoai }}
+                                    </td>
+                                    <td>
+                                        {{ $dt->Ten_dien_thoai }}
+                                    </td>
+                                    <td>
+                                        {{ ShowPrice($tongTienDT) }} VND
+                                    </td>
+                                    <td>
+                                        {{ ShowPrice($tongTienDT * 0.1) }} VND
+                                    </td>
+                                    <td>
+                                        {{ ShowPrice($tongVonDT) }} VND
+                                    </td>
+                                    <td>
+                                        {{ ShowPrice($tongLaiDT) }} VND
+                                    </td>
+                                    <td>
+                                        {{ $soLuongBanDT }}
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                         
                     </table>
@@ -276,6 +309,41 @@
         window.onload = function()
         {
             document.getElementById('thongKeMenu').classList.add('active');
+        }
+
+        function LayDuLieuBaoCao()
+        {
+            loaiThoiGian = document.getElementById('LoaiBaoCao').value;
+            thoiGian = '';
+            if(loaiThoiGian == 1)
+            {
+                loaiThoiGian = 'ngay'; 
+                thoiGian = document.getElementById('ThoiGianBaoCao').value;   
+            }
+            else if(loaiThoiGian == 3 )
+            {
+                loaiThoiGian = 'thang';    
+                thoiGian = document.getElementById('ThoiGianBaoCao').value;
+            }
+            else if( loaiThoiGian == 4)
+            {
+                loaiThoiGian = 'nam';
+                thoiGian = document.getElementById('NamBaoCao').value;
+            }
+            
+            kieuBaoCao = document.getElementById('kieubaocao').value;
+            if(kieuBaoCao == 1)
+            {
+                $.get('admin/ThongKeHoaDonAjax/'+loaiThoiGian+'/'+thoiGian, function(data){
+                    document.getElementById('duLieuBangHoaDon').innerHTML = data;
+                });
+            }
+            else if(kieuBaoCao == 2)
+            {
+                $.get('admin/ThongKeDienThoaiAjax/'+loaiThoiGian+'/'+thoiGian, function(data){
+                    document.getElementById('duLieuBangSanPham').innerHTML = data;
+                });
+            }
         }
     </script>
 @endsection

@@ -44,12 +44,12 @@ function doiLoaiBaoCao(){
             i.type ="date";
             //ajax now
             break;
-        case "2":
-            i.style.display = "inline-block";
-            n.style.display = "none";
-            i.type ="week";
-            //ajax now
-        break;
+        // case "2":
+        //     i.style.display = "inline-block";
+        //     n.style.display = "none";
+        //     i.type ="week";
+        //     //ajax now
+        // break;
         case "3":
             i.style.display = "inline-block";
             n.style.display = "none";

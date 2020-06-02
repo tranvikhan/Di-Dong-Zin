@@ -18,10 +18,13 @@ use Illuminate\Support\Facades\Route;
 // ==============================================================================================
 Route::group(['prefix'=>'admin', 'middleware'=>'AdminMiddleware'], function(){
     
-    Route::get('thongke', function(){
-        $sodonhang = App\HoaDon::where('Trang_thai', '=', 0)->count();
-        return view('admin.ThongKe', ['sodonhang'=>$sodonhang]);
-    });
+    Route::get('thongke', 'ThongKeController@getThongKe');
+
+    // Ajax thống kê hóa đơn
+    Route::get('ThongKeHoaDonAjax/{loaiThoiGian}/{thoiGian}', 'ThongKeController@getThongKeHoaDonAjax');
+    
+    // Ajax thống kê điện thoại
+    Route::get('ThongKeDienThoaiAjax/{loaiThoiGian}/{thoiGian}', 'ThongKeController@getThongKeDienThoaiAjax'); 
 
     Route::get('trang', function(){
         $sodonhang = App\HoaDon::where('Trang_thai', '=', 0)->count();
