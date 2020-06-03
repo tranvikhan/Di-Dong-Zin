@@ -170,7 +170,7 @@
         {
             if(confirm('Bạn sẽ in hóa đơn có mã là: '+ ma))
             {
-                alert('Quá trình in hóa đơn bắt đầu. Bạn chờ trong giây lát');
+                window.location.href = "admin/hoadon/InHoaDon/"+ma;
             }
         }
 

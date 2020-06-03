@@ -13,6 +13,12 @@ class HoaDonController extends Controller
         return view('admin.HoaDon', ['hoaDon'=>$hoaDon]);
     }
 
+    function getInHoaDon($maHD)
+    {
+        $hd = HoaDon::find($maHD);
+        return view('admin.InHoaDon', ['hd'=>$hd]);
+    }
+
     //-------------------------------------------------------------------------------------
     // ------------------------- AJAX -----------------------------------------------------
     function FindBill($id)

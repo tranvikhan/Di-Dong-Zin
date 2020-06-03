@@ -40,6 +40,8 @@ Route::group(['prefix'=>'admin', 'middleware'=>'AdminMiddleware'], function(){
         Route::get('danhsach', 'HoaDonController@getDanhSach');
 
         Route::get('TimHoaDonAjax/{id}', 'HoaDonController@FindBill');
+
+        Route::get("InHoaDon/{maHD}", 'HoaDonController@getInHoaDon');
     });
 
     Route::group(['prefix'=>'thanhvien'], function(){
@@ -169,6 +171,8 @@ Route::group(['prefix'=>'taikhoan', 'middleware'=>'UserMiddleware'], function(){
 
     Route::get('ChiTietDonHang/{id}.html', 'UserController@getChiTietDonHang');
 
+    Route::get('InHoaDon/{maHD}', 'UserController@getInHoaDon');
+
         // CÀI ĐẶT
     Route::get('CaiDat', 'UserController@getCaiDat');
 });
@@ -220,15 +224,7 @@ Route::group(['middleware'=>'web'], function(){
         session()->flush();
     });
 
-    Route::get('dangnhapchong', function(){
-        if(Auth::attempt(['Username'=>'abc6', 'password'=>'12345']))
-        {
-            echo 'da dang nhap chong thanh cong';
-        }
-        else
-            echo 'that bai';
-    });
-    Route::get('getView', function(){
+    Route::get('goiTrangIn', function(){
         return view('user.Email_DoiMatKhau');
     });
 });

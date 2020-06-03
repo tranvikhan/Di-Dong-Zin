@@ -812,6 +812,12 @@ class UserController extends Controller
         return view('user.account.ChiTietDonHang', ['fileCSS'=>'taiKhoan_donHang', 'hoaDon'=>$hoaDon]);
     }
 
+    function getInHoaDon($maHD)
+    {
+        $hoaDon = HoaDon::find($maHD);
+        return view('user.account.InHoaDon', ['hoaDon'=>$hoaDon]);
+    }
+
         // CÀI ĐẶT
     function getCaiDat()
     {

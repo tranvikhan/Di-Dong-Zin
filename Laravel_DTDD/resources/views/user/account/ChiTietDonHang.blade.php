@@ -140,7 +140,7 @@
                         </tr>
                     </tbody>
                 </table>
-                <button class="prm-btn" onclick="InHoaDon()">In hóa đơn</button>
+                <button class="prm-btn" onclick="InHoaDon({{ $hoaDon->Ma_hoa_don }})">In hóa đơn</button>
             </div>
         </div>
     </div>
@@ -155,11 +155,11 @@
             document.getElementById('donHangMenu').classList.add('active');
         }
 
-        function InHoaDon()
+        function InHoaDon(maHD)
         {
             if(confirm('Bạn sẽ in hóa đơn này'))
             {
-                alert('Quá trình in hóa đơn bắt đầu. Bạn chờ trong giây lát');
+                window.location.href = 'taikhoan/InHoaDon/'+maHD;
             }
         }
     </script>
