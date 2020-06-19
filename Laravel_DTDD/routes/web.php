@@ -102,14 +102,24 @@ Route::get('TrangChu', 'UserController@getTrangChu');
         // Tìm kiếm điện thoại tại Trang chủ
 Route::get('TimDienThoaiAjax/{noiDung}', 'UserController@TimDienThoaiAjax');
 
-    // Khi người dùng nhập nội dung tìm kiếm rồi nhấn Enter
-        //Nhưng do đang ở trong khác (không phải trang chủ) nên nội dung được gởi về để gọi ra trang chủ
+        // Khi người dùng nhập nội dung tìm kiếm rồi nhấn Enter
+            //Nhưng do đang ở trong khác (không phải trang chủ) nên nội dung được gởi về để gọi ra trang chủ
 Route::get('TimKiemTuKhoaDienThoai/{noiDung}', 'UserController@getTimKiemTuKhoaDienThoai');
 
 Route::get('ChonHangDienThoai/{Ma_hang_dien_thoai}', 'UserController@getChonHangDienThoai');
 
         //Sắp xếp điện thoại tại Trang chủ
 Route::get('SapXepDienThoaiAjax/{noiDung}/{maHangDT}/{mucGia}/{thuTu}', 'UserController@SapXepDienThoaiAjax');
+
+        //Nhấn nút XEM THÊM các điện thoại trong Trang chủ
+            //Giảm giá mạnh Ajax
+Route::get('XemThemGiamGiaManhAjax', 'UserController@getXemThemGiamGiaManhAjax');
+
+            //Bán chạy Ajax
+Route::get('XemThemBanChayAjax', 'UserController@getXemThemBanChayAjax');
+
+            //Tất cả sản phẩm Ajax
+Route::get('XemThemTatCaAjax', 'UserController@getXemThemTatCaAjax');
 
 
     //ĐĂNG XUẤT ===================================================================================

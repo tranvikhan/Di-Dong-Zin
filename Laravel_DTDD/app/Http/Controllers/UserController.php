@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\PHP_Classes\Price;
-//use App\PHP_Classes\Mail;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -23,6 +22,10 @@ use App\HoaDon;
 
 class UserController extends Controller
 {
+    // ===========================================================================================
+    // ---------------- TRANG CHỦ------------------ ----------------------------------------------
+    // ===========================================================================================
+
     function getTrangChu()
     {
         $soLuongDT = DienThoaiDiDong::where('Dang_ban', '=', 1)->count();
@@ -108,7 +111,7 @@ class UserController extends Controller
         // Tạo danh sách mã điện thoại và danh sách chứa phần trăm khuyến mãi
         foreach ($dienThoai as $dt) {
             $hasKM = false;
-            $km =$dt->ToKhuyenMai->last();
+            $km = $dt->ToKhuyenMai->last();
             if($km !== null)
             {
                 if( $km->Tu_ngay<=$today && $today<=$km->Den_ngay )
@@ -441,6 +444,235 @@ class UserController extends Controller
     function getChonHangDienThoai($id_hangDT)
     {
         return redirect('TrangChu')->with('hangDienThoaiDuocChon', $id_hangDT);
+    }
+
+    // Nhấn nút Xem Thêm: Giảm giá mạnh
+    function getXemThemGiamGiaManhAjax()
+    {
+        //Danh sách điện thoại giảm giá mạnh -------------------------------------------------
+        $dsMaDT = array();
+        $dsSoLuongKM = array();
+        $count = 0;
+
+            //Lấy ngày hôm nay
+        date_default_timezone_set('Asia/Ho_Chi_Minh');
+        $today = date('Y-m-d');
+
+        $dienThoai = DienThoaiDiDong::where([
+                ['Dang_ban', '=', 1],
+                ['So_luong', '>', 0]
+            ])->get();
+
+        // Tạo danh sách mã điện thoại và danh sách chứa phần trăm khuyến mãi
+        foreach ($dienThoai as $dt) {
+            $hasKM = false;
+            $km = $dt->ToKhuyenMai->last();
+            if($km !== null)
+            {
+                if( $km->Tu_ngay<=$today && $today<=$km->Den_ngay )
+                {
+                    $hasKM = true;
+                }
+            }
+            
+            if( $hasKM )
+            {
+                $dsMaDT[$count] = $dt->Ma_dien_thoai;
+                $dsSoLuongKM[$count] = $km->Phan_tram_khuyen_mai;
+                $count++;
+            }
+        }
+
+        // Sắp xếp lại 2 danh sách này dựa vào phần trăm khuyến mãi
+        for ($i=0; $i < count($dsMaDT)-1; $i++) { 
+            for ($j=$i+1; $j < count($dsMaDT); $j++) { 
+                if($dsSoLuongKM[$i] < $dsSoLuongKM[$j])
+                {
+                    //SWAP $dsSoLuongKM
+                    $temp = $dsSoLuongKM[$i];
+                    $dsSoLuongKM[$i] = $dsSoLuongKM[$j];
+                    $dsSoLuongKM[$j] = $temp;
+
+                    //SWAP $dsMaDT
+                    $temp = $dsMaDT[$i];
+                    $dsMaDT[$i] = $dsMaDT[$j];
+                    $dsMaDT[$j] = $temp;
+                }
+            }
+        }
+        $soLuongToiThieu;
+        if(count($dsMaDT) < 18){
+            $soLuongToiThieu = count($dsMaDT);
+        }
+        else{
+            $soLuongToiThieu = 18;
+        }
+            
+        $dsMaGiamGia = array();
+        for ($i=0; $i < $soLuongToiThieu; $i++) { 
+            $dsMaGiamGia[$i] = $dsMaDT[$i];
+        }
+
+        //Hiển thị ra
+        $price = new Price();
+        foreach($dsMaGiamGia as $maDT)
+        {
+            $dt = DienThoaiDiDong::find($maDT);
+
+            echo '<div class="col-2s " onclick="GoToPhone('. $dt->Ma_dien_thoai .')">';
+                echo '<div class="mobile-phone">
+                        <img src="DiDongZin/imagePhone/'. $dt->Hinh_anh .'" style="height: 215px" alt="'. $dt->Ten_dien_thoai .'">
+                        <h2 class="name">'. $dt->Ten_dien_thoai .'</h2>';
+                        echo '<div class="giaca">';
+                            $phanTramKM = $dt->ToKhuyenMai->last()->Phan_tram_khuyen_mai;   
+                            $gia = $dt->ToGiaBan->last()->Gia; 
+                            echo '<span class="price">'. $price->ShowPrice($gia * (1-($phanTramKM/100))) .' VND</span>
+                                  <span class="price-old">'. $price->ShowPrice($gia) .' VND</span>';
+                        echo '</div>';
+                        
+                        echo '<span class="sale-giam-gia">Giảm '. $phanTramKM .'%</span>';
+                echo '</div>';
+
+                echo '<div class="hidden-info">';
+                    echo '<h2 class="name">'. $dt->Ten_dien_thoai .'</h2>
+                        <span class="price">'. $price->ShowPrice($dt->ToGiaBan->last()->Gia) .' VND</span>
+                        <span class="list-info">Màn hình: '. $dt->Kich_thuoc_man_hinh .' '. $dt->Do_phan_giai_man_hinh .'</span>
+                        <span class="list-info">Chipset: '. $dt->Chipset .'</span>
+                        <span class="list-info">Ram: '. $dt->RAM .'GB</span>
+                        <span class="list-info">Rom: '. $dt->ROM .'GB</span>
+                        <span class="list-info">Khe sim: '. $dt->Khe_sim .'</span>
+                        <span class="list-info">Pin: '. $dt->Pin .'mah</span>
+                        <span class="list-info">OS: '. $dt->OS .' '. $dt->Phien_ban_OS .'</span>';
+                echo '</div>';
+            echo '</div>';
+        }
+    }
+
+    // Nhấn nút Xem Thêm: Bán chạy
+    function getXemThemBanChayAjax()
+    {
+        //Danh sách điện thoại bán chạy --------------------------------------------------
+        $dsMaDT = array();
+        $dsSoLuongBan = array();
+        $count = 0;
+
+        $dienThoai = DienThoaiDiDong::where([
+                ['Dang_ban', '=', 1],
+                ['So_luong', '>', 0]
+            ])->get();
+
+        // Tạo danh sách chứa mã điện thoại và số lượng bán được của điện thoại đó
+        foreach ($dienThoai as $dt) {
+            $dsMaDT[$count] = $dt->Ma_dien_thoai;
+            $dsSoLuongBan[$count] = $dt->ToChiTietGioHang->count();
+            $count++;
+        }
+
+        // Sắp xếp lại theo thứ tự giảm dần
+        for ($i=0; $i < count($dsMaDT)-1; $i++) { 
+            for ($j=$i+1; $j < count($dsMaDT); $j++) { 
+                if($dsSoLuongBan[$i] < $dsSoLuongBan[$j])
+                {
+                    //SWAP $dsSoLuongBan
+                    $temp = $dsSoLuongBan[$i];
+                    $dsSoLuongBan[$i] = $dsSoLuongBan[$j];
+                    $dsSoLuongBan[$j] = $temp;
+
+                    //SWAP $dsMaDT
+                    $temp = $dsMaDT[$i];
+                    $dsMaDT[$i] = $dsMaDT[$j];
+                    $dsMaDT[$j] = $temp;
+                }
+            }
+        }
+        $soLuongToiThieu;
+        if(count($dsMaDT) < 18){
+            $soLuongToiThieu = count($dsMaDT);
+        }
+        else{
+            $soLuongToiThieu = 18;
+        }
+            
+        $dsMaBanChay = array();
+        for ($i=0; $i < $soLuongToiThieu; $i++) { 
+            $dsMaBanChay[$i] = $dsMaDT[$i];
+        }
+
+        //Hiển thị ra
+        $price = new Price();
+        foreach($dsMaBanChay as $maDT)
+        {
+            $dt = DienThoaiDiDong::find($maDT);
+            
+            echo '<div class="col-2s" onclick="GoToPhone('. $dt->Ma_dien_thoai .')">';
+                echo '<div class="mobile-phone">
+                        <img src="DiDongZin/imagePhone/'. $dt->Hinh_anh .'" style="height: 215px" alt="'. $dt->Ten_dien_thoai .'">
+                        <h2 class="name">'. $dt->Ten_dien_thoai .'</h2>
+                        <span class="price">'. $price->ShowPrice($dt->ToGiaBan->last()->Gia) .' VND</span>';
+                echo '</div>';
+                echo '<div class="hidden-info">
+                        <h2 class="name">'. $dt->Ten_dien_thoai .'</h2>
+                        <span class="price">'. $price->ShowPrice($dt->ToGiaBan->last()->Gia) .' VND</span>
+                        <span class="list-info">Màn hình: '. $dt->Kich_thuoc_man_hinh .' '. $dt->Do_phan_giai_man_hinh .'</span>
+                        <span class="list-info">Chipset: '. $dt->Chipset .'</span>
+                        <span class="list-info">Ram: '. $dt->RAM .'GB</span>
+                        <span class="list-info">Rom: '. $dt->ROM .'GB</span>
+                        <span class="list-info">Khe sim: '. $dt->Khe_sim .'</span>
+                        <span class="list-info">Pin: '. $dt->Pin .'mah</span>
+                        <span class="list-info">OS: '. $dt->OS .' '. $dt->Phien_ban_OS .'</span>';
+                echo '</div>';
+            echo '</div>';
+        }
+    }
+
+    // Nhấn nút Xem Thêm: Tất cả sản phẩm
+    function getXemThemTatCaAjax()
+    {
+        //Danh sách điện thoại ---------------------------------------------------------
+        $soLuongDT = DienThoaiDiDong::where([
+                ['Dang_ban', '=', 1],
+                ['So_luong','>', 0]
+            ])->count();
+        $dsDienThoai;
+
+        if($soLuongDT > 24)
+        {
+            $dsDienThoai = DienThoaiDiDong::where([
+                    ['Dang_ban', '=', 1],
+                    ['So_luong', '>', 0]
+                ])->orderBy('Ma_dien_thoai', 'desc')->take(24)->get();
+        }
+        else
+        {
+            $dsDienThoai = DienThoaiDiDong::where([
+                    ['Dang_ban', '=', 1],
+                    ['So_luong', '>', 0]
+                ])->orderBy('Ma_dien_thoai', 'desc')->get();
+        }       
+        
+        //Hiển thị ra
+        $price = new Price();
+        foreach($dsDienThoai as $dt)
+        {            
+            echo '<div class="col-2s" onclick="GoToPhone('. $dt->Ma_dien_thoai .')">';
+                echo '<div class="mobile-phone">
+                        <img src="DiDongZin/imagePhone/'. $dt->Hinh_anh .'" style="height: 215px" alt="'. $dt->Ten_dien_thoai .'">
+                        <h2 class="name">'. $dt->Ten_dien_thoai .'</h2>
+                        <span class="price">'. $price->ShowPrice($dt->ToGiaBan->last()->Gia) .' VND</span>';
+                echo '</div>';
+                echo '<div class="hidden-info">
+                        <h2 class="name">'. $dt->Ten_dien_thoai .'</h2>
+                        <span class="price">'. $price->ShowPrice($dt->ToGiaBan->last()->Gia) .' VND</span>
+                        <span class="list-info">Màn hình: '. $dt->Kich_thuoc_man_hinh .' '. $dt->Do_phan_giai_man_hinh .'</span>
+                        <span class="list-info">Chipset: '. $dt->Chipset .'</span>
+                        <span class="list-info">Ram: '. $dt->RAM .'GB</span>
+                        <span class="list-info">Rom: '. $dt->ROM .'GB</span>
+                        <span class="list-info">Khe sim: '. $dt->Khe_sim .'</span>
+                        <span class="list-info">Pin: '. $dt->Pin .'mah</span>
+                        <span class="list-info">OS: '. $dt->OS .' '. $dt->Phien_ban_OS .'</span>';
+                echo '</div>';
+            echo '</div>';
+        }        
     }
 
     function postDangNhap(Request $request)

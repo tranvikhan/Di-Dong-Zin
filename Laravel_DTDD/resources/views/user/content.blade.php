@@ -27,7 +27,7 @@
     <!-- XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-->
     <div id="giamGiaManh">
         <h2   class="title">GIẢM GIÁ MẠNH</h2>
-        <div class="top-sale row">
+        <div class="top-sale row" id="divGiamGiaManh">
             @foreach($dsMaGiamGia as $maDT)
                 <?php
                     $dt = App\DienThoaiDiDong::find($maDT);
@@ -63,15 +63,15 @@
             @endforeach
             
         </div>
-        <div class="see-more">
-            <button class="prm-btn">Xem Thêm</button>
+        <div class="see-more" id="btnXemThem_giamGiaManh">
+            <button class="prm-btn" onclick="XemThemDTDD(0)">Xem Thêm</button>
         </div>
     </div>
 
     <!-- XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-->
     <div id="banChay">
         <h2 class="title">BÁN CHẠY</h2>
-        <div class="top-sale row">
+        <div class="top-sale row" id="divBanChay">
             @foreach($dsMaBanChay as $maDT)
                 <?php
                     $dt = App\DienThoaiDiDong::find($maDT);
@@ -97,8 +97,8 @@
             @endforeach
 
         </div>
-        <div class="see-more">
-            <button class="prm-btn">Xem Thêm</button>
+        <div class="see-more" id="btnXemThem_banChay">
+            <button class="prm-btn" onclick="XemThemDTDD(1)">Xem Thêm</button>
         </div>
     </div>
     
@@ -155,7 +155,7 @@
     <input type="hidden" id="maHangDienThoaiDuocChon" value="">
 
     <div class="see-more" id="btnXemThem_tatCa">
-        <button class="prm-btn">Xem Thêm</button>
+        <button class="prm-btn" onclick="XemThemDTDD(2)">Xem Thêm</button>
     </div>
 
     @if (session('noiDungCanTimKiem'))
@@ -357,6 +357,32 @@
             $.get('SapXepDienThoaiAjax/'+noiDung+'/'+hangDT+'/'+mucGia+'/'+thuTu, function(data){
                 document.getElementById('phoneFound').innerHTML = data;
             });
+        }
+
+        function XemThemDTDD(index)
+        {
+            // index: GiamGiaManh=0, BanChay=1, TatCaDienThoai=2
+            if(index == 0)
+            {
+                $.get('XemThemGiamGiaManhAjax', function(data){
+                    document.getElementById('divGiamGiaManh').innerHTML = data;
+                });
+                document.getElementById('btnXemThem_giamGiaManh').hidden = true;
+            }
+            else if(index == 1)
+            {
+                $.get('XemThemBanChayAjax', function(data){
+                    document.getElementById('divBanChay').innerHTML = data;
+                });
+                document.getElementById('btnXemThem_banChay').hidden = true;
+            }
+            else if(index == 2)
+            {
+                $.get('XemThemTatCaAjax', function(data){
+                    document.getElementById('phoneFound').innerHTML = data;
+                });
+                document.getElementById('btnXemThem_tatCa').hidden = true;
+            }
         }
     </script>
 @endsection
