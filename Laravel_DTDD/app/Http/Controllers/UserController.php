@@ -23,21 +23,37 @@ use App\HoaDon;
 class UserController extends Controller
 {
     // ===========================================================================================
-    // ---------------- TRANG CHỦ------------------ ----------------------------------------------
+    // ---------------- TRANG CHỦ ----------------------------------------------------------------
     // ===========================================================================================
 
     function getTrangChu()
     {
-        $soLuongDT = DienThoaiDiDong::where('Dang_ban', '=', 1)->count();
-        $dsDienThoai;
+        // Xác định số lượng hiển thị tối đa và số lượng hiển thị hiện tại của GIẢM GIÁ, BÁN CHẠY, TẤT CẢ ĐIỆN THOẠI
+            // GIẢM GIÁ
+        $soLuongToiDa_GiamGia = 0;
+        $soLuongHienTai_GiamGia = 0;
+            // BÁN CHẠY
+        $soLuongToiDa_BanChay = 0;
+        $soLuongHienTai_BanChay = 0;
+            // TẤT CẢ ĐIỆN THOẠI
+        $soLuongToiDa_TatCa = 0;
+        $soLuongHienTai_TatCa = 0;
 
         //Danh sách điện thoại ---------------------------------------------------------
+        $soLuongDT = DienThoaiDiDong::where([
+                ['Dang_ban', '=', 1],
+                ['So_luong', '>', 0]
+            ])->count();
+        $dsDienThoai;
+        
+        $soLuongToiDa_TatCa = $soLuongDT;
         if($soLuongDT >= 12)
         {
             $dsDienThoai = DienThoaiDiDong::where([
                     ['Dang_ban', '=', 1],
                     ['So_luong', '>', 0]
                 ])->orderBy('Ma_dien_thoai', 'desc')->take(12)->get();
+            $soLuongHienTai_TatCa = 12;
         }
         else
         {
@@ -45,6 +61,7 @@ class UserController extends Controller
                     ['Dang_ban', '=', 1],
                     ['So_luong', '>', 0]
                 ])->orderBy('Ma_dien_thoai', 'desc')->get();
+            $soLuongHienTai_TatCa = $soLuongDT;
         }       
         
         //Danh sách điện thoại bán chạy --------------------------------------------------
@@ -81,16 +98,16 @@ class UserController extends Controller
                 }
             }
         }
-        $soLuongToiThieu;
+        $soLuongToiDa_BanChay = count($dsMaDT);
         if(count($dsMaDT) < 6){
-            $soLuongToiThieu = count($dsMaDT);
+            $soLuongHienTai_BanChay = count($dsMaDT);
         }
         else{
-            $soLuongToiThieu = 6;
+            $soLuongHienTai_BanChay = 6;
         }
             
         $dsMaBanChay = array();
-        for ($i=0; $i < $soLuongToiThieu; $i++) { 
+        for ($i=0; $i < $soLuongHienTai_BanChay; $i++) { 
             $dsMaBanChay[$i] = $dsMaDT[$i];
         }
 
@@ -145,20 +162,24 @@ class UserController extends Controller
                 }
             }
         }
-        $soLuongToiThieu;
+        $soLuongToiDa_GiamGia = count($dsMaDT);
         if(count($dsMaDT) < 6){
-            $soLuongToiThieu = count($dsMaDT);
+            $soLuongHienTai_GiamGia = count($dsMaDT);
         }
         else{
-            $soLuongToiThieu = 6;
+            $soLuongHienTai_GiamGia = 6;
         }
             
         $dsMaGiamGia = array();
-        for ($i=0; $i < $soLuongToiThieu; $i++) { 
+        for ($i=0; $i < $soLuongHienTai_GiamGia; $i++) { 
             $dsMaGiamGia[$i] = $dsMaDT[$i];
         }
 
-        return view('user.content', ['dsDienThoai'=>$dsDienThoai, 'dsMaBanChay'=>$dsMaBanChay, 'dsMaGiamGia'=>$dsMaGiamGia]);
+        return view('user.content', ['dsDienThoai'=>$dsDienThoai, 'dsMaBanChay'=>$dsMaBanChay, 'dsMaGiamGia'=>$dsMaGiamGia, 
+                    'soLuongToiDa_TatCa'=>$soLuongToiDa_TatCa, 'soLuongHienTai_TatCa'=>$soLuongHienTai_TatCa,
+                    'soLuongToiDa_BanChay'=>$soLuongToiDa_BanChay, 'soLuongHienTai_BanChay'=>$soLuongHienTai_BanChay,
+                    'soLuongToiDa_GiamGia'=>$soLuongToiDa_GiamGia, 'soLuongHienTai_GiamGia'=>$soLuongHienTai_GiamGia  
+                ]);
     }
         
     function TimDienThoaiAjax($noiDung)
@@ -787,8 +808,7 @@ class UserController extends Controller
                 'username2.unique'=>'Tên đăng nhập đã bị trùng',
                 'password2.required'=>'Mật khẩu bắt buộc phải nhập',
                 're_password2.same'=>'Mật khẩu nhập lại không chính xác'
-            ]);
-        
+            ]);        
 
         $user = new TaiKhoan;
         $user->Ma_tai_khoan = TaiKhoan::all()->max('Ma_tai_khoan') + 1;

@@ -66,6 +66,12 @@
         <div class="see-more" id="btnXemThem_giamGiaManh">
             <button class="prm-btn" onclick="XemThemDTDD(0)">Xem Thêm</button>
         </div>
+
+        {{-- Hiển thị ra THÊM khi nhấn nút Xem Thêm --}}
+            {{-- Số lượng điện thoại tối đa --}}
+        <input type="hidden" id="soLuongToiDa_GiamGia" value="">
+            {{-- Số lượng điện thoại hiện tại --}}
+        <input type="hidden" id="soLuongHienTai_GiamGia" value="">
     </div>
 
     <!-- XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-->
@@ -100,6 +106,12 @@
         <div class="see-more" id="btnXemThem_banChay">
             <button class="prm-btn" onclick="XemThemDTDD(1)">Xem Thêm</button>
         </div>
+
+        {{-- Hiển thị ra THÊM khi nhấn nút Xem Thêm --}}
+            {{-- Số lượng điện thoại tối đa --}}
+        <input type="hidden" id="soLuongToiDa_BanChay" value="">
+            {{-- Số lượng điện thoại hiện tại --}}
+        <input type="hidden" id="soLuongHienTai_BanChay" value="">
     </div>
     
     <!-- XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-->
@@ -145,18 +157,25 @@
                 </div>
             </div>
         @endforeach
-                
     </div>
+
+    <div class="see-more" id="btnXemThem_tatCa">
+        <button class="prm-btn" onclick="XemThemDTDD(2)">Xem Thêm</button>
+    </div>
+
+    {{-- Hiển thị ra THÊM khi nhấn nút Xem Thêm --}}
+        {{-- Số lượng điện thoại tối đa --}}
+    <input type="hidden" id="soLuongToiDa_TatCa" value="">
+        {{-- Số lượng điện thoại hiện tại --}}
+    <input type="hidden" id="soLuongHienTai_TatCa" value="">
+    
+    <!-- XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-->
 
     {{-- Nhận noiDung tìm kiếm trước đó --}}
     <input type="hidden" id="noiDungTimKiem" value="">
 
     {{-- Nhận Mã hãng điện thoại được chọn trước đó --}}
     <input type="hidden" id="maHangDienThoaiDuocChon" value="">
-
-    <div class="see-more" id="btnXemThem_tatCa">
-        <button class="prm-btn" onclick="XemThemDTDD(2)">Xem Thêm</button>
-    </div>
 
     @if (session('noiDungCanTimKiem'))
         <?php
