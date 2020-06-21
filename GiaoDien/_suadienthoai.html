@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <title>Quản Lý - Sửa điện thoại</title>
+    <meta charset="utf-8">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
+        rel="stylesheet">
+    <link rel="shortcut icon" href="assets/img/logo-min.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/manage.css">
+    <!--open lib animation...........................................................................-->
+    <link rel="stylesheet" type="text/css" href="assets/css/animate.css">
+</head>
+
+<body>
+    <!-- TOP HEADER ..................................................................................-->
+    <div class="top_header">
+        <img id="btn-menu" src="assets/img/menu_100px.png" onclick="show_left_menu()">
+        <h2>DIDONGZIN MANAGEMENT CENTER</h2>
+        <a id="btn-admin">Chào! Admin</a>
+        <img id="admin-avt" src="assets/img/cat_profile_30px.png">
+    </div>
+    <!-- LEFT MENU..................................................................................-->
+    <div id="left-menu">
+        <ul>
+            <li class="tablinks" onclick="loadPage('_thongke.html')">
+                <img src="assets/img/home_50px.png" alt="logo">
+                <p>THỐNG KÊ</p>
+            </li>
+            <li class="tablinks  active" onclick="loadPage('_dienthoai.html')">
+                <img src="assets/img/smartphone_tablet_50px.png" alt="logo">
+                <p>Điện thoại</p>
+            </li>
+            <li class="tablinks" onclick="loadPage('_hangdienthoai.html')">
+                <img src="assets/img/department_50px.png" alt="logo">
+                <p>Hãng điện thoại</p>
+            </li>
+            <li class="tablinks" onclick="loadPage('_donhang.html')">
+                <img src="assets/img/purchase_order_50px.png" alt="logo">
+                <p>Đơn hàng</p>
+                <span class="sodonmoi">2</span>
+            </li>
+            <li class="tablinks" onclick="loadPage('_hoadon.html')">
+                <img src="assets/img/receipt_50px.png" alt="logo">
+                <p>Hóa đơn</p>
+            </li>
+            <li class="tablinks" onclick="loadPage('_thanhvien.html')">
+                <img src="assets/img/member_50px.png" alt="logo">
+                <p>Thành viên</p>
+            </li>
+            <li class="tablinks" onclick="loadPage('_trang.html')">
+                <img src="assets/img/page_50px.png" alt="logo">
+                <p>Trang</p>
+            </li>
+            <li class="tablinks" onclick="loadPage('_caidat.html')">
+                <img src="assets/img/settings_50px.png" alt="logo" id="ic-caidat">
+                <p>Cài đặt</p>
+            </li>
+            <li class="tablinks">
+                <img src="assets/img/login_rounded_50px.png" alt="logo">
+                <p>Đăng xuất</p>
+            </li>
+        </ul>
+    </div>
+    <!-- NOI DUNG CHINH ..................................................................................-->
+    <div class="content">
+        <div id="suadienthoai" class="tabcontent nhaplieu">
+            <h2>SỬA ĐIỆN THOẠI</h2>
+            <!-- SUA DIEN THOAI ..................................................................................-->
+            <form action="#" method="POST">
+                <div class="row">
+                    <div class="col-7">
+                        <table>
+                            <tr>
+                                <th colspan="2">
+                                    Thông số kỹ thuật:
+                                </th>
+                            </tr>
+                            <tr>
+                                <td>Kích thước</td>
+                                <td><input type="text" placeholder=" --x--x-- cm"></td>
+                            </tr>
+                            <tr>
+                                <td>Trọng lượng</td>
+                                <td><input type="text" placeholder=" --g"></td>
+                            </tr>
+                            <tr>
+                                <td>Ram</td>
+                                <td><input type="text" placeholder=" --GB"></td>
+                            </tr>
+                            <tr>
+                                <td>Rom</td>
+                                <td><input type="text" placeholder=" --GB"></td>
+                            </tr>
+                            <tr>
+                                <td>Chipset</td>
+                                <td><input type="text" placeholder=" "></td>
+                            </tr>
+                            <tr>
+                                <td>Loại màn hình</td>
+                                <td><input type="text" placeholder=" "></td>
+                            </tr>
+                            <tr>
+                                <td>Kích thước màn hình</td>
+                                <td><input type="text" placeholder=" "></td>
+                            </tr>
+                            <tr>
+                                <td>Độ phân giải màn hình</td>
+                                <td><input type="text" placeholder=" "></td>
+                            </tr>
+                            <tr>
+                                <td>Camera sau</td>
+                                <td><input type="text" placeholder=" "></td>
+                            </tr>
+                            <tr>
+                                <td>Camera trước</td>
+                                <td><input type="text" placeholder=" "></td>
+                            </tr>
+                            <tr>
+                                <td>Wifi</td>
+                                <td><input type="text" placeholder=" "></td>
+                            </tr>
+                            <tr>
+                                <td>Bluetooth</td>
+                                <td><input type="text" placeholder=" "></td>
+                            </tr>
+                            <tr>
+                                <td>NFC</td>
+                                <td><input type="text" placeholder=" "></td>
+                            </tr>
+                            <tr>
+                                <td>Hệ điều hành</td>
+                                <td><input type="text" placeholder=" "></td>
+                            </tr>
+                            <tr>
+                                <td>Phiên bản hệ điều hành</td>
+                                <td><input type="text" placeholder=" "></td>
+                            </tr>
+                            <tr>
+                                <td>Quay video</td>
+                                <td><input type="text" placeholder=" "></td>
+                            </tr>
+                            <tr>
+                                <td>Cảm biến</td>
+                                <td><input type="text" placeholder=" "></td>
+                            </tr>
+                            <tr>
+                                <td>Khe sim</td>
+                                <td><input type="text" placeholder=" "></td>
+                            </tr>
+                            <tr>
+                                <td>Khe thẻ nhớ</td>
+                                <td><input type="text" placeholder=" "></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-5">
+                        <table>
+                            <tr>
+                                <th colspan="2">Mã điện thoại:</th>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <input type="text" disabled id="phoneID">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th colspan="2">Tên điện thoại:</th>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <input type="text" placeholder="">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th colspan="2">Hãng điện thoại:</th>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <select>
+                                        <option>Hãng điện thoại</option>
+                                        <option>Apple</option>
+                                        <option>Samsung</option>
+                                        <option>Xiaomi</option>
+                                        <option>Hawaii</option>
+                                        <option>Nokia</option>
+                                        <option>Realme</option>
+                                        <option>Vsmart</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th colspan="2">Mô tả:</th>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <textarea rows="4" cols="40"></textarea>
+                                </td>
+                            </tr>
+                             <tr>
+                                 <th colspan="2">Số lượng điện thoại:</th>
+                             </tr>
+                             <tr>
+                                 <td colspan="2">
+                                     <input type="number" placeholder="">
+                                 </td>
+                            </tr>
+                            <tr>
+                                <th colspan="2">Giá điện thoại:</th>
+                            </tr>
+                            <tr>
+                                <td>Giá bán:</td>
+                                <td>
+                                    <input type="text" placeholder="VNĐ">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th> Khuyến mãi:</th>
+                                <td>
+                                    <label class="mycheckbox">
+                                        <input type="checkbox" id="apDungKM" checked>
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>% Giảm giá:</td>
+                                <td>
+                                    <input type="text" placeholder="2%" id="phanTramGiam">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Quà tặng:</td>
+                                <td>
+                                    <textarea rows="3" cols="40" id="quaTang"></textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Từ ngày:</td>
+                                <td><input type="date" id="ngayBatDau"></td>
+                            </tr>
+                            <tr>
+                                <td>Đến ngày:</td>
+                                <td><input type="date" id="ngayKetThuc"></td>
+                            </tr>
+                            <tr>
+                                <th colspan="2">Ảnh sản phẩm:</th>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <img src="assets/img/undraw_photo_4yb9.svg" id="ImageReview2">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <input type="file" id="inputImage2">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="reset" value="Hủy" onclick="loadPage('_dienthoai.html')">
+                                </td>
+                                <td>
+                                    <input type="submit" value="Lưu">
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+<script src="assets/js/manage.js"></script>
+<script src="assets/js/_suadienthoai.js"></script>
+
+</html>

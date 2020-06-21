@@ -1,0 +1,295 @@
+
+.user-tab-menu,
+.user-tab-content {
+    padding: 20px 0;
+}
+.user-tab-menu>div{
+    background-color: transparent;
+    border-radius: 10px;
+}
+.user-tab-menu a{
+    text-decoration: none;
+    display: block;
+    padding: 10px 20px;
+    font-size: 15px;
+    border-radius: 10px;
+    color: var(--font-color4);
+    margin-bottom: 1px;
+}
+.user-tab-menu a:hover{
+    background-color: var(--border-item);
+}
+.user-tab-menu>div>a>img{
+    width: 30px;
+}
+.user-tab-menu>div>a>span{
+    position: relative;
+    top: -8px;
+    left: 5px;
+}
+.user-tab-menu .active {
+    background-color: var(--border-item);
+}
+.user-tab-content{
+    padding-left: 20px;
+    padding-right: 20px;
+}
+.title{
+    margin-top: 0;
+}
+.user-thongtin{
+    background-color:var(--border-item);
+    border-radius: 15px;
+    padding: 40px;
+}
+.user-thongtin>form>div>img{
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+}
+.user-thongtin .col-4{
+    text-align: center;
+}
+.user-thongtin>form>div>table{
+    text-align: left;
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 15px;
+    font-weight: 400;
+    font-family: 'Roboto',sans-serif;
+    color: var(--font-color4);
+}
+.user-thongtin input,
+.user-thongtin select {
+    border: none;
+    outline: none;
+    font-family: 'Roboto',sans-serif;
+    background-color: var(--backgroud-color1);
+    width: 100%;
+    padding: 7px 10px;
+    border-radius: 8px;
+    color: var(--font-color4);
+    border: solid 1px var(--backgroud-color1);
+    transition: 0.2s;
+}
+.user-thongtin input:hover,
+.user-thongtin select:hover{
+    border-color: var(--primary-color);
+}
+.user-thongtin select{
+    width: auto;
+}
+.user-thongtin input:disabled{
+    background-color: var(--font-color3);
+    color: var(--font-color2);
+}
+.user-thongtin th{
+    font-weight: 400;
+    padding: 10px;
+    width: 30%;
+}
+.user-thongtin td{
+    padding: 10px;
+}
+.user-thongtin input[type='submit']{
+    padding: 10px 20px;
+    width: auto;
+    float: right;
+    background-color: var(--primary-color);
+    color: var(--font-color-light);
+    font-weight: 500;
+    border-radius: 30px;
+    margin-top: 20px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.user-thongtin input[type='submit']:hover {
+    background-color: var(--backgroud-color4);
+}
+.user-thongtin .col-4{
+    position: relative;
+}
+.user-thongtin .col-4 p{
+    margin-top: 10px;
+    color: var(--font-color4);
+    margin-bottom: 15px;
+}
+.user-thongtin input[type='file']{
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 0;
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    opacity: 0;
+    z-index: 1;
+    cursor: pointer;
+}
+/* The myRadio*/
+.myRadio {
+    display:inline-block;
+    position: relative;
+    padding-left: 25px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 15px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    margin-right: 15px;
+}
+
+/* Hide the browser's default radio button */
+.myRadio input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+/* Create a custom radio button */
+.checkmark {
+    position: absolute;
+    top: -2px;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    background-color: var(--backgroud-light);
+    border-radius: 50%;
+}
+
+/* On mouse-over, add a grey background color */
+.myRadio:hover input~.checkmark {
+    background-color: var(--font-color3);
+}
+
+/* When the radio button is checked, add a blue background */
+.myRadio input:checked~.checkmark {
+    background-color: var(--primary-color);
+}
+
+/* Create the indicator (the dot/circle - hidden when not checked) */
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the indicator (dot/circle) when checked */
+.myRadio input:checked~.checkmark:after {
+    display: block;
+}
+
+/* Style the indicator (dot/circle) */
+.myRadio .checkmark:after {
+    top: 6px;
+    left: 6px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--font-color-light);
+}
+
+.donhangmoi {
+    background-color: var(--border-item);
+    width: 100%;
+    padding: 30px 30px 30px 30px;
+    border-radius: 20px;
+    margin: 20px 0;
+    transition: 0.2s;
+    position: relative;
+}
+.donhangmoi:hover{
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+}
+
+
+.donhangmoi table {
+    text-align: left;
+    font-size: 15px;
+    overflow-x: auto;
+    color: var(--font-color4);
+}
+
+.donhangmoi td {
+    font-weight: 300;
+}
+.donhangmoi .prm-btn{
+    background-color: var(--border-item);
+    border-color: var(--font-color4);
+    color: var(--font-color4);
+    float: right;
+    margin-top: 20px;
+    transition: 0.2s;
+}
+.donhangmoi .prm-btn:hover{
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+.donhangmoi>a {
+    position: absolute;
+    right: 20px;
+    top:15px;
+    font-size: 14px;
+    color: var(--font-color4);
+    transition: 0.2s;
+}
+.donhangmoi>a:hover{
+    color: var(--primary-color);
+}
+
+.tb1 th {
+    width: 50%;
+    font-weight: 400;
+}
+.processing{
+    color: var(--primary-color);
+}
+.table-customize{
+    margin-top: 25px;
+}
+.table-customize>thead>tr{
+    border-top: solid 1px var(--backgroud-color1);
+}
+.table-customize>thead>tr>th {
+    padding: 10px 14px 10px 0;
+    text-align: left;
+}
+.table-customize>tbody>tr>td{
+    padding-left: 0;
+}
+.table-responsive>tbody>tr td:before{
+    left: 0;
+}
+
+.title-th {
+    text-align: left;
+
+}
+.table-customize>tbody>tr
+.title-td {
+    padding: 5px 14px 5px 0;
+}
+@media (max-width: 767px) and (min-width: 320px){
+    .table-responsive>tbody>tr td:first-child {
+        border-top: solid 1px var(--backgroud-color1);
+    }
+    .title-th {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+        padding: 10px 14px 10px 0;
+    }
+    .table-customize>tbody>tr .dau-td {
+        border-top: solid 2px var(--backgroud-color1);
+    }
+    .table-customize>tbody>tr .title-td {
+        padding: 16px 14px 5px 0;
+        font-weight: 400;
+    }
+    .user-thongtin{
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+} 

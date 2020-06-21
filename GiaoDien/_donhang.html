@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <title>Quản Lý - Đơn Hàng</title>
+    <meta charset="utf-8">
+   <link
+       href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
+       rel="stylesheet">
+    <link rel="shortcut icon" href="assets/img/logo-min.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/manage.css">
+    <!--open lib animation...........................................................................-->
+    <link rel="stylesheet" type="text/css" href="assets/css/animate.css">
+</head>
+
+<body>
+    <!-- TOP HEADER ..................................................................................-->
+    <div class="top_header">
+        <img id="btn-menu" src="assets/img/menu_100px.png" onclick="show_left_menu()">
+        <h2>DIDONGZIN MANAGEMENT CENTER</h2>
+        <a id="btn-admin">Chào! Admin</a>
+        <img id="admin-avt" src="assets/img/cat_profile_30px.png">
+    </div>
+    <!-- LEFT MENU..................................................................................-->
+    <div id="left-menu">
+        <ul>
+            <li class="tablinks " onclick="loadPage('_thongke.html')">
+                <img src="assets/img/home_50px.png" alt="logo">
+                <p>THỐNG KÊ</p>
+            </li>
+            <li class="tablinks" onclick="loadPage('_dienthoai.html')">
+                <img src="assets/img/smartphone_tablet_50px.png" alt="logo">
+                <p>Điện thoại</p>
+            </li>
+            <li class="tablinks" onclick="loadPage('_hangdienthoai.html')">
+                <img src="assets/img/department_50px.png" alt="logo">
+                <p>Hãng điện thoại</p>
+            </li>
+            <li class="tablinks active" onclick="loadPage('_donhang.html')">
+                <img src="assets/img/purchase_order_50px.png" alt="logo">
+                <p>Đơn hàng</p>
+                <span class="sodonmoi">2</span>
+            </li>
+            <li class="tablinks" onclick="loadPage('_hoadon.html')">
+                <img src="assets/img/receipt_50px.png" alt="logo">
+                <p>Hóa đơn</p>
+            </li>
+            <li class="tablinks" onclick="loadPage('_thanhvien.html')">
+                <img src="assets/img/member_50px.png" alt="logo">
+                <p>Thành viên</p>
+            </li>
+            <li class="tablinks" onclick="loadPage('_trang.html')">
+                <img src="assets/img/page_50px.png" alt="logo">
+                <p>Trang</p>
+            </li>
+            <li class="tablinks" onclick="loadPage('_caidat.html')">
+                <img src="assets/img/settings_50px.png" alt="logo" id="ic-caidat">
+                <p>Cài đặt</p>
+            </li>
+            <li class="tablinks">
+                <img src="assets/img/login_rounded_50px.png" alt="logo">
+                <p>Đăng xuất</p>
+            </li>
+        </ul>
+    </div>
+    <!-- NOI DUNG CHINH ..................................................................................-->
+    <div class="content">
+        <div id="donhang" class="tabcontent">
+            <h2>QUẢN LÝ ĐƠN HÀNG</h2>
+            <div class="donhangmoi">
+                <table class="tb1">
+                    <tr>
+                        <th>Mã đơn hàng:</th>
+                        <td>001</td>
+                        <th>Ngày tạo:</th>
+                        <td>22/4/2020</td>
+                    </tr>
+                    <tr>
+                        <th>Khách hàng:</th>
+                        <td>Trần Vi Khan</td>
+                        <th>Mã khách hàng:</th>
+                        <td>001</td>
+                    </tr>
+                    <tr>
+                        <th>Số điện thoại:</th>
+                        <td>0974184717</td>
+                        <th>Hình thức thanh toán:</th>
+                        <td>Online</td>
+                    </tr>
+                    <tr>
+                        <th>Địa chỉ nhận hàng:</th>
+                        <td colspan="3">Long Mỹ, Hậu Giang</td>
+
+                    </tr>
+                </table>
+                <div class="dropdown-btn">
+                    <img src="assets/img/xemthem.png">
+                </div>
+                <div class="dropdown-cnt">
+                    <table class="tb2">
+                        <tr>
+                            <th>
+                                STT
+                            </th>
+                            <th>
+                                Điện thoại
+                            </th>
+                            <th>
+                                Số lượng
+                            </th>
+                            <th>
+                                Đơn giá
+                            </th>
+                            <th>
+                                Thành tiền
+                            </th>
+                        </tr>
+                        <tr>
+                            <td>
+                                1
+                            </td>
+                            <td>
+                                <img src="imagePhone/iphone11-black-1.png" width="50px">
+                                <span>iPhone11 64Gb Mới Chính Hãng</span>
+                            </td>
+                            <td>
+                                1
+                            </td>
+                            <td>
+                                19.190.000
+                            </td>
+                            <td>
+                                19.190.000
+                            </td>
+                        </tr>
+                        <tr>
+                            <th colspan="4">
+                                Tổng cộng:
+                            </th>
+                            <td>
+                                19.190.000
+                            </td>
+                        </tr>
+                        <tr>
+                            <th colspan="4">
+                                Thuế VAT:
+                            </th>
+                            <td>
+                                100.000
+                            </td>
+                        </tr>
+                        <tr>
+                            <th colspan="4">
+                                Tổng thanh toán:
+                            </th>
+                            <td>
+                                19.290.000
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="g-btn-xacnhan">
+                        <button class="btnThemdienthoai"><img src="assets/img/cancel_30px.png">Hủy bỏ</button>
+                        <button class="btnThemdienthoai"><img src="assets/img/checked_30px.png">Xác nhận</button>
+                    </div>
+                </div>
+            </div>
+            <div class="donhangmoi">
+                <table class="tb1">
+                    <tr>
+                        <th>Mã đơn hàng:</th>
+                        <td>001</td>
+                        <th>Ngày tạo:</th>
+                        <td>22/4/2020</td>
+                    </tr>
+                    <tr>
+                        <th>Khách hàng:</th>
+                        <td>Trần Vi Khan</td>
+                        <th>Mã khách hàng:</th>
+                        <td>001</td>
+                    </tr>
+                    <tr>
+                        <th>Số điện thoại:</th>
+                        <td>0974184717</td>
+                        <th>Hình thức thanh toán:</th>
+                        <td>Online</td>
+                    </tr>
+                    <tr>
+                        <th>Địa chỉ nhận hàng:</th>
+                        <td colspan="3">Long Mỹ, Hậu Giang</td>
+
+                    </tr>
+                </table>
+                <div class="dropdown-btn">
+                    <img src="assets/img/xemthem.png">
+                </div>
+                <div class="dropdown-cnt">
+                    <table class="tb2">
+                        <tr>
+                            <th>
+                                STT
+                            </th>
+                            <th>
+                                Điện thoại
+                            </th>
+                            <th>
+                                Số lượng
+                            </th>
+                            <th>
+                                Đơn giá
+                            </th>
+                            <th>
+                                Thành tiền
+                            </th>
+                        </tr>
+                        <tr>
+                            <td>
+                                1
+                            </td>
+                            <td>
+                                <img src="imagePhone/iphone11-black-1.png" width="50px">
+                                <span>iPhone11 64Gb Mới Chính Hãng</span>
+                            </td>
+                            <td>
+                                1
+                            </td>
+                            <td>
+                                19.190.000
+                            </td>
+                            <td>
+                                19.190.000
+                            </td>
+                        </tr>
+                        <tr>
+                            <th colspan="4">
+                                Tổng cộng:
+                            </th>
+                            <td>
+                                19.190.000
+                            </td>
+                        </tr>
+                        <tr>
+                            <th colspan="4">
+                                Thuế VAT:
+                            </th>
+                            <td>
+                                100.000
+                            </td>
+                        </tr>
+                        <tr>
+                            <th colspan="4">
+                                Tổng thanh toán:
+                            </th>
+                            <td>
+                                19.290.000
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="g-btn-xacnhan">
+                        <button class="btnThemdienthoai"><img src="assets/img/cancel_30px.png">Hủy bỏ</button>
+                        <button class="btnThemdienthoai"><img src="assets/img/checked_30px.png">Xác nhận</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="assets/js/manage.js"></script>
+<script src="assets/js/_donhang.js"></script>
+
+</html>

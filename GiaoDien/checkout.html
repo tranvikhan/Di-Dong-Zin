@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <title>Đặt Hàng</title>
+    <meta charset="utf-8">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
+        rel="stylesheet">
+    <link rel="shortcut icon" href="assets/img/logo-min.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/style-login-success.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/checkout.css">
+    <!--open lib animation-->
+    <link rel="stylesheet" type="text/css" href="assets/css/animate.css">
+    <!----------------------------------------------------->
+</head>
+
+<body>
+    <div class="container nav-top">
+        <!-- Rounded switch -->
+        <label class="switch">
+            <input type="checkbox" id="switch1">
+            <span class="slider round"></span>
+        </label>
+        <img id="show_company" src="assets/img/menu_100px.png" alt="menu" onclick="show_company()">
+        <div class="row">
+
+            <div class="col-4" onclick="loadPage('index-login-success.html')">
+                <img src="assets/img/logo-min.png" alt="logo" />
+                <h2 class="animated infinite pulse">DIDONGZIN</h2>
+            </div>
+            <div class="search-bar col-4">
+                <input id="text_search" type="text" placeholder="Tìm sản phẩm" onkeyup="search_phone(this.value)" />
+                <img src="assets/img/search_30px.png" alt="icon-search">
+                <div id="search-results">
+                    <div class="phone-results">
+                        <img src="imagePhone/iphone11-black-1.png" alt="iphone 11" />
+                        <h2 class="name">iPhone11 64Gb Mới Chính Hãng</h2>
+                        <span class="price">19.190.000 VND</span>
+                    </div>
+                    <div class="phone-results">
+                        <img src="imagePhone/iphoneX-space-gray-300x400.png" alt="iphone X" />
+                        <h2 class="name">iPhoneX 64Gb Mới Chính Hãng</h2>
+                        <span class="price">11.190.000 VND</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4 right-nav-bar">
+                <a id="cart-btn" onclick="loadPage('checkout.html')">
+                    <img src="assets/img/shopping_cart_100px.png" alt="cart" />
+                    <span class="badge">3</span>
+                    <p>Giỏ hàng</p>
+                    <div id="cart">
+                        <div class="phone-results">
+                            <img src="imagePhone/iphone11-black-1.png" alt="iphone 11" />
+                            <h2 class="name">iPhone11 64Gb Mới Chính Hãng</h2>
+                            <span class="price">19.190.000 VND</span>
+                            <span class="count">X 1</span>
+                        </div>
+                        <div class="phone-results">
+                            <img src="imagePhone/iphoneX-space-gray-300x400.png" alt="iphone X" />
+                            <h2 class="name">iPhoneX 64Gb Mới Chính Hãng</h2>
+                            <span class="price">11.190.000 VND</span>
+                            <span class="count">X 2</span>
+                        </div>
+                    </div>
+                </a>
+                <a id="myBtn">
+                    <img src="avatar/avatar-cartoon-superman-png_244033.jpg" alt="user" />
+                    <p>Trần Vi Khan</p>
+                    <div class="user-menu">
+                        <img src="avatar/avatar-cartoon-superman-png_244033.jpg" alt="user" />
+                        <img src="assets/img/camera_50px.png" alt="update-avatar" id="update_avatar">
+                        <h2>Trần Vi Khan</h2>
+                        <p>tranvikhan</p>
+                        <button onclick="loadPage('_user_thongtin.html')">Quản lý tài khoản</button>
+                        <button>Đăng Xuất</button>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+    </div>
+    <div id="company">
+        <img src="assets/img/back_30px.png" alt="back" onclick="hide_company()">
+        <a href="#">APPLE</a>
+        <a href="#">SAMSUNG</a>
+        <a href="#">XIAOMI</a>
+        <a href="#">HAWAII</a>
+        <a href="#">NOKIA</a>
+        <a href="#">REALME</a>
+        <a href="#">VSMART</a>
+    </div>
+    <div class="container page-body">
+        <div class="row">
+            <form action="dathang.php" method="POST">
+            <div class="col-12">
+                <h2 class="title">Giỏ Hàng</h2>
+                <table class="table table-bordered table-customize table-responsive">
+                    <thead>
+                        <tr>
+                            <th>Điện thoại</th>
+                            <th>Số lượng</th>
+                            <th>Giá</th>
+                            <th>Tạm tính</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td data-title="Điện Thoại">
+                                <img src="imagePhone/iphone11-black-1.png" alt="dtdd">
+                                <a href="#">iPhone11 64Gb Mới Chính Hãng</a>
+                            </td>
+                            <td data-title="Số Lượng">
+                                <span class="tru-dt">-</span>
+                                <span class="soluong-dt">1</span>
+                                <span class="cong-dt">+</span>
+                            </td>
+                            <td data-title="Giá">19.190.000 VND</td>
+                            <td data-title="Tạm tính">19.190.000 VND</td>
+                        </tr>
+                        <tr>
+                            <td data-title="Điện Thoại">
+                                <img src="imagePhone/iphone11-black-1.png" alt="dtdd">
+                                <a class="ten-dt" href="#">iPhone11 64Gb Mới Chính Hãng</a>
+                            </td>
+                            <td data-title="Số Lượng">
+                                <span class="tru-dt">-</span>
+                                <span class="soluong-dt">2</span>
+                                <span class="cong-dt">+</span>
+                            </td>
+                            <td data-title="Giá">19.190.000 VND</td>
+                            <td data-title="Tạm tính">19.190.000 VND</td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>  
+            <div class="col-6 thongtindathang">
+                    <h2 class="title">Cộng giỏ hàng</h2>
+                    <table>
+                        <tr>
+                            <th>Tạm tính:</th>
+                            <td>31.916.151 VND</td>
+                        </tr>
+                        <tr>
+                            <th>Thuế VAT:</th>
+                            <td>0 VND</td>
+                        </tr>
+                        <tr>
+                            <th>Tổng cộng:</th>
+                            <td class="tongcong">31.916.151 VND</td>
+                        </tr>
+                    </table>            
+            </div>  
+            <div class="col-6 thongtindathang thongtinthanhtoan">
+                <h2 class="title">Thông tin thanh toán</h2>
+                <table>
+                    <tr>
+                        <th>Họ tên*</th>
+                        <td>
+                            <input type="text" placeholder="Trần Vi Khan" name="tenKhachHang">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Số điện thoại*</th>
+                        <td>
+                            <input type="text" placeholder="097414717" name="soDT">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                           Địa chỉ giao hàng*
+                        </th>
+                        <td> 
+                            <input type="text" placeholder="Ninh Kiều Cần Thơ" name="diaChi">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Hình thức thanh toán
+                        </th>
+                        <td>
+                            <select name="hinhthuc">
+                                <option>Thanh toán Online</option>
+                                <option>Thanh toán khi nhận hàng</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr class="hint-thanhtoan">
+                        <th>
+                            Tên tài khoản ngân hàng
+                        </th>
+                        <td>
+                            <input type="text" placeholder="Trần Vi Khan" name="tenChuThe">
+                        </td>
+                    </tr>
+                    <tr class="hint-thanhtoan">
+                        <th>
+                            Số thẻ
+                        </th>
+                        <td>
+                            <input type="text" placeholder="000-000-000-000" name="soThe">
+                        </td>
+                    </tr>
+                    <tr class="hint-thanhtoan">
+                        <th>
+                            CVV/CVV2
+                        </th>
+                        <td>
+                            <input type="text" placeholder="" name="CVV">
+                        </td>
+                    </tr>
+                    <tr class="hint-thanhtoan">
+                        <th>
+                            Ngày hết hạn
+                        </th>
+                        <td>
+                            <select name="thangHetHan">
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                                <option>6</option>
+                                <option>7</option>
+                                <option>8</option>
+                                <option>9</option>
+                                <option>10</option>
+                                <option>11</option>
+                                <option>12</option>
+                            </select>
+                            <select name="namHetHan">
+                                <option>2020</option>
+                                <option>2021</option>
+                                <option>2022</option>
+                                <option>2023</option>
+                                <option>2024</option>
+                            </select>
+                        </td>
+                    </tr>
+                    
+                </table>
+                <input type="submit" value="Đặt Hàng">
+            </div>
+            </form>
+        </div>
+    </div>
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-3s">
+                    <a>Giới thiệu công ty</a>
+                    <a>Hệ thống cửa hàng</a>
+                    <a>Tuyển dụng</a>
+                    <a>Chính sách bảo mật</a>
+                </div>
+                <div class="col-3s">
+                    <a>Chính sách bảo hành</a>
+                    <a>Chính sách đổi trả sản phẩm</a>
+                    <a>Hỏi đáp mua hàng online</a>
+                    <a>Phương thức thanh toán</a>
+                </div>
+                <div class="col-4">
+                    <a>NIÊN LUẬN NGÀNH KỸ THUẬT PHẦN MỀM</a>
+                    <a>Giáo viên hướng dẫn: <strong> Cô Trương Thị Thanh Tuyển</strong></a>
+                    <a>Sinh viên 1: <strong> Trần Vi Khan - B1704736</strong></a>
+                    <a>Sinh viên 2: <strong> Nguyễn Tấn Thịnh - B1704773</strong></a>
+                </div>
+                <div class="col-2">
+                    <img src="assets/img/visa_30px.png">
+                    <img src="assets/img/mastercard_logo_100px.png">
+                    <img src="assets/img/jcb_100px.png">
+                </div>
+            </div>
+        </div>
+    </footer>
+    <div class="coppy-right">
+        <p>BẢN QUYỀN THUỘC VỀ NHÓM TÁC GIẢ TRÊN</p>
+    </div>
+    <div class="nav-bottom">
+        <a href="index.html"><img src="assets/img/home_100px.png"></a>
+        <a onclick="show_search_bar()"><img src="assets/img/search_30px.png"></a>
+        <a href="checkout.html">
+            <img src="assets/img/shopping_cart_100px.png">
+            <span class="badge">3</span>
+        </a>
+        <a href="_user_thongtin.html"><img src="assets/img/thumbnails_100px.png"></a>
+    </div>
+    <img src="assets/img/slide_up_50px.png" onclick="scroll_top()" id="up-btn" alt="...">
+</body>
+<script src="assets/js/main-login-success.js"></script>
+<script src="assets/js/checkout.js"></script>
+
+</html>
