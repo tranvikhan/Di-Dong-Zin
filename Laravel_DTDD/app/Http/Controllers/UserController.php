@@ -468,7 +468,7 @@ class UserController extends Controller
     }
 
     // Nhấn nút Xem Thêm: Giảm giá mạnh
-    function getXemThemGiamGiaManhAjax()
+    function getXemThemGiamGiaManhAjax($soLuongSeHienThi)
     {
         //Danh sách điện thoại giảm giá mạnh -------------------------------------------------
         $dsMaDT = array();
@@ -521,16 +521,9 @@ class UserController extends Controller
                 }
             }
         }
-        $soLuongToiThieu;
-        if(count($dsMaDT) < 18){
-            $soLuongToiThieu = count($dsMaDT);
-        }
-        else{
-            $soLuongToiThieu = 18;
-        }
             
         $dsMaGiamGia = array();
-        for ($i=0; $i < $soLuongToiThieu; $i++) { 
+        for ($i=0; $i < $soLuongSeHienThi; $i++) { 
             $dsMaGiamGia[$i] = $dsMaDT[$i];
         }
 
@@ -570,7 +563,7 @@ class UserController extends Controller
     }
 
     // Nhấn nút Xem Thêm: Bán chạy
-    function getXemThemBanChayAjax()
+    function getXemThemBanChayAjax($soLuongSeHienThi)
     {
         //Danh sách điện thoại bán chạy --------------------------------------------------
         $dsMaDT = array();
@@ -606,16 +599,9 @@ class UserController extends Controller
                 }
             }
         }
-        $soLuongToiThieu;
-        if(count($dsMaDT) < 18){
-            $soLuongToiThieu = count($dsMaDT);
-        }
-        else{
-            $soLuongToiThieu = 18;
-        }
             
         $dsMaBanChay = array();
-        for ($i=0; $i < $soLuongToiThieu; $i++) { 
+        for ($i=0; $i < $soLuongSeHienThi; $i++) { 
             $dsMaBanChay[$i] = $dsMaDT[$i];
         }
 
@@ -647,29 +633,13 @@ class UserController extends Controller
     }
 
     // Nhấn nút Xem Thêm: Tất cả sản phẩm
-    function getXemThemTatCaAjax()
+    function getXemThemTatCaAjax($soLuongSeHienThi)
     {
         //Danh sách điện thoại ---------------------------------------------------------
-        $soLuongDT = DienThoaiDiDong::where([
+        $dsDienThoai = DienThoaiDiDong::where([
                 ['Dang_ban', '=', 1],
-                ['So_luong','>', 0]
-            ])->count();
-        $dsDienThoai;
-
-        if($soLuongDT > 24)
-        {
-            $dsDienThoai = DienThoaiDiDong::where([
-                    ['Dang_ban', '=', 1],
-                    ['So_luong', '>', 0]
-                ])->orderBy('Ma_dien_thoai', 'desc')->take(24)->get();
-        }
-        else
-        {
-            $dsDienThoai = DienThoaiDiDong::where([
-                    ['Dang_ban', '=', 1],
-                    ['So_luong', '>', 0]
-                ])->orderBy('Ma_dien_thoai', 'desc')->get();
-        }       
+                ['So_luong', '>', 0]
+            ])->orderBy('Ma_dien_thoai', 'desc')->take($soLuongSeHienThi)->get(); 
         
         //Hiển thị ra
         $price = new Price();

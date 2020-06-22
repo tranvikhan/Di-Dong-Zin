@@ -61,17 +61,19 @@
                     </div>
                 </div>
             @endforeach
-            
         </div>
-        <div class="see-more" id="btnXemThem_giamGiaManh">
-            <button class="prm-btn" onclick="XemThemDTDD(0)">Xem Thêm</button>
-        </div>
+
+        @if($soLuongHienTai_GiamGia < $soLuongToiDa_GiamGia)
+            <div class="see-more" id="btnXemThem_giamGiaManh">
+                <button class="prm-btn" onclick="XemThemDTDD(0)">Xem Thêm</button>
+            </div>
+        @endif
 
         {{-- Hiển thị ra THÊM khi nhấn nút Xem Thêm --}}
             {{-- Số lượng điện thoại tối đa --}}
-        <input type="hidden" id="soLuongToiDa_GiamGia" value="">
+        <input type="hidden" id="soLuongToiDa_GiamGia" value="{{ $soLuongToiDa_GiamGia }}">
             {{-- Số lượng điện thoại hiện tại --}}
-        <input type="hidden" id="soLuongHienTai_GiamGia" value="">
+        <input type="hidden" id="soLuongHienTai_GiamGia" value="{{ $soLuongHienTai_GiamGia }}">
     </div>
 
     <!-- XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-->
@@ -103,15 +105,18 @@
             @endforeach
 
         </div>
-        <div class="see-more" id="btnXemThem_banChay">
-            <button class="prm-btn" onclick="XemThemDTDD(1)">Xem Thêm</button>
-        </div>
+
+        @if($soLuongHienTai_BanChay < $soLuongToiDa_BanChay)
+            <div class="see-more" id="btnXemThem_banChay">
+                <button class="prm-btn" onclick="XemThemDTDD(1)">Xem Thêm</button>
+            </div>
+        @endif
 
         {{-- Hiển thị ra THÊM khi nhấn nút Xem Thêm --}}
             {{-- Số lượng điện thoại tối đa --}}
-        <input type="hidden" id="soLuongToiDa_BanChay" value="">
+        <input type="hidden" id="soLuongToiDa_BanChay" value="{{ $soLuongToiDa_BanChay }}">
             {{-- Số lượng điện thoại hiện tại --}}
-        <input type="hidden" id="soLuongHienTai_BanChay" value="">
+        <input type="hidden" id="soLuongHienTai_BanChay" value="{{ $soLuongHienTai_BanChay }}">
     </div>
     
     <!-- XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-->
@@ -159,15 +164,17 @@
         @endforeach
     </div>
 
-    <div class="see-more" id="btnXemThem_tatCa">
-        <button class="prm-btn" onclick="XemThemDTDD(2)">Xem Thêm</button>
-    </div>
+    @if ($soLuongHienTai_TatCa < $soLuongToiDa_TatCa)
+        <div class="see-more" id="btnXemThem_tatCa">
+            <button class="prm-btn" onclick="XemThemDTDD(2)">Xem Thêm</button>
+        </div>    
+    @endif
 
     {{-- Hiển thị ra THÊM khi nhấn nút Xem Thêm --}}
         {{-- Số lượng điện thoại tối đa --}}
-    <input type="hidden" id="soLuongToiDa_TatCa" value="">
+    <input type="hidden" id="soLuongToiDa_TatCa" value="{{ $soLuongToiDa_TatCa }}">
         {{-- Số lượng điện thoại hiện tại --}}
-    <input type="hidden" id="soLuongHienTai_TatCa" value="">
+    <input type="hidden" id="soLuongHienTai_TatCa" value="{{ $soLuongHienTai_TatCa }}">
     
     <!-- XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-->
 
@@ -184,16 +191,16 @@
                 // Cắt khoảng trắng thừa ở đầu và cuối chuỗi
                 $noiDung = trim($noiDung, ' ');
                 
-                echo 'document.getElementById("btnXemThem_tatCa").innerHTML = "";';
-                echo 'document.getElementById("banChay").innerHTML = "";';
-                echo 'document.getElementById("giamGiaManh").innerHTML = "";';
+                echo 'document.getElementById("btnXemThem_tatCa").innerHTML = "";;
+                      document.getElementById("banChay").innerHTML = "";;
+                      document.getElementById("giamGiaManh").innerHTML = "";';
                 
                 // Gọi Ajax
                 echo '$.get("SapXepDienThoaiAjax/'. $noiDung .'/khongChon/khongChon/khongChon", function(data){
                     document.getElementById("phoneFound").innerHTML = data;
                 });';
-                echo 'document.getElementById("noiDungTimKiem").value = "'. $noiDung .'";';
-                echo 'document.getElementById("title_allPhone").innerHTML = "Kết quả tìm kiếm \''. $noiDung .'\'";';
+                echo 'document.getElementById("noiDungTimKiem").value = "'. $noiDung .'";;
+                      document.getElementById("title_allPhone").innerHTML = "Kết quả tìm kiếm \''. $noiDung .'\'";';
             echo '</script>';
         ?>
     @endif
@@ -204,16 +211,16 @@
                 $maHangDT = session()->get('hangDienThoaiDuocChon');
                 $tenHangDT = App\HangDienThoaiDiDong::find($maHangDT)->Ten_hang;
                 
-                echo 'document.getElementById("btnXemThem_tatCa").innerHTML = "";';
-                echo 'document.getElementById("banChay").innerHTML = "";';
-                echo 'document.getElementById("giamGiaManh").innerHTML = "";';
+                echo 'document.getElementById("btnXemThem_tatCa").innerHTML = "";;
+                        document.getElementById("banChay").innerHTML = "";;
+                        document.getElementById("giamGiaManh").innerHTML = "";';
                 
                 // Gọi Ajax
                 echo '$.get("SapXepDienThoaiAjax/khongChon/'. $maHangDT .'/khongChon/khongChon", function(data){
                     document.getElementById("phoneFound").innerHTML = data;
                 });';
-                echo 'document.getElementById("maHangDienThoaiDuocChon").value = "'. $maHangDT .'";';
-                echo 'document.getElementById("title_allPhone").innerHTML = "Điện thoại hãng: '. $tenHangDT .'";';
+                echo 'document.getElementById("maHangDienThoaiDuocChon").value = "'. $maHangDT .'";;
+                      document.getElementById("title_allPhone").innerHTML = "Điện thoại hãng: '. $tenHangDT .'";';
             echo '</script>';
         ?>
     @endif
@@ -380,27 +387,77 @@
 
         function XemThemDTDD(index)
         {
+            soLuongToiDa = 0;
+            soLuongHienTai = 0;
+            soLuongSeHienThi = 0;
+
             // index: GiamGiaManh=0, BanChay=1, TatCaDienThoai=2
+            // Lấy số lượng tối đa và số lượng hiện tại
             if(index == 0)
             {
-                $.get('XemThemGiamGiaManhAjax', function(data){
-                    document.getElementById('divGiamGiaManh').innerHTML = data;
-                });
-                document.getElementById('btnXemThem_giamGiaManh').hidden = true;
+                soLuongToiDa = document.getElementById('soLuongToiDa_GiamGia').value * 1;
+                soLuongHienTai = document.getElementById('soLuongHienTai_GiamGia').value * 1;                    
             }
             else if(index == 1)
             {
-                $.get('XemThemBanChayAjax', function(data){
-                    document.getElementById('divBanChay').innerHTML = data;
-                });
-                document.getElementById('btnXemThem_banChay').hidden = true;
+                soLuongToiDa = document.getElementById('soLuongToiDa_BanChay').value * 1;
+                soLuongHienTai = document.getElementById('soLuongHienTai_BanChay').value * 1;
             }
             else if(index == 2)
             {
-                $.get('XemThemTatCaAjax', function(data){
+                soLuongToiDa = document.getElementById('soLuongToiDa_TatCa').value * 1;
+                soLuongHienTai = document.getElementById('soLuongHienTai_TatCa').value * 1;
+            }
+
+            // Tính toán số lượng hiện thị
+            if( (soLuongHienTai + 10) >= soLuongToiDa)
+            {
+                soLuongSeHienThi = soLuongToiDa;
+            }
+            else
+            {
+                soLuongSeHienThi = soLuongHienTai + 10;
+            }
+
+            // Chạy AJAX
+            if(index == 0)
+            {
+                $.get('XemThemGiamGiaManhAjax/'+ soLuongSeHienThi, function(data){
+                    document.getElementById('divGiamGiaManh').innerHTML = data;
+                });
+
+                document.getElementById('soLuongHienTai_GiamGia').value = soLuongSeHienThi; 
+                    // Nếu đã hiển thị tối đa số sản phẩm thì sẽ ẩn nút Xem Thêm
+                if(soLuongSeHienThi == soLuongToiDa)
+                {
+                    document.getElementById('btnXemThem_giamGiaManh').hidden = true;
+                }                  
+            }
+            else if(index == 1)
+            {
+                $.get('XemThemBanChayAjax/'+ soLuongSeHienThi, function(data){
+                    document.getElementById('divBanChay').innerHTML = data;
+                });
+                
+                document.getElementById('soLuongHienTai_BanChay').value = soLuongSeHienThi;
+                    // Nếu đã hiển thị tối đa số sản phẩm thì sẽ ẩn nút Xem Thêm
+                if(soLuongSeHienThi == soLuongToiDa)
+                {
+                    document.getElementById('btnXemThem_banChay').hidden = true;
+                }
+            }
+            else if(index == 2)
+            {
+                $.get('XemThemTatCaAjax/'+ soLuongSeHienThi, function(data){
                     document.getElementById('phoneFound').innerHTML = data;
                 });
-                document.getElementById('btnXemThem_tatCa').hidden = true;
+                
+                document.getElementById('soLuongHienTai_TatCa').value = soLuongSeHienThi;
+                    // Nếu đã hiển thị tối đa số sản phẩm thì sẽ ẩn nút Xem Thêm
+                if(soLuongSeHienThi == soLuongToiDa)
+                {
+                    document.getElementById('btnXemThem_tatCa').hidden = true;
+                }
             }
         }
     </script>

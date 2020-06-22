@@ -113,13 +113,13 @@ Route::get('SapXepDienThoaiAjax/{noiDung}/{maHangDT}/{mucGia}/{thuTu}', 'UserCon
 
         //Nhấn nút XEM THÊM các điện thoại trong Trang chủ
             //Giảm giá mạnh Ajax
-Route::get('XemThemGiamGiaManhAjax', 'UserController@getXemThemGiamGiaManhAjax');
+Route::get('XemThemGiamGiaManhAjax/{soLuongSeHienThi}', 'UserController@getXemThemGiamGiaManhAjax');
 
             //Bán chạy Ajax
-Route::get('XemThemBanChayAjax', 'UserController@getXemThemBanChayAjax');
+Route::get('XemThemBanChayAjax/{soLuongSeHienThi}', 'UserController@getXemThemBanChayAjax');
 
             //Tất cả sản phẩm Ajax
-Route::get('XemThemTatCaAjax', 'UserController@getXemThemTatCaAjax');
+Route::get('XemThemTatCaAjax/{soLuongSeHienThi}', 'UserController@getXemThemTatCaAjax');
 
 
     //ĐĂNG XUẤT ===================================================================================
