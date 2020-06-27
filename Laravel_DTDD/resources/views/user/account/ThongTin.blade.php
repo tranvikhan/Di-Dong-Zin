@@ -84,7 +84,7 @@
                                     Số điện thoại
                                 </th>
                                 <td>
-                                    <input type="tel" name="phonenumber" value="{{ Auth::user()->So_dien_thoai }}">
+                                    <input type="tel" name="phonenumber" value="{{ Auth::user()->So_dien_thoai }}" id="sdt">
                                 </td>
                             </tr>
                             <tr>
@@ -97,7 +97,7 @@
                             </tr>
                             <tr>
                                 <td colspan="2">
-                                    <input type="submit" value="Cập nhật">
+                                    <input type="submit" value="Cập nhật" onclick="return KiemTraSDT()">
                                 </td>
                             </tr>
                         </table>
@@ -115,6 +115,25 @@
     <script>
         window.onload = function(){
             document.getElementById('thongTinMenu').classList.add('active');
+        }
+
+        function KiemTraSDT()
+        {
+            sdt = document.getElementById('sdt').value;
+
+            // Cắt tất cả khoảng trắng
+            sdt = sdt.replace(/ /g, '');
+
+            // Tạo regexr cho 2 trường hợp sdt có và không có dấu +
+            reg1 = /^\+\d{11,12}$/;
+            reg2 = /^\d{10,11}$/;
+            if(reg1.test(sdt) || reg2.test(sdt)){
+                return true;
+            }
+            else{
+                alert("Số điện thoại không đúng, vui lòng xem lại");
+                return false;
+            }
         }
     </script>
 @endsection

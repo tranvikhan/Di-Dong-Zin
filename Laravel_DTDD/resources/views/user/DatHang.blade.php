@@ -151,6 +151,29 @@
             <form action="TaoDonHang" method="POST">
                 {{ csrf_field() }}
 
+                {{-- Nhận errors gửi về của quá trình tạo đơn hàng, quá trình này chỉ xảy ra khi đã đăng nhập --}}
+                @if (Auth::check())
+                    @if (count($errors) > 0)
+                        <?php
+                            $loi = "";
+                            foreach ($errors->all() as $err) {
+                                if($loi == ""){
+                                    $loi .= $err;
+                                }else{
+                                    $loi .= '\\n'. $err;
+                                }
+                            }
+                            echo '<script>alert("'. $loi .'");</script>'
+                        ?>
+                    @endif    
+                @endif
+                    
+                @if(session('thongBaoTaoDonHang'))
+                    <?php
+                        echo '<script>alert("'. session('thongBaoTaoDonHang') .'")</script>';
+                    ?>
+                @endif
+
                 <h2 class="title">Thông tin thanh toán</h2>
                 <table>
                     <tr>
@@ -167,9 +190,9 @@
                         <th>Số điện thoại*</th>
                         <td>
                             <input type="text" placeholder="097414717..." name="soDT"
-                            @if (Auth::check())
-                                value="{{ Auth::user()->So_dien_thoai }}"
-                            @endif
+                                @if (Auth::check())
+                                    value="{{ Auth::user()->So_dien_thoai }}"
+                                @endif
                             >
                         </td>
                     </tr>
@@ -262,29 +285,6 @@
             @endif
         >
 
-        {{-- Nhận errors gửi về của quá trình tạo đơn hàng, quá trình này chỉ xảy ra khi đã đăng nhập --}}
-        @if (Auth::check())
-            <?php $loi = ""; ?>
-            @if (count($errors) > 0)
-                <?php
-                    foreach ($errors->all() as $err) {
-                        if($loi == ""){
-                            $loi .= $err;
-                        }else{
-                            $loi .= '\\n'. $err;
-                        }
-                    }
-                    echo '<script>alert("'. $loi .'");</script>'
-                ?>
-            @endif    
-        @endif        
-
-        @if(session('thongBaoTaoDonHang'))
-            <?php
-                echo '<script>alert("'. session('thongBaoTaoDonHang') .'")</script>';
-            ?>
-        @endif
-        </form>
     </div>
 </div>
 
@@ -454,6 +454,9 @@
         function DatHang()
         {
             daDangNhap = document.getElementById('xacNhanDangNhap').value;
+
+            // Kho đủ hàng
+            khoDuHang = false;
             if(daDangNhap == 'checked')
             {
                 $.get('KiemTraKhoAjax', function(data){
@@ -472,9 +475,17 @@
                     else
                         //data = '': không có lỗi khi kiểm tra số lượng điện thoại trong kho
                     {
-                        return true;
+                        khoDuHang = true;
                     }                    
                 });
+
+                if(confirm("Bạn sẽ tạo đơn hàng này?"))
+                {
+                    return true;
+                }
+                else{
+                    return false;
+                }
             }
             else if(daDangNhap == 'uncheck')
             {

@@ -668,6 +668,16 @@ class UserController extends Controller
 
     function postDangNhap(Request $request)
     {
+        $this->validate($request, 
+            [
+                'username'=>'required',
+                'password'=>'required'
+            ], 
+            [
+                'username.required'=>'Tên đăng nhập không được rỗng',
+                'password.required'=>'Mật khẩu không được rỗng'
+            ]);
+
         $uid = $request->username;
         $pass = $request->password;
 
@@ -878,6 +888,14 @@ class UserController extends Controller
         {
             return redirect('taikhoan/ThongTinCaNhan')->with('thongBaoCapNhat', 'Họ tên phải bao gồm họ tên lót và tên');
         }
+
+        // Kiểm tra ngày sinh không được lớn hơn ngày hiện tại
+        date_default_timezone_set("Asia/Ho_Chi_Minh");
+        $today = date("Y-m-d");
+        if($request->dateOfBirth > $today)
+        {
+            return redirect('taikhoan/ThongTinCaNhan')->with('thongBaoCapNhat', 'Ngày sinh không hợp lệ');
+        }
         
         $id = Auth::user()->Ma_tai_khoan;
         $user = TaiKhoan::find($id);
@@ -910,7 +928,8 @@ class UserController extends Controller
         $user->Ngay_sinh = $request->dateOfBirth;
         $user->Gioi_tinh = $request->sex;
         $user->Dia_chi = $request->address;
-        $user->So_dien_thoai = $request->phonenumber;
+            // Cắt hết các khoảng trắng trong số điện thoại
+        $user->So_dien_thoai = str_replace(' ', '', $request->phonenumber);
 
         $user->save();
         return redirect('taikhoan/ThongTinCaNhan')->with('thongBaoCapNhat', 'Cập nhật thông tin thành công');
@@ -1318,13 +1337,22 @@ class UserController extends Controller
                 [
                     'tenChuThe'=>'required',
                     'soThe'=>'required',
-                    'CVV'=>'required',
+                    'CVV'=>'required|numeric'
                 ], 
                 [
                     'tenChuThe.required'=>'Tên chủ thẻ không được trống',
                     'soThe.required'=>'Số thẻ không được trống',
-                    'CVV.required'=>'CVV không được trống'
+                    'CVV.required'=>'CVV/CVV2 không được trống',
+                    'CVV.numeric'=>'CVV/CVV2 phải là số'
                 ]);
+
+            $daySo = str_replace(" ", "", $request->soThe);
+            // Kiểm tra phải là một dãy các con số
+            if( !is_numeric($daySo) )
+            {
+                return redirect('ThanhToanGioHang')->with('thongBaoTaoDonHang', 'Số thẻ phải là dãy số');
+            }
+
             $month = date('m');
             $year  = date('Y');
             if(($request->namHetHan < $year) || ($request->namHetHan == $year && $request->thangHetHan <= $month))
@@ -1460,7 +1488,6 @@ class UserController extends Controller
         $str = '';
         foreach ($dsChiTiet as $chiTiet) {
             $soLuongDT = $chiTiet->So_luong;
-
 
             $dt = $chiTiet->ToDienThoaiDiDong;
             $soLuongTrongKho = $dt->So_luong;

@@ -177,14 +177,6 @@
             }         
         }
     ?>
-
-    {{-- <a href="#">APPLE</a>
-    <a href="#">SAMSUNG</a>
-    <a href="#">XIAOMI</a>
-    <a href="#">HAWAII</a>
-    <a href="#">NOKIA</a>
-    <a href="#">REALME</a>
-    <a href="#">VSMART</a> --}}
 </div>
 
 <script>    

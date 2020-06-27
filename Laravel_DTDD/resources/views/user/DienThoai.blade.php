@@ -280,53 +280,57 @@
         if( KiemTraDangNhap() )
         {
             noiDung = document.getElementById('noiDungCmtMoi').value;
-            id_maxCmt = document.getElementById('max_idParentCmt').value * 1;
-            id_maxCmt += 1;
 
-            // Lưu lại mã bình luận max hiện tại
-            document.getElementById('max_idParentCmt').value = id_maxCmt;
+            if( LaBinhLuanKhongRong("them", noiDung) )
+            {
+                id_maxCmt = document.getElementById('max_idParentCmt').value * 1;
+                id_maxCmt += 1;
 
-            //Lấy thời gian hiện tại
-            day = new Date();
-            now = day.getFullYear()+'-'+(day.getMonth()+1)+'-'+day.getDate()+' '+day.getHours()+':'+day.getMinutes()+':'+day.getSeconds();
+                // Lưu lại mã bình luận max hiện tại
+                document.getElementById('max_idParentCmt').value = id_maxCmt;
 
-            // Lấy tên người dùng và tên ảnh đại diện
-            hoTen = document.getElementById('hoTenTaiKhoan').value;
-            anhDaiDien = document.getElementById('tenAnhDaiDien').value;
+                //Lấy thời gian hiện tại
+                day = new Date();
+                now = day.getFullYear()+'-'+(day.getMonth()+1)+'-'+day.getDate()+' '+day.getHours()+':'+day.getMinutes()+':'+day.getSeconds();
 
-            // Tạo comment cha mới
-            str =   '<div class="docker" id="parent-cmt'+ id_maxCmt +'">'
-                        +'<div class="comment">'
-                            +'<img src="DiDongZin/avatar/'+ anhDaiDien +'" alt="avatar">'
-                            +'<div>'
-                                +'<span class="name-cmt">'+ hoTen +'</span>'
-                                +'<span class="time-cmt">'+ now +'</span>'
-                                +'<p class="content-cmt" id="content-cmt'+ id_maxCmt +'">'+ noiDung +'</p>'
-                                
-                                +'<div class="action-g" id="action-cmt'+ id_maxCmt +'">'
-                                    +'<button class="reply-cmt" onclick="reply_cmt('+ id_maxCmt +')"><img '
-                                        +' src="DiDongZin/assets/img/left_2_30px.png">Trả lời</button>'
-                                    +'<button class="edit-cmt" onclick="edit_cmt('+ id_maxCmt +')"><img '
-                                        +' src="DiDongZin/assets/img/design_30px.png">Chỉnh sửa</button>'
-                                    +'<button class="del-cmt" onclick="delete_cmt('+ id_maxCmt +')"><img src="DiDongZin/assets/img/trash_can_30px.png">Xóa</button>'
+                // Lấy tên người dùng và tên ảnh đại diện
+                hoTen = document.getElementById('hoTenTaiKhoan').value;
+                anhDaiDien = document.getElementById('tenAnhDaiDien').value;
+
+                // Tạo comment cha mới
+                str =   '<div class="docker" id="parent-cmt'+ id_maxCmt +'">'
+                            +'<div class="comment">'
+                                +'<img src="DiDongZin/avatar/'+ anhDaiDien +'" alt="avatar">'
+                                +'<div>'
+                                    +'<span class="name-cmt">'+ hoTen +'</span>'
+                                    +'<span class="time-cmt">'+ now +'</span>'
+                                    +'<p class="content-cmt" id="content-cmt'+ id_maxCmt +'">'+ noiDung +'</p>'
+                                    
+                                    +'<div class="action-g" id="action-cmt'+ id_maxCmt +'">'
+                                        +'<button class="reply-cmt" onclick="reply_cmt('+ id_maxCmt +')"><img '
+                                            +' src="DiDongZin/assets/img/left_2_30px.png">Trả lời</button>'
+                                        +'<button class="edit-cmt" onclick="edit_cmt('+ id_maxCmt +')"><img '
+                                            +' src="DiDongZin/assets/img/design_30px.png">Chỉnh sửa</button>'
+                                        +'<button class="del-cmt" onclick="delete_cmt('+ id_maxCmt +')"><img src="DiDongZin/assets/img/trash_can_30px.png">Xóa</button>'
+                                    +'</div>'
                                 +'</div>'
                             +'</div>'
-                        +'</div>'
 
-                        // div này: dùng để xuất hiện những bình luận con của bình luận cha
-                        +'<div id="child-cmt-frame'+ id_maxCmt +'"></div>'
-                        
-                        // Khung nhập phần trả lời của bình luận cha
-                        +'<div class="comment tl-cmt" id="reply-cmt-frame'+ id_maxCmt +'"></div>'
-                    +'</div>';
-            allCmt_frame = document.getElementById('all-cmt');
-            $(str).prependTo(allCmt_frame);
+                            // div này: dùng để xuất hiện những bình luận con của bình luận cha
+                            +'<div id="child-cmt-frame'+ id_maxCmt +'"></div>'
+                            
+                            // Khung nhập phần trả lời của bình luận cha
+                            +'<div class="comment tl-cmt" id="reply-cmt-frame'+ id_maxCmt +'"></div>'
+                        +'</div>';
+                allCmt_frame = document.getElementById('all-cmt');
+                $(str).prependTo(allCmt_frame);
 
-            // Làm rỗng khung nhập binh luận
-            document.getElementById('noiDungCmtMoi').value = '';
+                // Làm rỗng khung nhập binh luận
+                document.getElementById('noiDungCmtMoi').value = '';
 
-            // Thêm bình luận cha, nên Ma_binh_luan_cha=0
-            ThemBinhLuan('0', noiDung);
+                // Thêm bình luận cha, nên Ma_binh_luan_cha=0
+                ThemBinhLuan('0', noiDung);    
+            }            
         }        
     }
 
@@ -350,50 +354,53 @@
         }        
     }
 
-    // NHẤN NÚT GỬI, TẠO BÌNH LUẬN CON MỚI
+    // NHẤN NÚT GỬI, TẠO BÌNH LUẬN CON MỚI (ĐÃ NHẤN NÚT TRẢ LỜI BÌNH LUẬN CHA)
     function btnGui_reply(idParentCmt)
     {
         noiDung = document.getElementById('content-reply'+idParentCmt).value;
 
-        id_maxCmt = document.getElementById('max_idParentCmt').value * 1;
-        id_maxCmt += 1;
+        if( LaBinhLuanKhongRong("them", noiDung) )
+        {
+            id_maxCmt = document.getElementById('max_idParentCmt').value * 1;
+            id_maxCmt += 1;
 
-        // Gán lại giá trị Mã bình luận max
-        document.getElementById('max_idParentCmt').value = id_maxCmt;
+            // Gán lại giá trị Mã bình luận max
+            document.getElementById('max_idParentCmt').value = id_maxCmt;
 
-        //Lấy thời gian hiện tại
-        day = new Date();
-        now = day.getFullYear()+'-'+(day.getMonth()+1)+'-'+day.getDate()+' '+day.getHours()+':'+day.getMinutes()+':'+day.getSeconds();
+            //Lấy thời gian hiện tại
+            day = new Date();
+            now = day.getFullYear()+'-'+(day.getMonth()+1)+'-'+day.getDate()+' '+day.getHours()+':'+day.getMinutes()+':'+day.getSeconds();
 
-        // Lấy tên người dùng và tên ảnh đại diện
-        hoTen = document.getElementById('hoTenTaiKhoan').value;
-        anhDaiDien = document.getElementById('tenAnhDaiDien').value;
+            // Lấy tên người dùng và tên ảnh đại diện
+            hoTen = document.getElementById('hoTenTaiKhoan').value;
+            anhDaiDien = document.getElementById('tenAnhDaiDien').value;
 
-        // Tạo bình luận con mới
-        str =   '<div class="docker" id="child-cmt'+ id_maxCmt +'">'
-                    +'<div class="comment tl-cmt">'
-                        +'<img src="DiDongZin/avatar/'+ anhDaiDien +'" alt="avatar">'
-                        +'<div>'
-                            +'<span class="name-cmt">'+ hoTen +'</span>'
-                            +'<span class="time-cmt">'+ now +'</span>'
-                            +'<p class="content-cmt" id="content-childCmt'+ id_maxCmt +'">'+ noiDung +'</p>'
-                            +'<div class="action-g" id="action-childCmt'+ id_maxCmt +'">'
-                                +'<button class="edit-cmt" onclick="edit_childCmt('+ id_maxCmt +')"><img '
-                                    +' src="DiDongZin/assets/img/design_30px.png">Chỉnh sửa</button>'
-                                +'<button class="del-cmt" onclick="delete_childCmt('+ id_maxCmt +')"><img '
-                                    +' src="DiDongZin/assets/img/trash_can_30px.png">Xóa</button>'
+            // Tạo bình luận con mới
+            str =   '<div class="docker" id="child-cmt'+ id_maxCmt +'">'
+                        +'<div class="comment tl-cmt">'
+                            +'<img src="DiDongZin/avatar/'+ anhDaiDien +'" alt="avatar">'
+                            +'<div>'
+                                +'<span class="name-cmt">'+ hoTen +'</span>'
+                                +'<span class="time-cmt">'+ now +'</span>'
+                                +'<p class="content-cmt" id="content-childCmt'+ id_maxCmt +'">'+ noiDung +'</p>'
+                                +'<div class="action-g" id="action-childCmt'+ id_maxCmt +'">'
+                                    +'<button class="edit-cmt" onclick="edit_childCmt('+ id_maxCmt +')"><img '
+                                        +' src="DiDongZin/assets/img/design_30px.png">Chỉnh sửa</button>'
+                                    +'<button class="del-cmt" onclick="delete_childCmt('+ id_maxCmt +')"><img '
+                                        +' src="DiDongZin/assets/img/trash_can_30px.png">Xóa</button>'
+                                +'</div>'
                             +'</div>'
                         +'</div>'
-                    +'</div>'
-                +'</div>';
-        child_cmt_frame = document.getElementById('child-cmt-frame'+idParentCmt);
-        $(str).appendTo(child_cmt_frame);
-        
-        // Đóng khung trả lời lại
-        btnHuy_reply(idParentCmt);
+                    +'</div>';
+            child_cmt_frame = document.getElementById('child-cmt-frame'+idParentCmt);
+            $(str).appendTo(child_cmt_frame);
+            
+            // Đóng khung trả lời lại
+            btnHuy_reply(idParentCmt);
 
-        // Thêm bình luận con
-        ThemBinhLuan(idParentCmt, noiDung);        
+            // Thêm bình luận con
+            ThemBinhLuan(idParentCmt, noiDung);    
+        }                
     }
 
     // NHẤN NÚT HỦY KHI ĐÃ MỞ HỘP THOẠI TRẢ LỜI
@@ -421,19 +428,23 @@
     function save_cmt(idCmt)
     {
         noiDung = document.getElementById('content-update'+idCmt).value;
-        document.getElementById("content-cmt"+idCmt).innerHTML = noiDung;
 
-        // Hiện thị lại các action đối với bình luận
-        str = '<button class="reply-cmt" onclick="reply_cmt('+ idCmt +')"><img'
-                    +' src="DiDongZin/assets/img/left_2_30px.png">Trả lời</button>'
-                +'<button class="edit-cmt" onclick="edit_cmt('+ idCmt +')"><img'
-                    +' src="DiDongZin/assets/img/design_30px.png">Chỉnh sửa</button>'
-                +'<button class="del-cmt" onclick="delete_cmt('+ idCmt +')"><img'
-                    +' src="DiDongZin/assets/img/trash_can_30px.png">Xóa</button>';
-        document.getElementById("action-cmt"+idCmt).innerHTML = str;
+        if( LaBinhLuanKhongRong("sua", noiDung) )
+        {
+            document.getElementById("content-cmt"+idCmt).innerHTML = noiDung;
 
-        // Cập nhật bình luận cha
-        CapNhatBinhLuan('sua', idCmt, noiDung);
+            // Hiện thị lại các action đối với bình luận
+            str = '<button class="reply-cmt" onclick="reply_cmt('+ idCmt +')"><img'
+                        +' src="DiDongZin/assets/img/left_2_30px.png">Trả lời</button>'
+                    +'<button class="edit-cmt" onclick="edit_cmt('+ idCmt +')"><img'
+                        +' src="DiDongZin/assets/img/design_30px.png">Chỉnh sửa</button>'
+                    +'<button class="del-cmt" onclick="delete_cmt('+ idCmt +')"><img'
+                        +' src="DiDongZin/assets/img/trash_can_30px.png">Xóa</button>';
+            document.getElementById("action-cmt"+idCmt).innerHTML = str;
+
+            // Cập nhật bình luận cha
+            CapNhatBinhLuan('sua', idCmt, noiDung);
+        }        
     }
 
     // NHẤN NÚT HỦY KHI ĐÃ MỞ HỘP THOẠI CHỈNH SỬA
@@ -465,6 +476,7 @@
     }
 
     //----------- THAO TÁC VỚI BÌNH LUẬN CON ----------------------------------
+    // CHỈNH SỬA BÌNH LUẬN CON
     function edit_childCmt(idChildCmt)
     {
         noiDung = document.getElementById("content-childCmt"+idChildCmt).innerHTML;
@@ -479,23 +491,28 @@
         document.getElementById("action-childCmt"+idChildCmt).innerHTML = '';
     }
 
+    // NHẤN NÚT LƯU LẠI, SAU KHI CHỈNH SỬA XONG
     function btnLuu_childCmt(idChildCmt)
     {
         noiDung = document.getElementById('content-update'+idChildCmt).value;
-        noiDung = noiDung.trim();
-        document.getElementById('content-childCmt'+idChildCmt).innerHTML = noiDung;
+        
+        if( LaBinhLuanKhongRong("sua", noiDung) )
+        {
+            document.getElementById('content-childCmt'+idChildCmt).innerHTML = noiDung;
 
-        //Hiển thị lại các action cho bình luận con
-        str =   '<button class="edit-cmt" onclick="edit_childCmt('+ idChildCmt +')"><img'
-                    +' src="DiDongZin/assets/img/design_30px.png">Chỉnh sửa</button>'
-                +'<button class="del-cmt" onclick="delete_childCmt('+ idChildCmt +')"><img'
-                    +' src="DiDongZin/assets/img/trash_can_30px.png">Xóa</button>';
-        document.getElementById('action-childCmt'+idChildCmt).innerHTML = str;
+            //Hiển thị lại các action cho bình luận con
+            str =   '<button class="edit-cmt" onclick="edit_childCmt('+ idChildCmt +')"><img'
+                        +' src="DiDongZin/assets/img/design_30px.png">Chỉnh sửa</button>'
+                    +'<button class="del-cmt" onclick="delete_childCmt('+ idChildCmt +')"><img'
+                        +' src="DiDongZin/assets/img/trash_can_30px.png">Xóa</button>';
+            document.getElementById('action-childCmt'+idChildCmt).innerHTML = str;
 
-        // Cập nhật bình luận con
-        CapNhatBinhLuan('sua', idChildCmt, noiDung);
+            // Cập nhật bình luận con
+            CapNhatBinhLuan('sua', idChildCmt, noiDung);
+        }        
     }
 
+    // NHẤN NÚT HỦY BỎ CHỈNH SỬA
     function btnHuy_childCmt(idChildCmt)
     {
         noiDungCu = document.getElementById('content-temp'+idChildCmt).value;
@@ -509,6 +526,7 @@
         document.getElementById('action-childCmt'+idChildCmt).innerHTML = str;
     }
 
+    // XÓA BÌNH LUẬN CON
     function delete_childCmt(idChildCmt)
     {
         if(confirm('Bạn sẽ xóa bình luận này?'))
@@ -535,7 +553,28 @@
         }
     }
 
-    // 2 function gọi Ajax cập nhật bình luận
+    // Kiểm tra bình luận rỗng
+    function LaBinhLuanKhongRong(loai, noiDung)
+    {
+        noiDung = noiDung.trim();
+        if(noiDung == "" && loai == "them")
+        {
+            alert("Bình luận bạn nhập đang rỗng");
+            return false;
+        }
+        else if(noiDung == "" && loai == "sua")
+        {
+            alert("Nội dung chỉnh sửa bình luận không trống");
+            return false;
+        }
+        else
+        {
+            return true;
+        } 
+    }
+
+    // 2 function gọi Ajax cập nhật bình luận -----------------------------------------
+    // TẠO BÌNH LUẬN TẠO
     function ThemBinhLuan(Ma_binh_luan_cha, Noi_dung)
     {
         Ma_dien_thoai = document.getElementById('idDienThoai').value;
@@ -545,6 +584,7 @@
         });
     }
 
+    // DÙNG AJAX LƯU LẠI BÌNH LUẬN LÊN CSDL
     function CapNhatBinhLuan(loai, Ma_binh_luan, Noi_dung)
     {
         $.get('CapNhatBinhLuan/'+ loai +'/'+ Ma_binh_luan +'/'+ Noi_dung, function(data){

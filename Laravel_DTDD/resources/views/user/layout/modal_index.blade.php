@@ -33,6 +33,8 @@
                         <a onclick="openTab(event, 'quenmatkhau')">Quên mật khẩu ?</a>
                     </form>
                 </div>
+
+                {{----- QUÊN MẬT KHẨU ------------------------------------------------------}}
                 <div id="quenmatkhau" class="tabcontent">
                     <form action="KiemTraDieuKienDoiMatKhau" method="POST">
                         {{ csrf_field() }}
@@ -43,7 +45,7 @@
                         <label for="emailKhoiPhuc"><img src="DiDongZin/assets/img/email.png"></label>
                         <input type="text" name="email" id="emailKhoiPhuc" placeholder="Nhập email">
                         
-                        <input class="thr-btn" type="submit" value="Yêu cầu đổi mật khẩu">
+                        <input class="thr-btn" type="submit" value="Yêu cầu đổi mật khẩu" onclick="return KiemTraQuenMatKhau()">
                     </form>
 
                     @if (session('DoiMatKhauThanhCong'))
@@ -119,6 +121,24 @@
                     ?>
                 @endif
                 
+                <script>
+                    function KiemTraQuenMatKhau()
+                    {
+                        username = document.getElementById('usernameKhoiPhuc').value.trim();
+                        email = document.getElementById('emailKhoiPhuc').value.trim();
+                        if(username == '')
+                        {
+                            alert('Tên đăng nhập không được trống');
+                            return false;
+                        }
+                        else if(email == '')
+                        {
+                            alert('Email không được trống');
+                            return false;
+                        }
+                        return true;
+                    }
+                </script>
             </div>
         </div>
     </div>
