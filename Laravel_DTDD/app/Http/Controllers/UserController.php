@@ -797,6 +797,7 @@ class UserController extends Controller
         $user->Ho_va_ten_lot = $request->hoVaTenLot;
         $user->Ten = $request->ten;
         $user->Email = $request->email;
+        $user->URL_Avatar = 'male_user_100px.png';
         $user->Tai_khoan_admin = 0;
         
         $user->save();
@@ -915,7 +916,8 @@ class UserController extends Controller
             // Xóa ảnh cũ trong hệ thống trước khi cập nhật ảnh mới
                 // unlink($filename): dùng để xóa file trong hệ thống, $filename: đường dẫn tới file 
                 // Nếu người dùng đã có avatar thì khi đổi ảnh thì xóa avatar cũ
-            if($user->URL_Avatar !== null)
+                // male_user_100px.png là avatar mặc định nên không xóa
+            if($user->URL_Avatar !== 'male_user_100px.png')
             {
                 unlink('DiDongZin/avatar/'.$user->URL_Avatar);
             }
@@ -1390,7 +1392,15 @@ class UserController extends Controller
             $hoaDon->Hinh_thuc_thanh_toan = $request->hinhthuc;
             $hoaDon->Dia_chi_nhan_hang = $request->diaChi;
             $hoaDon->Thue_VAT = 10;
-            $hoaDon->Trang_thai = 0;
+                // Nếu là thanh toán online thì đơn hàng sẽ trở thành hóa đơn luôn, do Thành viên đã trả tiền
+            if($request->hinhthuc == 'Thanh toán Online')
+            {
+                $hoaDon->Trang_thai = 1;
+            }
+            else
+            {
+                $hoaDon->Trang_thai = 0;
+            }            
             $hoaDon->save();
 
             // Sửa Da_thanh_toan = 1 trong giỏ hàng
@@ -1406,12 +1416,12 @@ class UserController extends Controller
             }
 
             //Cập nhật lại số lượng điện thoại trong kho
-            $dsChiTiet = $gioHang->ToChiTietGioHang;
-            foreach ($dsChiTiet as $chiTiet) {
-                $dt = $chiTiet->ToDienThoaiDiDong;
-                $dt->So_luong = $dt->So_luong - $chiTiet->So_luong;
-                $dt->save();
-            }
+            // $dsChiTiet = $gioHang->ToChiTietGioHang;
+            // foreach ($dsChiTiet as $chiTiet) {
+            //     $dt = $chiTiet->ToDienThoaiDiDong;
+            //     $dt->So_luong = $dt->So_luong - $chiTiet->So_luong;
+            //     $dt->save();
+            // }
 
             return redirect('ThanhToanGioHang')->with('thongBaoTaoDonHang', 'Bạn đã tạo đơn hàng thành công');
         }
@@ -1419,6 +1429,13 @@ class UserController extends Controller
         {
             return redirect('ThanhToanGioHang')->with('thongBaoTaoDonHang', 'Trong giỏ hàng của bạn không có điện thoại nào nên không thể tạo đơn hàng');
         }
+    }
+
+    // LAY SO LUONG DIEN THOAI TRONG KHO
+    function getLaySoLuongKhoAjax($idDT)
+    {
+        $dt = DienThoaiDiDong::find($idDT);
+        echo $dt->So_luong;
     }
 
     //THỰC HIỆN AJAX VIỆC TĂNG GIẢM SỐ LƯỢNG KHI ĐÃ ĐĂNG NHẬP
@@ -1476,59 +1493,4 @@ class UserController extends Controller
             session()->put('count', $soLuongDT);
         }
     }
-
-    //THỰC HIỆN AJAX VIỆC KIỂM TRA SỐ LƯỢNG ĐIỆN THOẠI TRONG KHO
-    function getKiemTraKhoAjax()
-    {
-        // Do người dùng đã đăng nhập mới thể nhấn đặt hàng
-        $idGioHang = Auth::user()->ToGioHang->last()->Ma_gio_hang;
-
-        $dsChiTiet = GioHang::find($idGioHang)->ToChiTietGioHang;
-        // str: Chứa các các lời đề nghị khi điện thoại trong kho bị thiếu 
-        $str = '';
-        foreach ($dsChiTiet as $chiTiet) {
-            $soLuongDT = $chiTiet->So_luong;
-
-            $dt = $chiTiet->ToDienThoaiDiDong;
-            $soLuongTrongKho = $dt->So_luong;
-            if($soLuongTrongKho == 0)
-            {
-                $str .=  'Điện thoại '.$dt->Ten_dien_thoai.' vừa được mua hết. ';
-            }
-            else if($soLuongDT > $soLuongTrongKho)
-            {
-                $str .=  'Điện thoại '.$dt->Ten_dien_thoai.' chỉ còn '.$dt->So_luong.' chiếc. ';
-            }
-        }
-        echo $str;
-    }
-
-    //THỰC HIỆN AJAX VIỆC CẬP NHẬT SỐ LƯỢNG ĐIỆN THOẠI TRONG GIỎ HÀNG
-    function getCapNhatGioHangAjax()
-    {
-        // Do người dùng đã đăng nhập mới thể nhấn đặt hàng
-        $idGioHang = Auth::user()->ToGioHang->last()->Ma_gio_hang;
-
-        $dsChiTiet = GioHang::find($idGioHang)->ToChiTietGioHang;
-        foreach ($dsChiTiet as $chiTiet) {
-            $dt = $chiTiet->ToDienThoaiDiDong;
-
-                // Số lượng điện thoại trong kho = 0
-            if($dt->So_luong == 0)
-            {
-                DB::table('Chi_tiet_gio_hang')->where([
-                    ['Ma_dien_thoai', '=', $dt->Ma_dien_thoai],
-                    ['Ma_gio_hang', '=', $idGioHang]
-                ])->delete();
-            }
-                // Số lượng điện thoại trong kho < số lượng điện thoại trong giỏ hàng
-            else if($dt->So_luong < $chiTiet->So_luong)
-            {
-                DB::table('Chi_tiet_gio_hang')->where([
-                    ['Ma_dien_thoai', '=', $dt->Ma_dien_thoai],
-                    ['Ma_gio_hang', '=', $idGioHang]
-                ])->update(['So_luong'=>$dt->So_luong]);
-            }
-        }
-    }  
 }

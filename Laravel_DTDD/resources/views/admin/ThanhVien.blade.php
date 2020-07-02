@@ -12,14 +12,7 @@
             @foreach ($thanhVien as $tv)
                 <div class="col-4 col-4s cart-thanhvien">
                     <div class="row">
-                        <img 
-                            @if ($tv->URL_Avatar !== null)
-                                src="DiDongZin/avatar/{{ $tv->URL_Avatar }}"
-                            @else
-                                src="DiDongZin/assets/img/male_user_100px.png"
-                            @endif    
-                         
-                        alt="avatar" class="col-5"> 
+                        <img src="DiDongZin/avatar/{{ $tv->URL_Avatar }}" alt="avatar" class="col-5"> 
                         <img src="DiDongZin/assets/img/slider_50px.png" alt="setting" class="sua_thanhvien" 
                             onclick="XemThanhVien('{{ $tv->URL_Avatar }}', '{{ $tv->Ma_tai_khoan }}', '{{ $tv->Tai_khoan_admin }}', '{{ $tv->Username }}', '{{ $tv->Ho_va_ten_lot }} {{ $tv->Ten }}', '{{ $tv->Gioi_tinh }}', '{{ $tv->Ngay_sinh }}', '{{ $tv->So_dien_thoai }}', '{{ $tv->Dia_chi }}')">
                         

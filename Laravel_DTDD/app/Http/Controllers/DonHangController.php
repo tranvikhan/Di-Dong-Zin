@@ -21,6 +21,14 @@ class DonHangController extends Controller
         $hoaDon->Trang_thai = 1;
         $hoaDon->save();
 
+        // Cập nhật lại số lượng điện thoại trong kho
+        $dsChiTiet = $hoaDon->ToGioHang->ToChiTietGioHang;
+        foreach ($dsChiTiet as $chiTiet) {
+            $dt = $chiTiet->ToDienThoaiDiDong;
+            $dt->So_luong = $dt->So_luong - $chiTiet->So_luong;
+            $dt->save();
+        }
+
         return redirect('admin/donhang/danhsach')->with('thongbao', 'Xác nhận đơn hàng thành công');
     }
 

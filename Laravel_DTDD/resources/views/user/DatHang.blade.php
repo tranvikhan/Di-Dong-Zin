@@ -189,7 +189,7 @@
                     <tr>
                         <th>Số điện thoại*</th>
                         <td>
-                            <input type="text" placeholder="097414717..." name="soDT"
+                            <input type="text" placeholder="097414717..." name="soDT" id="soDT"
                                 @if (Auth::check())
                                     value="{{ Auth::user()->So_dien_thoai }}"
                                 @endif
@@ -295,15 +295,35 @@
     <script>
         function TangGiamSoLuong(checked, loai, idDT, maGioHang)
         {
+            // Giảm tổng số lượng điện thoại trong 2 icon giỏ hàng
+            count = document.getElementById('iconGioHangTren').innerHTML;
+
             //TĂNG GIẢM SỐ LƯỢNG TRÊN GIAO DIỆN
             soLuong = document.getElementById('sl'+idDT).innerHTML;
             if(loai == 'tang')
             {
-                document.getElementById('sl'+idDT).innerHTML = soLuong*1 + 1;
-                ThayDoiGiaTongCong('tang', idDT);
+                $.get('LaySoLuongKhoAjax/'+idDT, function(data){
+                    if(soLuong >= data*1)
+                    {
+                        alert('Số lượng điện thoại bạn mua đã là số lượng tối đa trong kho');
+                    }
+                    else
+                    {
+                        document.getElementById('sl'+idDT).innerHTML = soLuong*1 + 1;
+                        ThayDoiGiaTongCong('tang', idDT);
+
+                        // Icon xuất hiện ở giao diện rộng (desktop)
+                        document.getElementById('iconGioHangTren').innerHTML = count*1 + 1;
+                        // Icon xuất hiện ở giao diện hẹp (smart phone)
+                        document.getElementById('iconGioHangDuoi').innerHTML = count*1 + 1;
+                    }               
+                });                                 
             }
             else if(loai == 'giam')
             {
+                // Đã giảm
+                decreament = false;
+                
                 soLuongHienTai = document.getElementById('sl'+idDT).innerHTML;
                 // Nếu số lượng hiện tại = 1, đồng ý giảm lần nữa sẽ tiến hành xóa
                 if(soLuongHienTai == 1)
@@ -312,6 +332,8 @@
                     {
                         document.getElementById('sl'+idDT).innerHTML = soLuong*1 - 1;   
                         ThayDoiGiaTongCong('giam', idDT);
+
+                        decreament = true;
                     }
                     // Ngược lại, thì không thay đổi gì
                 }
@@ -319,28 +341,21 @@
                 {
                     document.getElementById('sl'+idDT).innerHTML = soLuong*1 - 1;   
                     ThayDoiGiaTongCong('giam', idDT);
+
+                    decreament = true;
+                }
+
+                if( decreament )
+                {
+                    // Icon xuất hiện ở giao diện rộng (desktop)
+                    document.getElementById('iconGioHangTren').innerHTML = count*1 - 1;
+                    // Icon xuất hiện ở giao diện hẹp (smart phone)
+                    document.getElementById('iconGioHangDuoi').innerHTML = count*1 - 1;
                 }
             }
             soLuong = document.getElementById('sl'+idDT).innerHTML;
             
             document.getElementById('soLuongIconGioHang'+idDT).innerHTML = 'X '+soLuong;
-            
-            // Giảm tổng số lượng điện thoại trong 2 icon giỏ hàng
-            count = document.getElementById('iconGioHangTren').innerHTML;
-            if( loai == 'tang' )
-            {
-                // Icon xuất hiện ở giao diện rộng (desktop)
-                document.getElementById('iconGioHangTren').innerHTML = count*1 + 1;
-                // Icon xuất hiện ở giao diện hẹp (smart phone)
-                document.getElementById('iconGioHangDuoi').innerHTML = count*1 + 1;
-            }
-            else if( loai ==  'giam' )
-            {
-                // Icon xuất hiện ở giao diện rộng (desktop)
-                document.getElementById('iconGioHangTren').innerHTML = count*1 - 1;
-                // Icon xuất hiện ở giao diện hẹp (smart phone)
-                document.getElementById('iconGioHangDuoi').innerHTML = count*1 - 1;
-            }
 
             if( soLuong == 0)
             {
@@ -459,25 +474,10 @@
             khoDuHang = false;
             if(daDangNhap == 'checked')
             {
-                $.get('KiemTraKhoAjax', function(data){
-                    if(data != '') 
-                    {
-                        if(confirm(data+' Bạn có muốn mua số còn lại luôn không?')) {
-                            // Cập nhật số lượng điện thoại giỏ hàng
-                            $.get('CapNhatGioHangAjax', function(data){
-                                // Cập nhật, không trả về data       
-                            });
-
-                            alert('Mời bạn điền và xem lại thông tin trước khi đặt hàng');
-                            window.location.href = 'ThanhToanGioHang';
-                        }
-                    }
-                    else
-                        //data = '': không có lỗi khi kiểm tra số lượng điện thoại trong kho
-                    {
-                        khoDuHang = true;
-                    }                    
-                });
+                if( !KiemTraSDT() )
+                {
+                    return false;
+                }
 
                 if(confirm("Bạn sẽ tạo đơn hàng này?"))
                 {
@@ -494,6 +494,25 @@
                 
                 return false;
             }            
+        }
+
+        function KiemTraSDT()
+        {
+            sdt = document.getElementById('soDT').value;
+
+            // Cắt tất cả khoảng trắng
+            sdt = sdt.replace(/ /g, '');
+
+            // Tạo regexr cho 2 trường hợp sdt có và không có dấu +
+            reg1 = /^\+\d{11,12}$/;
+            reg2 = /^\d{10,11}$/;
+            if(reg1.test(sdt) || reg2.test(sdt)){
+                return true;
+            }
+            else{
+                alert("Số điện thoại không đúng, vui lòng xem lại");
+                return false;
+            }
         }
     </script>    
 @endsection

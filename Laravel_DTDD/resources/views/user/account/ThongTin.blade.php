@@ -33,7 +33,7 @@
 
                     <div class="col-4">
                         <img 
-                            @if (Auth::user()->URL_Avatar == null)
+                            @if (Auth::user()->URL_Avatar == 'male_user_100px.png')
                                 src="DiDongZin/avatar/plus_150px.png"
                             @else
                                 src="DiDongZin/avatar/{{ Auth::user()->URL_Avatar }}"    
@@ -121,19 +121,22 @@
         {
             sdt = document.getElementById('sdt').value;
 
-            // Cắt tất cả khoảng trắng
-            sdt = sdt.replace(/ /g, '');
+            if(sdt != '')
+            {
+                // Cắt tất cả khoảng trắng
+                sdt = sdt.replace(/ /g, '');
 
-            // Tạo regexr cho 2 trường hợp sdt có và không có dấu +
-            reg1 = /^\+\d{11,12}$/;
-            reg2 = /^\d{10,11}$/;
-            if(reg1.test(sdt) || reg2.test(sdt)){
-                return true;
-            }
-            else{
-                alert("Số điện thoại không đúng, vui lòng xem lại");
-                return false;
-            }
+                // Tạo regexr cho 2 trường hợp sdt có và không có dấu +
+                reg1 = /^\+\d{11,12}$/;
+                reg2 = /^\d{10,11}$/;
+                if(reg1.test(sdt) || reg2.test(sdt)){
+                    return true;
+                }
+                else{
+                    alert("Số điện thoại không đúng, vui lòng xem lại");
+                    return false;
+                }
+            }            
         }
     </script>
 @endsection

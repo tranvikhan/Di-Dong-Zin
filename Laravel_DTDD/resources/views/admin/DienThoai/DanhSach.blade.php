@@ -117,7 +117,7 @@
                             <td>
                                 {{ $dt->Ten_dien_thoai }}
                                 <div class="mini-action">
-                                    <a href="#">Xem</a>
+                                    <a href="DienThoai/{{ $dt->Ma_dien_thoai }}.html">Xem</a>
                                     <a onclick="loadPage('admin/dienthoai/sua/{{ $dt->Ma_dien_thoai }}')">Chỉnh sửa</a>
                                     <a href="admin/dienthoai/xoa/{{ $dt->Ma_dien_thoai }}" onclick="return XoaDienThoai('{{ $dt->Ten_dien_thoai }}')">Xóa</a>
                                 </div>

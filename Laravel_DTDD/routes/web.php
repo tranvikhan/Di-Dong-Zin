@@ -148,19 +148,14 @@ Route::get('ThanhToanGioHang', 'UserController@getThanhToanGioHang');
 
 Route::post('TaoDonHang', 'UserController@postTaoDonHang');
 
-        // AJAX KIỂM TRA KHO VÀ ĐƯA RA THÔNG BÁO NẾU KHI THIẾU HOẶC KHÔNG CÓ ĐIỆN THOẠI
-Route::get('KiemTraKhoAjax', 'UserController@getKiemTraKhoAjax');
-
-        // AJAX LÚC NÀO CŨNG CHẠY: CHỈ CẬP NHẬT KHI THIẾU HOẶC KHÔNG CÓ ĐIỆN THOẠI
-Route::get('CapNhatGioHangAjax', 'UserController@getCapNhatGioHangAjax');
-
         //TẠO SESSION ĐIỆN THOẠI CHO VÀO GIỎ HÀNG
 Route::get('ThemVaoGioHang/{id}', 'UserController@getThemVaoGioHang');
 
 Route::get('TangGiamSoLuongCHECKED_AJAX/{loai}/{maDT}/{maGioHang}/{soLuong}', 'UserController@getTangGiamSoLuongCHECKED_AJAX');
 
 Route::get('TangGiamSoLuongUNCHECK_AJAX/{loai}/{maDT}/{soLuong}', 'UserController@getTangGiamSoLuongUNCHECK_AJAX');
-
+        //LẤY SỐ LƯỢNG ĐIỆN THOẠI TRONG KHO
+Route::get('LaySoLuongKhoAjax/{idDT}', 'UserController@getLaySoLuongKhoAjax');
 
     //QUẢN LÝ THÔNG TIN THÀNH VIÊN ================================================================
 Route::group(['prefix'=>'taikhoan', 'middleware'=>'UserMiddleware'], function(){
